@@ -1,13 +1,13 @@
-DELETE FROM Exercise_type;
+DELETE FROM exercise_type;
 
-INSERT INTO Exercise_type (id, type, additional_info) VALUES
+INSERT INTO exercise_type (id, exercise_type, additional_info) VALUES
     (1, 'Strength', 'Strength type of exercise'),
     (2, 'Endurance', 'Endurance / Aerobic type of exercise'),
     (3, 'Flexibility', 'Flexibility type of exercise');
 
-DELETE FROM Muscles;
+DELETE FROM muscles;
 
-INSERT INTO Muscles (id, name, body_part) VALUES
+INSERT INTO muscles (id, muscles_name, body_part) VALUES
     (1, 'Front delt', 'Shoulders'),
     (2, 'Rear delt', 'Shoulders'),
     (3, 'Bicep', 'Arms'),
@@ -24,9 +24,9 @@ INSERT INTO Muscles (id, name, body_part) VALUES
     (14, 'Calf high', 'Calves'),
     (15, 'Calf low', 'Calves');
 
-DELETE FROM Exercise;
+DELETE FROM exercise;
 
-INSERT INTO Exercise (id, name, description, type_id) VALUES
+INSERT INTO exercise (id, exercise_name, description, exercise_type_id) VALUES
     (1, 'Bench Press', 'Bench Press description', 1),
     (2, 'Front Squats', 'Front Squats description', 1),
     (3, 'Pull Ups', 'Pull Ups description', 1),

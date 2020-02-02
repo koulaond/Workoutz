@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -44,14 +45,24 @@ public class ExerciseEndpoint {
                 .map(muscleId -> musclesService.findById(muscleId))
                 .collect(toList());
         Exercise exercise = new Exercise(exerciseCreateDto.getName(), exerciseCreateDto.getDescription(), muscles, exerciseType);
-        Exercise created = exerciseService.createExercise(exercise);
+        Exercise created = exerciseService.create(exercise);
         return new ResponseEntity<>(mapToDto(created), HttpStatus.CREATED);
     }
 
-  private ExerciseDto mapToDto(Exercise exercise) {
-      ExerciseDto exerciseDto = modelMapper.map(exercise, ExerciseDto.class);
-      exerciseDto.setMuscles(exercise.getMuscles().stream().map(Muscles::getName).collect(toList()));
-      exerciseDto.setType(exercise.getType().getType());
-      return exerciseDto;
-  }
+    @RequestMapping(path = "/findByName")
+    public ResponseEntity<List<ExerciseDto>> findByName(@RequestParam String name) {
+        List<ExerciseDto> collect = exerciseService.findByName(name)
+                .stream()
+                .map(this::mapToDto)
+                .collect(toList());
+        if (collect.isEmpty()) return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        else return new ResponseEntity<>(collect, HttpStatus.OK);
+    }
+
+    private ExerciseDto mapToDto(Exercise exercise) {
+        ExerciseDto exerciseDto = modelMapper.map(exercise, ExerciseDto.class);
+        exerciseDto.setMuscles(exercise.getMuscles().stream().map(Muscles::getName).collect(toList()));
+        exerciseDto.setType(exercise.getExerciseType().getType());
+        return exerciseDto;
+    }
 }

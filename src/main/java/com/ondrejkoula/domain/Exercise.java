@@ -17,7 +17,7 @@ public class Exercise {
     @GeneratedValue
     private Long id;
 
-    @Column(unique = true)
+    @Column(name = "exercise_name", unique = true)
     private String name;
     private String description;
 
@@ -29,12 +29,12 @@ public class Exercise {
     private List<Muscles> muscles;
 
     @ManyToOne
-    private ExerciseType type;
+    private ExerciseType exerciseType;
 
-    public Exercise(String name, String description, List<Muscles> muscles, ExerciseType type) {
+    public Exercise(String name, String description, List<Muscles> muscles, ExerciseType exerciseType) {
         this.name = name;
         this.description = description;
         this.muscles = muscles;
-        this.type = type;
+        this.exerciseType = exerciseType;
     }
 }
