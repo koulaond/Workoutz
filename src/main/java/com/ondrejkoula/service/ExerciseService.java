@@ -5,7 +5,6 @@ import com.ondrejkoula.repository.ExerciseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
-import java.util.Optional;
 
 public class ExerciseService {
 
@@ -16,8 +15,8 @@ public class ExerciseService {
         return repository.save(exercise);
     }
 
-    public Optional<Exercise> findById(Long id) {
-        return repository.findById(id);
+    public Exercise findById(Long id) {
+        return repository.findById(id).orElseThrow(IllegalStateException::new);
     }
 
     public List<Exercise> findAll() {

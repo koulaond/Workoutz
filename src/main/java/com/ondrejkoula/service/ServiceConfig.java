@@ -20,4 +20,9 @@ public class ServiceConfig {
     public MusclesService musclesService() {
         return new MusclesService();
     }
+
+    @Bean
+    public ExercisePresetService exercisePresetService() {
+        return new ExercisePresetService();
+    }
 }
