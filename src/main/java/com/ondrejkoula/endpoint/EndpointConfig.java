@@ -6,8 +6,8 @@ import com.ondrejkoula.domain.preset.SuperSetPreset;
 import com.ondrejkoula.dto.preset.ExercisePresetDto;
 import com.ondrejkoula.dto.preset.StandardSetPresetDto;
 import com.ondrejkoula.dto.preset.SuperSetPresetDto;
-import com.ondrejkoula.dto.preset.create.StandardSetPresetCreateDto;
-import com.ondrejkoula.dto.preset.create.SuperSetPresetCreateDto;
+import com.ondrejkoula.dto.create.StandardSetPresetCreateDto;
+import com.ondrejkoula.dto.create.SuperSetPresetCreateDto;
 import com.ondrejkoula.endpoint.modelconverter.StandardSetPresetDtoToModelConverter;
 import com.ondrejkoula.endpoint.modelconverter.StandardSetPresetModelToDtoConverter;
 import com.ondrejkoula.endpoint.modelconverter.SuperSetPresetDtoToModelConverter;
@@ -67,5 +67,10 @@ public class EndpointConfig {
     @Bean
     public ExercisePresetEndpoint exercisePresetEndpoint() {
         return new ExercisePresetEndpoint();
+    }
+
+    @Bean
+    public WorkoutEndpoint workoutExerciseUnitEndpoint() {
+        return new WorkoutEndpoint();
     }
 }

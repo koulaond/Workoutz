@@ -2,8 +2,8 @@ package com.ondrejkoula.dto.preset;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
-import com.ondrejkoula.dto.preset.create.StandardSetPresetCreateDto;
-import com.ondrejkoula.dto.preset.create.SuperSetPresetCreateDto;
+import com.ondrejkoula.dto.create.StandardSetPresetCreateDto;
+import com.ondrejkoula.dto.create.SuperSetPresetCreateDto;
 import lombok.Data;
 
 @Data

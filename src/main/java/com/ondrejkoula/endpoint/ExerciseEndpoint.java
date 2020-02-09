@@ -45,7 +45,7 @@ public class ExerciseEndpoint {
                 .map(muscleId -> musclesService.findById(muscleId))
                 .collect(toList());
         Exercise exercise = new Exercise(exerciseCreateDto.getName(), exerciseCreateDto.getDescription(), muscles, exerciseType);
-        Exercise created = exerciseService.create(exercise);
+        Exercise created = exerciseService.save(exercise);
         return new ResponseEntity<>(mapToDto(created), HttpStatus.CREATED);
     }
 

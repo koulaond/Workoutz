@@ -1,4 +1,4 @@
-package com.ondrejkoula.dto.preset.create;
+package com.ondrejkoula.dto.create;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonTypeName;

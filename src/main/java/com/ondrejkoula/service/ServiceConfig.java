@@ -25,4 +25,14 @@ public class ServiceConfig {
     public ExercisePresetService exercisePresetService() {
         return new ExercisePresetService();
     }
+
+    @Bean
+    public WorkoutExerciseUnitService workoutExerciseUnitService() {
+        return new WorkoutExerciseUnitService();
+    }
+
+    @Bean
+    public WorkoutService workoutService () {
+        return new WorkoutService();
+    }
 }

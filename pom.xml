@@ -17,6 +17,7 @@
         <version.lombok>1.18.10</version.lombok>
         <version.spring.data.jpa>2.2.4.RELEASE</version.spring.data.jpa>
         <version.modelmapper>2.3.6</version.modelmapper>
+        <version.apache.collections4>4.0</version.apache.collections4>
     </properties>
 
     <dependencies>
@@ -54,6 +55,13 @@
             <version>${version.lombok}</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>${version.apache.collections4}</version>
+        </dependency>
+
     </dependencies>
 
     <build>

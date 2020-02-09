@@ -2,7 +2,7 @@ package com.ondrejkoula.endpoint.modelconverter;
 
 import com.ondrejkoula.domain.Exercise;
 import com.ondrejkoula.domain.preset.SuperSetPreset;
-import com.ondrejkoula.dto.preset.create.SuperSetPresetCreateDto;
+import com.ondrejkoula.dto.create.SuperSetPresetCreateDto;
 import com.ondrejkoula.service.ExerciseService;
 import org.modelmapper.AbstractConverter;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +25,7 @@ public class SuperSetPresetDtoToModelConverter extends AbstractConverter<SuperSe
             if (exercise == null) throw new IllegalStateException("Exercise not found"); // TODO replace by app-specific exceptions
             exercises.add(exercise);
         }
+        target.setId(source.getId());
         target.setExercises(exercises);
         target.setSeries(source.getSeries());
         target.setRepsPerSeries(source.getRepsPerSeries());

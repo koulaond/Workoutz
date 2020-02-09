@@ -11,7 +11,7 @@ public class ExerciseService {
     @Autowired
     private ExerciseRepository repository;
 
-    public Exercise create(Exercise exercise) {
+    public Exercise save(Exercise exercise) {
         return repository.save(exercise);
     }
 
