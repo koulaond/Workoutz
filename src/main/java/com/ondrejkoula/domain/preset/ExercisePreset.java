@@ -21,4 +21,6 @@ public abstract class ExercisePreset extends AbstractEntity {
 
     protected String label;
     protected String description;
+
+
 }
