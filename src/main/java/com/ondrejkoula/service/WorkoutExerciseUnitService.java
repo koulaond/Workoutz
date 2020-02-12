@@ -20,6 +20,6 @@ public class WorkoutExerciseUnitService {
     }
 
     public List<WorkoutExerciseUnit> findByWorkout(Long workoutId) {
-        return repository.findByIdWorkoutIdOrderByIdPosition(workoutId);
+        return repository.findByWorkoutIdOrderByPositionAsc(workoutId);
     }
 }

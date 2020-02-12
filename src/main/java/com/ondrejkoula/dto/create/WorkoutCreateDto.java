@@ -9,10 +9,11 @@ import java.util.Set;
 @Getter
 @Setter
 public class WorkoutCreateDto {
+    private Long id;
     private String name;
     private String description;
     private String note;
 
-    @JsonProperty("exercises")
+    @JsonProperty("schema")
     private Set<WorkoutExerciseUnitCreateDto> exerciseUnits;
 }

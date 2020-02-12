@@ -23,16 +23,15 @@ public class WorkoutDtoToModelConverter extends AbstractConverter<WorkoutCreateD
         workout.setDescription(source.getDescription());
         workout.setNote(source.getNote());
         workout.setName(source.getName());
+        workout.setId(source.getId());
         List<WorkoutExerciseUnit> units = source.getExerciseUnits()
                 .stream()
                 .map(unitDto -> {
                     ExercisePreset exercisePreset = exercisePresetService.findById(unitDto.getExercisePresetId());
                     return WorkoutExerciseUnit.builder()
                             .exercisePreset(exercisePreset)
-                            .id(WorkoutExerciseUnit.WorkoutExerciseUnitId.builder()
-                                    .position(unitDto.getPosition())
-                                    .workout(workout)
-                                    .build())
+                            .position(unitDto.getPosition())
+                            .workout(workout)
                             .build();
                 })
                 .collect(Collectors.toList());

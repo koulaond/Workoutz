@@ -1,16 +1,13 @@
 package com.ondrejkoula.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -20,6 +17,7 @@ public class Workout extends AbstractEntity {
     private String description;
     private String note;
 
-    @OneToMany
+
+    @OneToMany(mappedBy = "workout" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<WorkoutExerciseUnit> exerciseUnits;
 }

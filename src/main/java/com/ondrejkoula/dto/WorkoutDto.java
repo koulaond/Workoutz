@@ -1,7 +1,6 @@
 package com.ondrejkoula.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ondrejkoula.dto.create.WorkoutExerciseUnitDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,6 +18,6 @@ public class WorkoutDto {
     private String description;
     private String note;
 
-    @JsonProperty("exercises")
+    @JsonProperty("schema")
     private List<WorkoutExerciseUnitDto> exerciseUnits;
 }

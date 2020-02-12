@@ -3,7 +3,7 @@ package com.ondrejkoula.endpoint.modelconverter;
 import com.ondrejkoula.domain.Workout;
 import com.ondrejkoula.domain.preset.ExercisePreset;
 import com.ondrejkoula.dto.WorkoutDto;
-import com.ondrejkoula.dto.create.WorkoutExerciseUnitDto;
+import com.ondrejkoula.dto.WorkoutExerciseUnitDto;
 import com.ondrejkoula.dto.preset.ExercisePresetDto;
 import org.modelmapper.AbstractConverter;
 import org.modelmapper.ModelMapper;
@@ -30,8 +30,8 @@ public class WorkoutModelToDtoConverter extends AbstractConverter< Workout, Work
                     ExercisePreset exercisePreset = createdUnit.getExercisePreset();
                     ExercisePresetDto exercisePresetDto = modelMapper.map(exercisePreset, ExercisePresetDto.class);
                     WorkoutExerciseUnitDto unitDto = new WorkoutExerciseUnitDto();
-                    unitDto.setPosition(createdUnit.getId().getPosition());
-                    unitDto.setWorkoutId(createdUnit.getId().getWorkout().getId());
+                    unitDto.setPosition(createdUnit.getPosition());
+                    unitDto.setWorkoutId(source.getId());
                     unitDto.setExercisePresetDto(exercisePresetDto);
                     return unitDto;
                 })
