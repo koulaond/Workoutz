@@ -19,12 +19,21 @@ public class WorkoutService {
 
     @Transactional
     public Workout create(Workout workout) {
+        return workoutRepository.save(workout);
+    }
+
+    @Transactional
+    public Workout update(Workout workout) {
         if (workout.getId() != null) {
-            // Naive solution - delete all previous units and update workout with new ones
-            List<WorkoutExerciseUnit> found = workoutExerciseUnitRepository.findByWorkoutIdOrderByPositionAsc(workout.getId());
-            found.forEach(workoutExerciseUnit -> workoutExerciseUnitRepository.delete(workoutExerciseUnit));
+            deleteChildrenUnits(workout.getId());
         }
         return workoutRepository.save(workout);
+    }
+
+    private void deleteChildrenUnits(Long workoutId) {
+        // Naive solution - delete all previous units and update workout with new ones
+        List<WorkoutExerciseUnit> found = workoutExerciseUnitRepository.findByWorkoutIdOrderByPositionAsc(workoutId);
+        found.forEach(workoutExerciseUnit -> workoutExerciseUnitRepository.delete(workoutExerciseUnit));
     }
 
     public List<Workout> findAll() {
@@ -33,5 +42,10 @@ public class WorkoutService {
 
     public Workout findById(Long id) {
         return workoutRepository.findById(id).orElseThrow(IllegalStateException::new);
+    }
+
+    public void delete(Long id) {
+        deleteChildrenUnits(id);
+        workoutRepository.deleteById(id);
     }
 }

@@ -11,19 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class WorkoutDtoToModelConverter extends AbstractConverter<WorkoutCreateDto, Workout> {
+public class WorkoutCreateDtoToModelConverter<T  extends WorkoutCreateDto> extends AbstractConverter<T, Workout> {
 
     @Autowired
     private ExercisePresetService exercisePresetService;
 
     @Override
-    protected Workout convert(WorkoutCreateDto source) {
-        Workout workout = new Workout();
-        workout.setName(source.getName());
-        workout.setDescription(source.getDescription());
-        workout.setNote(source.getNote());
-        workout.setName(source.getName());
-        workout.setId(source.getId());
+    protected Workout convert(T source) {
+        Workout target = new Workout();
+        target.setName(source.getName());
+        target.setDescription(source.getDescription());
+        target.setNote(source.getNote());
+        target.setName(source.getName());
         List<WorkoutExerciseUnit> units = source.getExerciseUnits()
                 .stream()
                 .map(unitDto -> {
@@ -31,11 +30,11 @@ public class WorkoutDtoToModelConverter extends AbstractConverter<WorkoutCreateD
                     return WorkoutExerciseUnit.builder()
                             .exercisePreset(exercisePreset)
                             .position(unitDto.getPosition())
-                            .workout(workout)
+                            .workout(target)
                             .build();
                 })
                 .collect(Collectors.toList());
-        workout.setExerciseUnits(units);
-        return workout;
+        target.setExerciseUnits(units);
+        return target;
     }
 }

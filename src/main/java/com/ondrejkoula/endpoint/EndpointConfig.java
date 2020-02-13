@@ -8,6 +8,7 @@ import com.ondrejkoula.dto.WorkoutDto;
 import com.ondrejkoula.dto.create.StandardSetPresetCreateDto;
 import com.ondrejkoula.dto.create.SuperSetPresetCreateDto;
 import com.ondrejkoula.dto.create.WorkoutCreateDto;
+import com.ondrejkoula.dto.create.WorkoutUpdateDto;
 import com.ondrejkoula.dto.preset.ExercisePresetDto;
 import com.ondrejkoula.dto.preset.StandardSetPresetDto;
 import com.ondrejkoula.dto.preset.SuperSetPresetDto;
@@ -29,7 +30,8 @@ public class EndpointConfig {
         modelMapper.createTypeMap(SuperSetPresetCreateDto.class, SuperSetPreset.class).setConverter(superSetPresetDtoToModelConverter()).include(ExercisePreset.class);
         modelMapper.createTypeMap(SuperSetPreset.class, SuperSetPresetDto.class).setConverter(superSetPresetModelToDtoConverter()).include(ExercisePresetDto.class);
         modelMapper.createTypeMap(Workout.class, WorkoutDto.class).setConverter(workoutModelToDtoConverter());
-        modelMapper.createTypeMap(WorkoutCreateDto.class, Workout.class).setConverter(workoutDtoToModelConverter());
+        modelMapper.createTypeMap(WorkoutCreateDto.class, Workout.class).setConverter(workoutCreateDtoToModelConverter());
+        modelMapper.createTypeMap(WorkoutUpdateDto.class, Workout.class).setConverter(workoutUpdateDtoToModelConverter());
     }
 
     @Bean
@@ -58,8 +60,13 @@ public class EndpointConfig {
     }
 
     @Bean
-    public WorkoutDtoToModelConverter workoutDtoToModelConverter() {
-        return new WorkoutDtoToModelConverter();
+    public WorkoutCreateDtoToModelConverter<WorkoutCreateDto> workoutCreateDtoToModelConverter() {
+        return new WorkoutCreateDtoToModelConverter<>();
+    }
+
+    @Bean
+    public  WorkoutUpdateDtoToModelConverter workoutUpdateDtoToModelConverter() {
+        return new WorkoutUpdateDtoToModelConverter();
     }
 
     @Bean

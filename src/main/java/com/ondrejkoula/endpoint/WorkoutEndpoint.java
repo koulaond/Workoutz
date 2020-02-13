@@ -3,8 +3,7 @@ package com.ondrejkoula.endpoint;
 import com.ondrejkoula.domain.Workout;
 import com.ondrejkoula.dto.WorkoutDto;
 import com.ondrejkoula.dto.create.WorkoutCreateDto;
-import com.ondrejkoula.service.ExercisePresetService;
-import com.ondrejkoula.service.WorkoutExerciseUnitService;
+import com.ondrejkoula.dto.create.WorkoutUpdateDto;
 import com.ondrejkoula.service.WorkoutService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +24,6 @@ public class WorkoutEndpoint {
     private WorkoutService workoutService;
 
     @Autowired
-    private ExercisePresetService exercisePresetService;
-
-    @Autowired
-    private WorkoutExerciseUnitService workoutExerciseUnitService;
-
-    @Autowired
     private ModelMapper modelMapper;
 
     @RequestMapping(method = RequestMethod.POST)
@@ -38,6 +31,15 @@ public class WorkoutEndpoint {
         Workout workout = modelMapper.map(dto, Workout.class);
         Workout created = workoutService.create(workout);
         WorkoutDto workoutDto = modelMapper.map(created, WorkoutDto.class);
+        return new ResponseEntity<>(workoutDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.PUT)
+    public ResponseEntity<WorkoutDto> update(@RequestBody WorkoutUpdateDto dto) {
+        if (dto.getId() == null) throw new IllegalStateException("Missing ID"); // TODO  replace by  specific exception and handler
+        Workout workout = modelMapper.map(dto, Workout.class);
+        Workout updated = workoutService.update(workout);
+        WorkoutDto workoutDto = modelMapper.map(updated, WorkoutDto.class);
         return new ResponseEntity<>(workoutDto, HttpStatus.OK);
     }
 
@@ -54,6 +56,12 @@ public class WorkoutEndpoint {
         Workout created = workoutService.findById(id);
         WorkoutDto workoutDto = modelMapper.map(created, WorkoutDto.class);
         return new ResponseEntity<>(workoutDto, HttpStatus.OK);
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<Void> delete(Long id) {
+        workoutService.delete(id);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 }
