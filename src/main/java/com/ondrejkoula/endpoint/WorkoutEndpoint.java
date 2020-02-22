@@ -1,6 +1,8 @@
 package com.ondrejkoula.endpoint;
 
+import com.ondrejkoula.domain.TrainingPlanWorkout;
 import com.ondrejkoula.domain.Workout;
+import com.ondrejkoula.dto.TrainingPlanWorkoutDto;
 import com.ondrejkoula.dto.WorkoutDto;
 import com.ondrejkoula.dto.create.WorkoutCreateDto;
 import com.ondrejkoula.dto.create.WorkoutUpdateDto;
@@ -43,10 +45,20 @@ public class WorkoutEndpoint {
         return new ResponseEntity<>(workoutDto, HttpStatus.OK);
     }
 
+    @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<WorkoutDto>> findAll() {
         List<Workout> allWorkouts = workoutService.findAll();
         List<WorkoutDto> dtos = allWorkouts.stream()
                 .map(workout -> modelMapper.map(workout, WorkoutDto.class))
+                .collect(Collectors.toList());
+        return new ResponseEntity<>(dtos, HttpStatus.OK);
+    }
+
+    @RequestMapping(method = RequestMethod.GET, path = "byTrainingPlan/{trainingPlanId}")
+    public ResponseEntity<List<TrainingPlanWorkoutDto>> findWorkoutsForTrainingPlan(@PathVariable Long trainingPlanId) {
+        List<TrainingPlanWorkout> workoutsForTrainingPlan = workoutService.findWorkoutsForTrainingPlan(trainingPlanId);
+        List<TrainingPlanWorkoutDto> dtos = workoutsForTrainingPlan.stream()
+                .map(trainingPlanWorkout -> modelMapper.map(trainingPlanWorkout, TrainingPlanWorkoutDto.class))
                 .collect(Collectors.toList());
         return new ResponseEntity<>(dtos, HttpStatus.OK);
     }

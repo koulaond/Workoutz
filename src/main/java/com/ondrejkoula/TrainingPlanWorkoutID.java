@@ -14,9 +14,5 @@ import java.io.Serializable;
 @Setter
 public class TrainingPlanWorkoutID implements Serializable {
 
-    @ManyToOne
-    private TrainingPlan trainingPlan;
 
-    @ManyToOne
-    private Workout workout;
 }

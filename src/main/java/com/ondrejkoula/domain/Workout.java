@@ -20,6 +20,6 @@ public class Workout extends AbstractEntity {
     @OneToMany(mappedBy = "workout" ,fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<WorkoutExerciseUnit> exerciseUnits;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.workout")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "workout")
     private List<TrainingPlanWorkout> trainingPlans;
 }

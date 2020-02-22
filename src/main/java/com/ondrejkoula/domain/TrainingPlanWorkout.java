@@ -1,6 +1,5 @@
 package com.ondrejkoula.domain;
 
-import com.ondrejkoula.TrainingPlanWorkoutID;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,21 +10,27 @@ import javax.persistence.*;
 @Entity
 @Table(
         name = "training_plan_workout",
-        uniqueConstraints = @UniqueConstraint(columnNames = {"training_plan_id", "workout_id", "total_order"})
+        uniqueConstraints = @UniqueConstraint(columnNames = {"training_plan_id", "workout_id", "week", "day_in_week", "order_within_day", "phase"})
 )
 @AssociationOverrides({
-        @AssociationOverride(name = "pk.trainingPlan",
+        @AssociationOverride(name = "trainingPlan",
                 joinColumns = @JoinColumn(name = "training_plan_id")),
-        @AssociationOverride(name = "pk.workout",
+        @AssociationOverride(name = "workout",
                 joinColumns = @JoinColumn(name = "workout_id"))})
-public class TrainingPlanWorkout {
+public class TrainingPlanWorkout extends AbstractEntity {
 
-    @EmbeddedId
-    private TrainingPlanWorkoutID pk;
+    @ManyToOne
+    private TrainingPlan trainingPlan;
 
-    @Column(name = "total_order")
-    private Integer totalOrder;
+    @ManyToOne
+    private Workout workout;
+
     private Integer week;
+
+    @Column(name = "day_in_week")
     private Integer dayInWeek;
+
+    @Column(name = "order_within_day")
+    private Integer orderWithinDay;
     private Integer phase;
 }

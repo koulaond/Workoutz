@@ -1,9 +1,13 @@
 package com.ondrejkoula.endpoint;
 
+import com.ondrejkoula.domain.TrainingPlan;
+import com.ondrejkoula.domain.TrainingPlanWorkout;
 import com.ondrejkoula.domain.Workout;
 import com.ondrejkoula.domain.preset.ExercisePreset;
 import com.ondrejkoula.domain.preset.StandardSetPreset;
 import com.ondrejkoula.domain.preset.SuperSetPreset;
+import com.ondrejkoula.dto.TrainingPlanDto;
+import com.ondrejkoula.dto.TrainingPlanWorkoutDto;
 import com.ondrejkoula.dto.WorkoutDto;
 import com.ondrejkoula.dto.create.StandardSetPresetCreateDto;
 import com.ondrejkoula.dto.create.SuperSetPresetCreateDto;
@@ -23,7 +27,7 @@ import javax.annotation.PostConstruct;
 public class EndpointConfig {
 
     @PostConstruct
-    public void postConstrucct() {
+    public void postConstruct() {
         ModelMapper modelMapper = modelMapper();
         modelMapper.createTypeMap(StandardSetPresetCreateDto.class, StandardSetPreset.class).setConverter(exercisePresetDtoToModelConverter()).include(ExercisePreset.class);
         modelMapper.createTypeMap(StandardSetPreset.class, StandardSetPresetDto.class).setConverter(standardSetPresetModelToDtoConverter()).include(ExercisePresetDto.class);
@@ -32,6 +36,9 @@ public class EndpointConfig {
         modelMapper.createTypeMap(Workout.class, WorkoutDto.class).setConverter(workoutModelToDtoConverter());
         modelMapper.createTypeMap(WorkoutCreateDto.class, Workout.class).setConverter(workoutCreateDtoToModelConverter());
         modelMapper.createTypeMap(WorkoutUpdateDto.class, Workout.class).setConverter(workoutUpdateDtoToModelConverter());
+        modelMapper.createTypeMap(TrainingPlan.class, TrainingPlanDto.class).setConverter(trainingPlanModelToDtoConverter());
+        modelMapper.createTypeMap(TrainingPlanDto.class, TrainingPlan.class).setConverter(trainingPlanDtoToModelConverter());
+        modelMapper.createTypeMap(TrainingPlanWorkout.class, TrainingPlanWorkoutDto.class).setConverter(trainingPlanWorkoutModelToDtoConverter());
     }
 
     @Bean
@@ -75,6 +82,21 @@ public class EndpointConfig {
     }
 
     @Bean
+    public TrainingPlanDtoToModelConverter trainingPlanDtoToModelConverter() {
+        return new TrainingPlanDtoToModelConverter();
+    }
+
+    @Bean
+    public TrainingPlanModelToDtoConverter trainingPlanModelToDtoConverter() {
+        return new TrainingPlanModelToDtoConverter();
+    }
+
+    @Bean
+    public TrainingPlanWorkoutModelToDtoConverter trainingPlanWorkoutModelToDtoConverter() {
+        return new TrainingPlanWorkoutModelToDtoConverter();
+    }
+
+    @Bean
     public ExerciseEndpoint exerciseEndpoint() {
         return new ExerciseEndpoint();
     }
@@ -97,5 +119,10 @@ public class EndpointConfig {
     @Bean
     public WorkoutEndpoint workoutExerciseUnitEndpoint() {
         return new WorkoutEndpoint();
+    }
+
+    @Bean
+    public TrainingPlanEndpoint  trainingPlanEndpoint() {
+        return new TrainingPlanEndpoint();
     }
 }

@@ -3,7 +3,7 @@ package com.ondrejkoula.endpoint;
 import com.ondrejkoula.domain.Exercise;
 import com.ondrejkoula.domain.ExerciseType;
 import com.ondrejkoula.domain.Muscles;
-import com.ondrejkoula.dto.ExerciseCreateDto;
+import com.ondrejkoula.dto.create.ExerciseCreateDto;
 import com.ondrejkoula.dto.ExerciseDto;
 import com.ondrejkoula.service.ExerciseService;
 import com.ondrejkoula.service.ExerciseTypeService;

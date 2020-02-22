@@ -32,7 +32,17 @@ public class ServiceConfig {
     }
 
     @Bean
-    public WorkoutService workoutService () {
+    public WorkoutService workoutService() {
         return new WorkoutService();
+    }
+
+    @Bean
+    public TrainingPlanService trainingPlanService() {
+        return new TrainingPlanService();
+    }
+
+    @Bean
+    public TrainingPlanWorkoutService trainingPlanWorkoutService() {
+        return new TrainingPlanWorkoutService();
     }
 }

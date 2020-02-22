@@ -1,7 +1,9 @@
 package com.ondrejkoula.service;
 
+import com.ondrejkoula.domain.TrainingPlanWorkout;
 import com.ondrejkoula.domain.Workout;
 import com.ondrejkoula.domain.WorkoutExerciseUnit;
+import com.ondrejkoula.repository.TrainingPlanWorkoutRepository;
 import com.ondrejkoula.repository.WorkoutExerciseUnitRepository;
 import com.ondrejkoula.repository.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,9 @@ public class WorkoutService {
     @Autowired
     private WorkoutExerciseUnitRepository workoutExerciseUnitRepository;
 
+    @Autowired
+    private TrainingPlanWorkoutRepository trainingPlanWorkoutRepository;
+
     @Transactional
     public Workout create(Workout workout) {
         return workoutRepository.save(workout);
@@ -28,6 +33,10 @@ public class WorkoutService {
             deleteChildrenUnits(workout.getId());
         }
         return workoutRepository.save(workout);
+    }
+
+    public List<TrainingPlanWorkout> findWorkoutsForTrainingPlan(Long trainingPlanId) {
+        return trainingPlanWorkoutRepository.findByTrainingPlanId(trainingPlanId);
     }
 
     private void deleteChildrenUnits(Long workoutId) {

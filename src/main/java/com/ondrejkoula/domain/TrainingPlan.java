@@ -23,6 +23,6 @@ public class TrainingPlan extends AbstractEntity {
     private Integer daysPerWeek;
     private Integer phases;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.trainingPlan", cascade= CascadeType.ALL)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "trainingPlan", cascade= CascadeType.ALL)
     private List<TrainingPlanWorkout> workouts;
 }
