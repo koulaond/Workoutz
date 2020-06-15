@@ -17,7 +17,7 @@
         <version.lombok>1.18.10</version.lombok>
         <version.spring.data.jpa>2.2.4.RELEASE</version.spring.data.jpa>
         <version.modelmapper>2.3.6</version.modelmapper>
-        <version.apache.collections4>4.0</version.apache.collections4>
+        <version.apache.collections4>4.1</version.apache.collections4>
     </properties>
 
     <dependencies>
