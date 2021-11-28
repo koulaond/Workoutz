@@ -1,13 +1,14 @@
 package com.ondrejkoula.domain.circle;
 
 import com.ondrejkoula.domain.DomainEntity;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@EqualsAndHashCode
-@Document
+import javax.persistence.Table;
+
+@Getter
+@Setter
+@Table(name = "circle")
 public class Circle extends DomainEntity {
 
     private Integer setsCount;

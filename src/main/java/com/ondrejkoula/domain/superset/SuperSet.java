@@ -3,16 +3,18 @@ package com.ondrejkoula.domain.superset;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.ExerciseValue;
 import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Document
+@Table(name = "super_set")
 public class SuperSet extends DomainEntity {
 
+    @Embedded
     private ExerciseValue<Integer> seriesCount;
 
+    @OneToMany(mappedBy = "superSet", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SuperSetExercise> seriesContent;
 
 }

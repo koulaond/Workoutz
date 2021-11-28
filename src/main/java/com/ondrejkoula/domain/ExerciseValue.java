@@ -1,10 +1,13 @@
 package com.ondrejkoula.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
-@EqualsAndHashCode
-@Data
+import javax.persistence.Embeddable;
+
+@Getter
+@Setter
+@Embeddable
 public class ExerciseValue<T> {
 
     private T value;

@@ -1,14 +1,17 @@
 package com.ondrejkoula.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.Setter;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
-@Document
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Getter
+@Setter
+@Table(name = "sets_and_repetitions")
 public class SetsAndRepetitions extends DomainEntity {
 
+    @ManyToOne
     private ExercisePrescription exercisePrescription;
 
     private ExerciseValue<Integer> seriesCount;

@@ -1,9 +1,7 @@
 package com.ondrejkoula.repository;
 
 import com.ondrejkoula.domain.SetsAndRepetitions;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.UUID;
-
-public interface SetsAndRepetitionsRepository extends MongoRepository<SetsAndRepetitions, UUID> {
+public interface SetsAndRepetitionsRepository extends JpaRepository<SetsAndRepetitions, String> {
 }

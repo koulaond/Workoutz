@@ -1,10 +1,13 @@
 package com.ondrejkoula.domain;
 
-import lombok.Data;
-import org.springframework.data.mongodb.core.mapping.Document;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
-@Document
+import javax.persistence.Table;
+
+@Getter
+@Setter
+@Table(name = "high_intensity_intervals")
 public class HighIntensityIntervals extends DomainEntity{
 
     private ExercisePrescription exercisePrescription;

@@ -1,14 +1,18 @@
 package com.ondrejkoula.domain;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
-import org.springframework.data.annotation.Id;
 
-import java.util.UUID;
+import javax.persistence.*;
+
 
 @Data
+@Entity
+@MappedSuperclass
 public abstract class DomainEntity {
 
     @Id
-    protected UUID id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected Long id;
+
+    protected Status status;
 }

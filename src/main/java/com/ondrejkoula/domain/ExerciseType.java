@@ -1,10 +1,15 @@
 package com.ondrejkoula.domain;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
-@EqualsAndHashCode(callSuper = true)
-@Data
+import javax.persistence.Table;
+
+@Getter
+@Setter
+@ToString
+@Table(name = "exercise_type")
 public class ExerciseType extends DomainEntity {
 
     private String type;
