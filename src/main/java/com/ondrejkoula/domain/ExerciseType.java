@@ -1,17 +1,13 @@
 package com.ondrejkoula.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
+@EqualsAndHashCode(callSuper = true)
+@Data
+public class ExerciseType extends DomainEntity {
 
-@Getter
-@Setter
-@Entity
-public class ExerciseType extends AbstractEntity {
-
-    @Column(name = "exercise_type")
     private String type;
-    private String additionalInfo;
+
+    private ExerciseCategory category;
 }

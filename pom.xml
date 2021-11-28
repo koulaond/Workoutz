@@ -14,10 +14,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <version.lombok>1.18.10</version.lombok>
-        <version.spring.data.jpa>2.2.4.RELEASE</version.spring.data.jpa>
-        <version.modelmapper>2.3.6</version.modelmapper>
-        <version.apache.collections4>4.0</version.apache.collections4>
+        <version.lombok>1.18.22</version.lombok>
+        <version.spring.data.jpa>2.6.0</version.spring.data.jpa>
+        <version.modelmapper>2.4.4</version.modelmapper>
+        <version.apache.collections4>4.4</version.apache.collections4>
     </properties>
 
     <dependencies>
@@ -36,6 +36,13 @@
             <artifactId>spring-data-jpa</artifactId>
             <version>${version.spring.data.jpa}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-mongodb</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.modelmapper</groupId>
