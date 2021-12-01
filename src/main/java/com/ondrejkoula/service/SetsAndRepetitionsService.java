@@ -5,12 +5,12 @@ import com.ondrejkoula.domain.Status;
 import com.ondrejkoula.repository.SetsAndRepetitionsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Slf4j
-@Service
+@Component
 public class SetsAndRepetitionsService {
 
     private final SetsAndRepetitionsRepository repository;

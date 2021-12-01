@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 
 @Data
-@Entity
 @MappedSuperclass
 public abstract class DomainEntity {
 
@@ -14,5 +13,6 @@ public abstract class DomainEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     protected Long id;
 
+    @Column(name = "status")
     protected Status status;
 }

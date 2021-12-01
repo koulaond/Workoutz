@@ -4,12 +4,12 @@ import com.ondrejkoula.domain.ExerciseType;
 import com.ondrejkoula.repository.ExerciseTypeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.Optional;
 
 @Slf4j
-@Service
+@Component
 public class ExerciseTypeService {
 
     private final ExerciseTypeRepository repository;

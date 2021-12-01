@@ -3,25 +3,46 @@ package com.ondrejkoula.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "sets_and_repetitions")
 public class SetsAndRepetitions extends DomainEntity {
 
     @ManyToOne
+    @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 
-    private ExerciseValue<Integer> seriesCount;
+    // Series values
+    @Column(name = "series_count")
+    private Integer seriesCount;
 
-    private ExerciseValue<Integer> repetitionsCount;
+    @Column(name = "series_count_goal")
+    private Integer seriesCountGoal;
 
-    private ExerciseValue<Integer> weight;
 
+    // Repetitions values
+    @Column(name = "repetitions_count")
+    private Integer repetitionsCount;
+
+    @Column(name = "repetitions_count_goal")
+    private Integer repetitionsCountGoal;
+
+
+    // Weight values
+    @Column(name = "weight")
+    private Integer weight;
+
+    @Column(name = "weight_goal")
+    private Integer weightGoal;
+
+    // Time values
+    @Column(name = "max_time_sec")
     private Integer maxTimeSec;
 
+    @Column(name = "max_time_min")
     private Integer maxTimeMin;
 }
 
