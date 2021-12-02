@@ -1,18 +1,20 @@
 package com.ondrejkoula.domain;
 
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 
-@Data
+@Getter
+@Setter
 @MappedSuperclass
 public abstract class DomainEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    protected long id;
 
     @Column(name = "status")
-    protected Status status;
+    protected String status;
 }

@@ -11,7 +11,7 @@ import javax.persistence.*;
 @Table(name = "sets_and_repetitions")
 public class SetsAndRepetitions extends DomainEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 

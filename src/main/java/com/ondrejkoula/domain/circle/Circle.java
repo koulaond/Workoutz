@@ -5,11 +5,13 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.Table;
 
 @Getter
 @Setter
-@Table(name = "circle")
+@Entity
+@Table(name = "circles")
 public class Circle extends DomainEntity {
 
     @Column(name = "sets_count")

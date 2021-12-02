@@ -43,12 +43,12 @@ public class SetsAndRepetitionsService {
 
     public SetsAndRepetitions markAsReady(String id) {
         SetsAndRepetitions setsAndRepetitions = findById(id);
-        Status status = setsAndRepetitions.getStatus();
+        Status status = Status.valueOf(setsAndRepetitions.getStatus());
         if (Status.READY.equals(status)) {
             log.info("Sets and repetitions with ID {} are already set as ready", id);
             return setsAndRepetitions;
         }
-        setsAndRepetitions.setStatus(Status.READY);
+        setsAndRepetitions.setStatus(Status.READY.name());
         return save(setsAndRepetitions);
     }
 }

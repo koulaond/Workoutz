@@ -3,14 +3,12 @@ package com.ondrejkoula.domain.superset;
 import com.ondrejkoula.domain.DomainEntity;
 import lombok.Data;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
-@Table(name = "super_set")
+@Entity
+@Table(name = "super_sets")
 public class SuperSet extends DomainEntity {
 
     @Column(name = "series_count")

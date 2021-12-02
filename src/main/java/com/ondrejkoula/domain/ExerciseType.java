@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @Setter
 @ToString
 @Entity
-@Table(name = "exercise_type")
+@Table(name = "exercise_types")
 public class ExerciseType extends DomainEntity {
 
     @Column(name = "type")

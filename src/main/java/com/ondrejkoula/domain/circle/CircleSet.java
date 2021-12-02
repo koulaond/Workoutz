@@ -9,13 +9,14 @@ import java.util.List;
 
 @Getter
 @Setter
-@Table(name = "circle_set")
+@Entity
+@Table(name = "circle_sets")
 public class CircleSet extends DomainEntity {
 
     @OneToMany(mappedBy = "circleSet")
     private List<CircleSetExercise> setExercises;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "circle_id")
     private SuperCircle circle;
 

@@ -4,10 +4,7 @@ import com.ondrejkoula.domain.DomainEntity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -15,7 +12,8 @@ import java.util.List;
  */
 @Getter
 @Setter
-@Table(name = "super_circle")
+@Entity
+@Table(name = "super_circles")
 public class SuperCircle extends DomainEntity {
 
     @Column(name = "prepare_time")

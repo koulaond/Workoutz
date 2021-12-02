@@ -3,14 +3,15 @@ package com.ondrejkoula.domain;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
+@Entity
 @Table(name = "high_intensity_intervals")
-public class HighIntensityIntervals extends DomainEntity {
+public class HighIntensityInterval extends DomainEntity {
 
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 

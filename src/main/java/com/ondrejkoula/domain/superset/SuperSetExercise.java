@@ -1,34 +1,47 @@
 package com.ondrejkoula.domain.superset;
 
+import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.ExercisePrescription;
-import com.ondrejkoula.domain.ExerciseValue;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * Embedded exercise in Super set series.
  */
 @Getter
 @Setter
-@Table(name = "super_set_exercise")
-public class SuperSetExercise {
+@Entity
+@Table(name = "super_set_exercises")
+public class SuperSetExercise extends DomainEntity {
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "super_set_id")
     private SuperSet superSet;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 
-    private ExerciseValue<Integer> repetitionsCount;
+    // Repetitions values
+    @Column(name = "repetitions_count")
+    private Integer repetitionsCount;
 
-    private ExerciseValue<Integer> weight;
+    @Column(name = "repetitions_count_goal")
+    private Integer repetitionsCountGoal;
 
+    // Weight values
+    @Column(name = "weight")
+    private Integer weight;
+
+    @Column(name = "weight_goal")
+    private Integer weightGoal;
+
+    // Time values
+    @Column(name = "max_time_sec")
     private Integer maxTimeSec;
 
+    @Column(name = "max_time_min")
     private Integer maxTimeMin;
 }
