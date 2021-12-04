@@ -25,7 +25,7 @@ public class SetsAndRepetitionsService {
         return repository.save(setsAndRepetitions);
     }
 
-    public SetsAndRepetitions findById(String id) {
+    public SetsAndRepetitions findById(Long id) {
         log.info("Getting Sets and Repetitions exercise with ID:  " + id);
         Optional<SetsAndRepetitions> found = repository.findById(id);
         if (!found.isPresent()) {
@@ -36,12 +36,12 @@ public class SetsAndRepetitionsService {
         return found.get();
     }
 
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         log.info("Deleting Sets and Repetitions exercise with ID:  " + id);
         repository.deleteById(id);
     }
 
-    public SetsAndRepetitions markAsReady(String id) {
+    public SetsAndRepetitions markAsReady(Long id) {
         SetsAndRepetitions setsAndRepetitions = findById(id);
         Status status = Status.valueOf(setsAndRepetitions.getStatus());
         if (Status.READY.equals(status)) {

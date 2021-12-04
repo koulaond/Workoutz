@@ -21,12 +21,12 @@ public class ExerciseTypeService {
 
     public ExerciseType save(ExerciseType exerciseType) {
         log.info("Saving Exercise type: {}", exerciseType);
-        ExerciseType save = repository.save(exerciseType);
-        log.info("Exercise type successfully saved: {}", save);
-        return save;
+        ExerciseType saved = repository.save(exerciseType);
+        log.info("Exercise type successfully saved: {}", saved);
+        return saved;
     }
 
-    public ExerciseType findById(String id) {
+    public ExerciseType findById(Long id) {
         log.info("Getting Exercise Type with ID:  " + id);
         Optional<ExerciseType> exerciseType = repository.findById(id);
         if (!exerciseType.isPresent()) {
@@ -37,7 +37,7 @@ public class ExerciseTypeService {
         return exerciseType.get();
     }
 
-    public void deleteById(String id) {
+    public void deleteById(Long id) {
         log.info("Deleting Exercise Type with ID:  " + id);
         repository.deleteById(id);
     }

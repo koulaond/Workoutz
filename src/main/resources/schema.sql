@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS exercise_muscles;
+/*DROP TABLE IF EXISTS exercise_muscles;
 DROP TABLE IF EXISTS exercise;
 DROP TABLE IF EXISTS exercise_type;
 DROP TABLE IF EXISTS muscles;
@@ -26,4 +26,4 @@ CREATE TABLE exercise (
 CREATE TABLE exercise_muscles (
     exercise_id         INT                 NOT NULL,
     muscles_id          INT                 NOT NULL
-);
+);*/

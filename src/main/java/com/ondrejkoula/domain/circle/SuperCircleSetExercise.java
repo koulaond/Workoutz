@@ -13,17 +13,17 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
-@Table(name = "circle_set_exercises")
-public class CircleSetExercise extends DomainEntity {
+@Table(name = "super_circle_set_exercises")
+public class SuperCircleSetExercise extends DomainEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 
-    private Integer timeOverridenSec;
+    private Integer timeOverriddenSec;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "circle_set_id")
-    private CircleSet circleSet;
+    @JoinColumn(name = "super_circle_set_id")
+    private SuperCircleSet superCircleSet;
 
 }

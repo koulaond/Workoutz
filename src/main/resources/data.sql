@@ -1,4 +1,4 @@
-DELETE FROM exercise_type;
+/*DELETE FROM exercise_type;
 
 INSERT INTO exercise_type (id, exercise_type, additional_info) VALUES
     (1, 'Strength', 'Strength type of exercise'),
@@ -66,3 +66,4 @@ INSERT INTO exercise_muscles (exercise_id, muscles_id) VALUES
     (6, 15),
     (7, 3),
     (7, 7);
+*/

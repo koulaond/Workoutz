@@ -31,7 +31,8 @@ public class SuperCircle extends DomainEntity {
     @Column(name = "breathe_out_time")
     private Integer breatheOutTime;
 
-    @OneToMany(mappedBy = "circle", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CircleSet> definedSets;
+    @OneToMany(mappedBy = "superCircle", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OrderColumn(name = "position_in_circle")
+    private List<SuperCircleSet> definedSets;
 
 }

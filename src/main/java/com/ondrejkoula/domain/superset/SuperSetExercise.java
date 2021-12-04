@@ -16,11 +16,11 @@ import javax.persistence.*;
 @Table(name = "super_set_exercises")
 public class SuperSetExercise extends DomainEntity {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "super_set_id")
     private SuperSet superSet;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 
