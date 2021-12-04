@@ -1,6 +1,5 @@
 package com.ondrejkoula.domain.superset;
 
-import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.ExercisePrescription;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,7 +13,14 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "super_set_exercises")
-public class SuperSetExercise extends DomainEntity {
+public class SuperSetExercise {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+    @Column(name = "status")
+    protected String status;
 
     @ManyToOne
     @JoinColumn(name = "super_set_id")

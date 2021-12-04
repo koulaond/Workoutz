@@ -9,7 +9,14 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "exercise_prescriptions")
-public class ExercisePrescription extends DomainEntity {
+public class ExercisePrescription {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+    @Column(name = "status")
+    protected String status;
 
     @Column(name = "label")
     private String label;

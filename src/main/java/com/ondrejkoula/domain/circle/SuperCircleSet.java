@@ -1,17 +1,25 @@
 package com.ondrejkoula.domain.circle;
 
-import com.ondrejkoula.domain.DomainEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "super_circle_sets")
-public class SuperCircleSet extends DomainEntity {
+public class SuperCircleSet {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+    @Column(name = "status")
+    protected String status;
 
     @OneToMany(mappedBy = "superCircleSet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @OrderColumn(name = "position_in_set")

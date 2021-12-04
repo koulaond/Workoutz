@@ -1,18 +1,24 @@
 package com.ondrejkoula.domain.circle;
 
-import com.ondrejkoula.domain.DomainEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "circles")
-public class Circle extends DomainEntity {
+public class Circle {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+    @Column(name = "status")
+    protected String status;
 
     @Column(name = "sets_count")
     private Integer setsCount;

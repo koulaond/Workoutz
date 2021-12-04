@@ -1,4 +1,4 @@
-package com.ondrejkoula.repository;
+package com.ondrejkoula.repository.circle;
 
 import com.ondrejkoula.domain.circle.SuperCircleSetExercise;
 import org.springframework.data.jpa.repository.JpaRepository;

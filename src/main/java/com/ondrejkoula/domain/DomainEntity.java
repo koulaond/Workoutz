@@ -11,10 +11,5 @@ import javax.persistence.*;
 @MappedSuperclass
 public abstract class DomainEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    protected long id;
 
-    @Column(name = "status")
-    protected String status;
 }

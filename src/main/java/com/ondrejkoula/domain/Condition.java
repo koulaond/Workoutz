@@ -9,7 +9,14 @@ import javax.persistence.*;
 @Setter
 @Entity
 @Table(name = "conditions")
-public class Condition extends DomainEntity {
+public class Condition {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+    @Column(name = "status")
+    protected String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")

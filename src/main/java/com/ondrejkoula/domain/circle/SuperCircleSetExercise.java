@@ -1,9 +1,7 @@
 package com.ondrejkoula.domain.circle;
 
-import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.ExercisePrescription;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -12,9 +10,19 @@ import javax.persistence.*;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "super_circle_set_exercises")
-public class SuperCircleSetExercise extends DomainEntity {
+public class SuperCircleSetExercise {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+    @Column(name = "status")
+    protected String status;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")

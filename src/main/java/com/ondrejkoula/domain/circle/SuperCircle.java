@@ -1,8 +1,6 @@
 package com.ondrejkoula.domain.circle;
 
-import com.ondrejkoula.domain.DomainEntity;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,9 +10,19 @@ import java.util.List;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "super_circles")
-public class SuperCircle extends DomainEntity {
+public class SuperCircle  {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    protected long id;
+
+    @Column(name = "status")
+    protected String status;
 
     @Column(name = "prepare_time")
     private Integer prepareTime;

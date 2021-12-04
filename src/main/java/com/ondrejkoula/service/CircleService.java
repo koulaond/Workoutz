@@ -1,7 +1,7 @@
 package com.ondrejkoula.service;
 
 import com.ondrejkoula.domain.circle.Circle;
-import com.ondrejkoula.repository.CircleRepository;
+import com.ondrejkoula.repository.circle.CircleRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

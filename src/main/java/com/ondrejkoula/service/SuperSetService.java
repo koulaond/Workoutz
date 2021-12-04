@@ -1,7 +1,7 @@
 package com.ondrejkoula.service;
 
 import com.ondrejkoula.domain.superset.SuperSet;
-import com.ondrejkoula.repository.SuperSetRepository;
+import com.ondrejkoula.repository.superset.SuperSetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
