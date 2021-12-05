@@ -1,13 +1,16 @@
 package com.ondrejkoula.domain.superset;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "super_sets")
 public class SuperSet {
@@ -26,7 +29,13 @@ public class SuperSet {
     private Integer seriesCountGoal;
 
     @OneToMany(mappedBy = "superSet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @OrderColumn(name = "order_in_super_set")
     private List<SuperSetExercise> seriesContent;
+
+    public void setSeriesContent(List<SuperSetExercise> newContent) {
+        this.seriesContent.clear();
+        if (!CollectionUtils.isEmpty(newContent)) {
+            this.seriesContent.addAll(newContent);
+        }
+    }
 
 }

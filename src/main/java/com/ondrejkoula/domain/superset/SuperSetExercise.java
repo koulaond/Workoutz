@@ -1,8 +1,8 @@
 package com.ondrejkoula.domain.superset;
 
 import com.ondrejkoula.domain.ExercisePrescription;
-import lombok.Getter;
-import lombok.Setter;
+import com.ondrejkoula.domain.HasOrder;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -11,9 +11,12 @@ import javax.persistence.*;
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "super_set_exercises")
-public class SuperSetExercise {
+public class SuperSetExercise implements HasOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,12 +26,15 @@ public class SuperSetExercise {
     protected String status;
 
     @ManyToOne
+    @JoinColumn(name = "exercise_prescription_id")
+    private ExercisePrescription exercisePrescription;
+
+    @ManyToOne
     @JoinColumn(name = "super_set_id")
     private SuperSet superSet;
 
-    @ManyToOne
-    @JoinColumn(name = "exercise_prescription_id")
-    private ExercisePrescription exercisePrescription;
+    @Column(name = "order_in_set")
+    private Integer orderInSet;
 
     // Repetitions values
     @Column(name = "repetitions_count")
@@ -50,4 +56,9 @@ public class SuperSetExercise {
 
     @Column(name = "max_time_min")
     private Integer maxTimeMin;
+
+    @Override
+    public Integer getOrder() {
+        return orderInSet;
+    }
 }
