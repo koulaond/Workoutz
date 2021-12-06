@@ -1,7 +1,6 @@
-package com.ondrejkoula.repository;
+package com.ondrejkoula.repository.circle;
 
 import com.ondrejkoula.domain.circle.Circle;
-import com.ondrejkoula.repository.circle.CircleRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,12 +34,10 @@ public class CircleRepositoryIT {
 
         assertThat(all)
                 .hasSize(1)
-                .satisfies(list -> {
-                    assertThat(list.get(0))
-                            .hasFieldOrPropertyWithValue("status", "DRAFT")
-                            .hasFieldOrPropertyWithValue("id", 1L)
-                            .hasFieldOrPropertyWithValue("prepareTime", 15);
-                });
+                .satisfies(list -> assertThat(list.get(0))
+                        .hasFieldOrPropertyWithValue("status", "DRAFT")
+                        .hasFieldOrPropertyWithValue("id", 1L)
+                        .hasFieldOrPropertyWithValue("prepareTime", 15));
 
         repository.deleteById(circle.getId());
 

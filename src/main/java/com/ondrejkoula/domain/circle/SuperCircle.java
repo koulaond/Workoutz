@@ -40,7 +40,6 @@ public class SuperCircle  {
     private Integer breatheOutTime;
 
     @OneToMany(mappedBy = "superCircle", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @OrderColumn(name = "position_in_circle")
     private List<SuperCircleSet> definedSets;
 
 }

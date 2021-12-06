@@ -22,11 +22,13 @@ public class SuperCircleSet {
     protected String status;
 
     @OneToMany(mappedBy = "superCircleSet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @OrderColumn(name = "position_in_set")
     private List<SuperCircleSetExercise> setExercises;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "super_circle_id")
     private SuperCircle superCircle;
+
+    @Column(name = "order_in_cycle")
+    private Integer orderInCycle;
 
 }

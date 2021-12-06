@@ -28,10 +28,14 @@ public class SuperCircleSetExercise {
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 
+    @Column(name = "time_overriden_sec")
     private Integer timeOverriddenSec;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "super_circle_set_id")
     private SuperCircleSet superCircleSet;
+
+    @Column(name = "order_in_set")
+    private Integer orderInSet;
 
 }
