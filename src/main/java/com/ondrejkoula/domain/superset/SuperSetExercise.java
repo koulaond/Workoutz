@@ -1,10 +1,13 @@
 package com.ondrejkoula.domain.superset;
 
 import com.ondrejkoula.domain.ExercisePrescription;
-import com.ondrejkoula.domain.HasOrder;
+import com.ondrejkoula.domain.IncorporatedItem;
+import com.ondrejkoula.dto.SuperSetExerciseDTO;
 import lombok.*;
 
 import javax.persistence.*;
+
+import static java.util.Objects.isNull;
 
 /**
  * Embedded exercise in Super set series.
@@ -16,14 +19,17 @@ import javax.persistence.*;
 @AllArgsConstructor
 @Entity
 @Table(name = "super_set_exercises")
-public class SuperSetExercise implements HasOrder {
+public class SuperSetExercise implements IncorporatedItem<SuperSet> {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+    private long id;
 
     @Column(name = "status")
-    protected String status;
+    private String status;
+
+    @Column(name = "note")
+    private String note;
 
     @ManyToOne
     @JoinColumn(name = "exercise_prescription_id")
@@ -32,9 +38,6 @@ public class SuperSetExercise implements HasOrder {
     @ManyToOne
     @JoinColumn(name = "super_set_id")
     private SuperSet superSet;
-
-    @Column(name = "order_in_set")
-    private Integer orderInSet;
 
     // Repetitions values
     @Column(name = "repetitions_count")
@@ -57,8 +60,29 @@ public class SuperSetExercise implements HasOrder {
     @Column(name = "max_time_min")
     private Integer maxTimeMin;
 
+    private Integer position;
+
     @Override
-    public Integer getOrder() {
-        return orderInSet;
+    public SuperSet getParent() {
+        return superSet;
     }
+
+    public static SuperSetExercise from(SuperSetExerciseDTO dto) {
+        SuperSetExerciseBuilder builder = SuperSetExercise.builder()
+                .status(dto.getStatus())
+                .note(dto.getNote())
+                .repetitionsCount(dto.getRepetitionsCount())
+                .repetitionsCountGoal(dto.getRepetitionsCountGoal())
+                .weight(dto.getWeight())
+                .weightGoal(dto.getWeightGoal())
+                .maxTimeSec(dto.getMaxTimeSec())
+                .maxTimeMin(dto.getMaxTimeMin())
+                .position(dto.getPosition());
+
+        if (!isNull(dto.getExercisePrescription())) {
+            builder.exercisePrescription(ExercisePrescription.from(dto.getExercisePrescription()));
+        }
+        return builder.build();
+    }
+
 }

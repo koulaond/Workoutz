@@ -16,7 +16,7 @@ public class SuperCircleSet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+    private Long id;
 
     @Column(name = "status")
     protected String status;

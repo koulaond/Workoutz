@@ -17,7 +17,7 @@ public class SuperSet {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+    protected Long id;
 
     @Column(name = "status")
     protected String status;

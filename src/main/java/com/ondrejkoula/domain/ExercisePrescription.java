@@ -1,19 +1,23 @@
 package com.ondrejkoula.domain;
 
-import lombok.Getter;
-import lombok.Setter;
+import com.ondrejkoula.dto.ExercisePrescriptionDTO;
+import lombok.*;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "exercise_prescriptions")
 public class ExercisePrescription {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    protected long id;
+    private Long id;
 
     @Column(name = "status")
     protected String status;
@@ -27,4 +31,16 @@ public class ExercisePrescription {
 
     @Column(name = "description")
     private String description;
+
+    public static ExercisePrescription from(ExercisePrescriptionDTO dto) {
+        ExercisePrescriptionBuilder builder = ExercisePrescription.builder()
+                .status(dto.getStatus())
+                .label(dto.getLabel())
+                .description(dto.getDescription());
+
+        if (!Objects.isNull(dto.getExerciseType())) {
+            builder.exerciseType(ExerciseType.from(dto.getExerciseType()));
+        }
+        return builder.build();
+    }
 }

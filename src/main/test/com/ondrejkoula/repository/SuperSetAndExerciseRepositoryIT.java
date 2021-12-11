@@ -31,8 +31,8 @@ public class SuperSetAndExerciseRepositoryIT {
 
     @Test
     void shouldDeleteChildAfterParentDelete() {
-        exerciseRepository.save(SuperSetExercise.builder().orderInSet(0).build());
-        exerciseRepository.save(SuperSetExercise.builder().orderInSet(1).build());
+        exerciseRepository.save(SuperSetExercise.builder().position(0).build());
+        exerciseRepository.save(SuperSetExercise.builder().position(1).build());
 
         List<SuperSetExercise> allExercises = exerciseRepository.findAll();
         assertThat(allExercises).hasSize(2); // Exercises should be persisted
@@ -75,15 +75,15 @@ public class SuperSetAndExerciseRepositoryIT {
 
     @Test
     void shouldChangeExercisesOrder() {
-        exerciseRepository.save(SuperSetExercise.builder().maxTimeSec(10).orderInSet(1).build());
-        exerciseRepository.save(SuperSetExercise.builder().maxTimeSec(20).orderInSet(2).build());
-        exerciseRepository.save(SuperSetExercise.builder().maxTimeSec(30).orderInSet(3).build());
+        exerciseRepository.save(SuperSetExercise.builder().maxTimeSec(10).position(1).build());
+        exerciseRepository.save(SuperSetExercise.builder().maxTimeSec(20).position(2).build());
+        exerciseRepository.save(SuperSetExercise.builder().maxTimeSec(30).position(3).build());
 
         List<SuperSetExercise> allExercises = exerciseRepository.findAll();
         assertThat(allExercises).hasSize(3); // Exercises should be persisted
-        assertThat(allExercises.get(0).getOrderInSet()).isEqualTo(1);
-        assertThat(allExercises.get(1).getOrderInSet()).isEqualTo(2);
-        assertThat(allExercises.get(2).getOrderInSet()).isEqualTo(3);
+        assertThat(allExercises.get(0).getPosition()).isEqualTo(1);
+        assertThat(allExercises.get(1).getPosition()).isEqualTo(2);
+        assertThat(allExercises.get(2).getPosition()).isEqualTo(3);
 
         SuperSet savedSet = superSetRepository.save(
                 SuperSet.builder()
@@ -93,8 +93,8 @@ public class SuperSetAndExerciseRepositoryIT {
         );
 
         // Change an order of the first two exercises
-        allExercises.get(0).setOrderInSet(2);
-        allExercises.get(1).setOrderInSet(1);
+        allExercises.get(0).setPosition(2);
+        allExercises.get(1).setPosition(1);
 
         // Set first two exercises, exclude the third one
         savedSet.setSeriesContent(new ArrayList<>(Arrays.asList(allExercises.get(0), allExercises.get(1))));
@@ -105,8 +105,8 @@ public class SuperSetAndExerciseRepositoryIT {
 
         // Exercises should be only 2, the order should be switched
         assertThat(allExercises).hasSize(2);
-        assertThat(allExercises.get(0).getOrderInSet()).isEqualTo(2);
-        assertThat(allExercises.get(1).getOrderInSet()).isEqualTo(1);
+        assertThat(allExercises.get(0).getPosition()).isEqualTo(2);
+        assertThat(allExercises.get(1).getPosition()).isEqualTo(1);
 
     }
 }
