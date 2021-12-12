@@ -5,7 +5,7 @@ import com.ondrejkoula.domain.superset.SuperSetExercise;
 import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.superset.SuperSetRepository;
-import com.ondrejkoula.service.ExerciseService;
+import com.ondrejkoula.service.IncorporatedItemService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,16 +19,14 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 @Component
-public class SuperSetExerciseService extends ExerciseService<SuperSetExercise> {
-
-    private final SuperSetExerciseRepository repository;
+public class SuperSetExerciseService extends IncorporatedItemService<SuperSetExercise, SuperSetExerciseRepository> {
 
     private final SuperSetRepository superSetRepository;
 
     @Autowired
     public SuperSetExerciseService(SuperSetExerciseRepository repository,
                                    SuperSetRepository superSetRepository) {
-        this.repository = repository;
+        super(repository);
         this.superSetRepository = superSetRepository;
     }
 
@@ -51,7 +49,7 @@ public class SuperSetExerciseService extends ExerciseService<SuperSetExercise> {
             log.info("Parent Super set with ID:  " + parentSetId + " not exists.");
             return null; // TODO throw ParentNotFoundException
         }
-        List<SuperSetExercise> found = repository.findSuperSetExercisesBySuperSetIdOrderByPosition(parentSetId);
+        List<SuperSetExercise> found = repository.findSuperSetExercisesByParentIdOrderByPosition(parentSetId);
         log.info("Found {} exercises for super set with id {}", found.size(), parentSetId);
         return found;
     }
@@ -82,7 +80,7 @@ public class SuperSetExerciseService extends ExerciseService<SuperSetExercise> {
         });
 
         log.info("Saving new exercise on position {}", newExercise.getPosition());
-        newExercise.setSuperSet(parentSet.get());
+        newExercise.setParent(parentSet.get());
 
         return repository.save(newExercise);
     }
@@ -96,7 +94,7 @@ public class SuperSetExerciseService extends ExerciseService<SuperSetExercise> {
         }
 
         SuperSetExercise exercise = search.get();
-        long countBySuperSetId = repository.countBySuperSetId(exercise.getSuperSet().getId());
+        long countBySuperSetId = repository.countBySuperSetId(exercise.getParent().getId());
 
         if (countBySuperSetId < newPosition || newPosition < 0) {
             throwException(format("Position %s is out of range. Total exercises in set: %s", newPosition, countBySuperSetId));

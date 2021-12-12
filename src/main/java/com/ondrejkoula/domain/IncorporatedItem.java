@@ -1,8 +1,26 @@
 package com.ondrejkoula.domain;
 
-public interface IncorporatedItem<PARENT> {
+import lombok.*;
 
-    PARENT getParent();
+import javax.persistence.*;
 
-    Integer getPosition();
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@MappedSuperclass
+public abstract class IncorporatedItem<PARENT extends DomainEntity> extends DomainEntity{
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    protected PARENT parent;
+
+    @Column(name = "position")
+    protected Integer position;
+
+    public IncorporatedItem(Long id, String status, String note, PARENT parent, Integer position) {
+        super(id, status, note);
+        this.parent = parent;
+        this.position = position;
+    }
 }

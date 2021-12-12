@@ -1,8 +1,11 @@
 package com.ondrejkoula.domain.circle;
 
-import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.ExercisePrescription;
-import lombok.*;
+import com.ondrejkoula.domain.IncorporatedItem;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -15,7 +18,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "super_circle_set_exercises")
-public class SuperCircleSetExercise extends DomainEntity {
+public class SuperCircleSetExercise extends IncorporatedItem<SuperCircleSet> {
 
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -25,21 +28,12 @@ public class SuperCircleSetExercise extends DomainEntity {
     @Column(name = "time_overriden_sec")
     private Integer timeOverriddenSec;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "super_circle_set_id")
-    private SuperCircleSet superCircleSet;
-
-    @Column(name = "order_in_set")
-    private Integer orderInSet;
-
     @Builder
-    public SuperCircleSetExercise(Long id, String status, String note, ExercisePrescription exercisePrescription,
-                                  Integer timeOverriddenSec, SuperCircleSet superCircleSet, Integer orderInSet) {
-        super(id, status, note);
+    public SuperCircleSetExercise(Long id, String status, String note, SuperCircleSet superCircleSet, Integer position,
+                                  ExercisePrescription exercisePrescription, Integer timeOverriddenSec) {
+        super(id, status, note, superCircleSet, position);
         this.exercisePrescription = exercisePrescription;
         this.timeOverriddenSec = timeOverriddenSec;
-        this.superCircleSet = superCircleSet;
-        this.orderInSet = orderInSet;
     }
 
     @Override
@@ -52,8 +46,8 @@ public class SuperCircleSetExercise extends DomainEntity {
 
         return "Circle set exercise: [time overriden (sec): " +
                 timeOverriddenSec +
-                ", order in set: " +
-                orderInSet +
+                ", position: " +
+                position +
                 ", prescription details: " +
                 exPrescLoggableString + "]";
     }

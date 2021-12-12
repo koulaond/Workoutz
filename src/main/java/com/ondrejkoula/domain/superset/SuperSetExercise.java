@@ -1,13 +1,14 @@
 package com.ondrejkoula.domain.superset;
 
-import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.ExercisePrescription;
 import com.ondrejkoula.domain.IncorporatedItem;
 import com.ondrejkoula.dto.SuperSetExerciseDTO;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-
 import java.util.Objects;
 
 import static java.util.Objects.isNull;
@@ -20,15 +21,11 @@ import static java.util.Objects.isNull;
 @NoArgsConstructor
 @Entity
 @Table(name = "super_set_exercises")
-public class SuperSetExercise extends DomainEntity implements IncorporatedItem<SuperSet> {
+public class SuperSetExercise extends IncorporatedItem<SuperSet> {
 
     @ManyToOne
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
-
-    @ManyToOne
-    @JoinColumn(name = "super_set_id")
-    private SuperSet superSet;
 
     // Repetitions values
     @Column(name = "repetitions_count")
@@ -51,28 +48,29 @@ public class SuperSetExercise extends DomainEntity implements IncorporatedItem<S
     @Column(name = "max_time_min")
     private Integer maxTimeMin;
 
-    private Integer position;
-
-    @Override
-    public SuperSet getParent() {
-        return superSet;
-    }
-
     @Builder
-    public SuperSetExercise(Long id, String status, String note, ExercisePrescription exercisePrescription, SuperSet superSet,
-                            Integer repetitionsCount, Integer repetitionsCountGoal, Integer weight, Integer weightGoal,
-                            Integer maxTimeSec, Integer maxTimeMin, Integer position) {
-
-        super(id, status, note);
+    public SuperSetExercise(Long id, String status, String note, SuperSet parent, Integer position,
+                            ExercisePrescription exercisePrescription, Integer repetitionsCount, Integer repetitionsCountGoal,
+                            Integer weight, Integer weightGoal, Integer maxTimeSec, Integer maxTimeMin) {
+        super(id, status, note, parent, position);
         this.exercisePrescription = exercisePrescription;
-        this.superSet = superSet;
         this.repetitionsCount = repetitionsCount;
         this.repetitionsCountGoal = repetitionsCountGoal;
         this.weight = weight;
         this.weightGoal = weightGoal;
         this.maxTimeSec = maxTimeSec;
         this.maxTimeMin = maxTimeMin;
-        this.position = position;
+    }
+
+    @Override
+    public String loggableString() {
+
+        String exPrescLoggableString = "null";
+        if (!Objects.isNull(exercisePrescription)) {
+            exPrescLoggableString = exercisePrescription.loggableString();
+        }
+
+        return "Super set exercise item: [position: " + position + "prescription details: " + exPrescLoggableString + "]";
     }
 
     public static SuperSetExercise from(SuperSetExerciseDTO dto) {
@@ -93,14 +91,4 @@ public class SuperSetExercise extends DomainEntity implements IncorporatedItem<S
         return builder.build();
     }
 
-    @Override
-    public String loggableString() {
-
-        String exPrescLoggableString = "null";
-        if (!Objects.isNull(exercisePrescription)) {
-            exPrescLoggableString = exercisePrescription.loggableString();
-        }
-
-        return "Super set exercise item: [position: " + position + "prescription details: " + exPrescLoggableString + "]";
-    }
 }

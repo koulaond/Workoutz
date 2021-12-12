@@ -42,7 +42,7 @@ class SuperSetExerciseServiceTest {
     @Test
     void insertExerciseToSet_shouldSuccessfullyInsert() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
         SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").position(0).build();
         service.assignNewItemToParent(parentSet.getId(), newOne);
         List<SuperSetExercise> allExercises = service.findByParentId(parentSet.getId());
@@ -69,7 +69,7 @@ class SuperSetExerciseServiceTest {
     @Test
     void insertExerciseToSet_shouldFailDueToMissingPosition() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
         SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").build();
 
         assertThrows(ValidationException.class, () -> service.assignNewItemToParent(1L, newOne));
@@ -78,7 +78,7 @@ class SuperSetExerciseServiceTest {
     @Test
     void insertExerciseToSet_shouldFailDueToPositionOutOfRange() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
         SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").build();
 
         assertThrows(ValidationException.class, () -> service.assignNewItemToParent(2L, newOne));
@@ -88,10 +88,10 @@ class SuperSetExerciseServiceTest {
     void changeExercisePosition_exerciseMovedUp() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
 
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlySecond").superSet(parentSet).position(1).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").superSet(parentSet).position(2).build());
-        SuperSetExercise formerlyFourth = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").superSet(parentSet).position(3).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlySecond").parent(parentSet).position(1).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").parent(parentSet).position(2).build());
+        SuperSetExercise formerlyFourth = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").parent(parentSet).position(3).build());
 
         service.changeItemPosition(formerlyFourth.getId(), 0);
 
@@ -107,10 +107,10 @@ class SuperSetExerciseServiceTest {
     void changeExercisePosition_exerciseMovedDown() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
 
-        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlySecond").superSet(parentSet).position(1).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").superSet(parentSet).position(2).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").superSet(parentSet).position(3).build());
+        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlySecond").parent(parentSet).position(1).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").parent(parentSet).position(2).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").parent(parentSet).position(3).build());
 
         service.changeItemPosition(formerlyFirst.getId(), 3);
 
@@ -127,7 +127,7 @@ class SuperSetExerciseServiceTest {
     void changeExercisePosition_positionIsOutOfRange() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
 
-        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
+        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
         assertThrows(
                 ValidationException.class, () ->
@@ -140,7 +140,7 @@ class SuperSetExerciseServiceTest {
     void changeExercisePosition_positionIsNegative() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
 
-        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
+        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
         assertThrows(
                 ValidationException.class, () ->
@@ -153,10 +153,10 @@ class SuperSetExerciseServiceTest {
     void removeExerciseFromSet() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
 
-        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlySecond").superSet(parentSet).position(1).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").superSet(parentSet).position(2).build());
-        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").superSet(parentSet).position(3).build());
+        SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlySecond").parent(parentSet).position(1).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").parent(parentSet).position(2).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").parent(parentSet).position(3).build());
 
         service.removeExistingItemFromParent(formerlyFirst.getId());
 

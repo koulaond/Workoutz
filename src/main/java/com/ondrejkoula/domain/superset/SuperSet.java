@@ -21,7 +21,7 @@ public class SuperSet extends DomainEntity {
     @Column(name = "series_count_goal")
     private Integer seriesCountGoal;
 
-    @OneToMany(mappedBy = "superSet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SuperSetExercise> seriesContent;
 
     @Builder

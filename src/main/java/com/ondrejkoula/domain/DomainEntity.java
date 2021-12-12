@@ -14,7 +14,7 @@ public abstract class DomainEntity implements Loggable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    protected Long id;
 
     @Column(name = "status")
     protected String status;
