@@ -1,12 +1,11 @@
-package com.ondrejkoula.service;
+package com.ondrejkoula.service.superset;
 
 import com.ondrejkoula.domain.superset.SuperSet;
 import com.ondrejkoula.domain.superset.SuperSetExercise;
-import com.ondrejkoula.dto.SuperSetExerciseChangePositionDTO;
-import com.ondrejkoula.dto.SuperSetExerciseDTO;
 import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.superset.SuperSetRepository;
+import com.ondrejkoula.service.ExerciseService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,7 +19,7 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 @Component
-public class SuperSetExerciseService {
+public class SuperSetExerciseService extends ExerciseService<SuperSetExercise> {
 
     private final SuperSetExerciseRepository repository;
 
@@ -44,7 +43,8 @@ public class SuperSetExerciseService {
         return found.get();
     }
 
-    public List<SuperSetExercise> findByParentSetId(Long parentSetId) {
+    @Override
+    public List<SuperSetExercise> findByParentId(Long parentSetId) {
         log.info("Getting Super set exercises by parent super set ID:  " + parentSetId);
         Optional<SuperSet> parentSuperSet = superSetRepository.findById(parentSetId);
         if (!parentSuperSet.isPresent()) {
@@ -57,39 +57,39 @@ public class SuperSetExerciseService {
     }
 
 
-    public SuperSetExercise insertExerciseToSet(Long parentSetId, SuperSetExerciseDTO exerciseDTO) {
+    @Override
+    public SuperSetExercise assignNewItemToParent(Long parentSetId, SuperSetExercise newExercise) {
         Optional<SuperSet> parentSet = superSetRepository.findById(parentSetId);
         if (!parentSet.isPresent()) {
             throwException("Parent super set not found.");
         }
 
-        if (isNull(exerciseDTO.getPosition())) {
+        if (isNull(newExercise.getPosition())) {
             throwException("Position not defined.");
         }
 
         long countBySuperSetId = repository.countBySuperSetId(parentSetId);
-        if (countBySuperSetId < exerciseDTO.getPosition() || exerciseDTO.getPosition() < 0) {
-            throwException(format("Position %s is out of range. Total exercises in set: %s", exerciseDTO.getPosition(), countBySuperSetId));
+        if (countBySuperSetId < newExercise.getPosition() || newExercise.getPosition() < 0) {
+            throwException(format("Position %s is out of range. Total exercises in set: %s", newExercise.getPosition(), countBySuperSetId));
         }
 
-        List<SuperSetExercise> exercisesAfter = repository.findByPositionGreaterThan(parentSetId, exerciseDTO.getPosition());
-        log.info("Updating positions of all exercises with position greater than {}", exerciseDTO.getPosition());
+        List<SuperSetExercise> exercisesAfter = repository.findByPositionGreaterThan(parentSetId, newExercise.getPosition());
+        log.info("Updating positions of all exercises with position greater than {}", newExercise.getPosition());
 
         exercisesAfter.forEach(exercise -> {
             exercise.setPosition(exercise.getPosition() + 1);
             repository.save(exercise);
         });
 
-        log.info("Saving new exercise on position {}", exerciseDTO.getPosition());
-        SuperSetExercise newExercise = SuperSetExercise.from(exerciseDTO);
+        log.info("Saving new exercise on position {}", newExercise.getPosition());
         newExercise.setSuperSet(parentSet.get());
 
         return repository.save(newExercise);
     }
 
-
-    public SuperSetExercise changeExercisePosition(SuperSetExerciseChangePositionDTO dto) {
-        Optional<SuperSetExercise> search = repository.findById(dto.getId());
+    @Override
+    public SuperSetExercise changeItemPosition(Long id, Integer newPosition) {
+        Optional<SuperSetExercise> search = repository.findById(id);
 
         if (!search.isPresent()) {
             throwException("Exercise not found.");
@@ -98,26 +98,26 @@ public class SuperSetExerciseService {
         SuperSetExercise exercise = search.get();
         long countBySuperSetId = repository.countBySuperSetId(exercise.getSuperSet().getId());
 
-        if (countBySuperSetId < dto.getNewPosition() || dto.getNewPosition() < 0) {
-            throwException(format("Position %s is out of range. Total exercises in set: %s", dto.getNewPosition(), countBySuperSetId));
+        if (countBySuperSetId < newPosition || newPosition < 0) {
+            throwException(format("Position %s is out of range. Total exercises in set: %s", newPosition, countBySuperSetId));
         }
 
         Integer oldPosition = exercise.getPosition();
-        List<SuperSetExercise> exercisesBetween = getExercisesBetween(exercise.getParent().getId(), oldPosition, dto.getNewPosition());
+        List<SuperSetExercise> exercisesBetween = getExercisesBetween(exercise.getParent().getId(), oldPosition, newPosition);
 
         exercisesBetween.forEach(superSetExercise -> {
-            if (Objects.equals(dto.getNewPosition(), oldPosition)) {
+            if (Objects.equals(newPosition, oldPosition)) {
                 return;
             }
-            superSetExercise.setPosition(dto.getNewPosition() > oldPosition ? superSetExercise.getPosition() - 1 : superSetExercise.getPosition() + 1);
+            superSetExercise.setPosition(newPosition > oldPosition ? superSetExercise.getPosition() - 1 : superSetExercise.getPosition() + 1);
             repository.save(superSetExercise);
         });
-        exercise.setPosition(dto.getNewPosition());
+        exercise.setPosition(newPosition);
 
         return repository.save(exercise);
     }
 
-    public void removeExerciseFromSet(Long exerciseId) {
+    public void removeExistingItemFromParent(Long exerciseId) {
         Optional<SuperSetExercise> search = repository.findById(exerciseId);
         if (!search.isPresent()) {
             return;
@@ -132,17 +132,17 @@ public class SuperSetExerciseService {
         });
     }
 
+    public void deleteById(Long id) {
+        log.info("Deleting Super set exercise with ID:  " + id);
+        repository.deleteById(id);
+    }
+
     private List<SuperSetExercise> getExercisesBetween(Long parentId, Integer leftBound, Integer rightBound) {
         if (leftBound > rightBound) {
             return repository.findByPositionBetween(parentId, rightBound, leftBound - 1);
         } else {
             return repository.findByPositionBetween(parentId, leftBound + 1, rightBound);
         }
-    }
-
-    public void deleteById(Long id) {
-        log.info("Deleting Super set exercise with ID:  " + id);
-        repository.deleteById(id);
     }
 
     private void throwException(String message) {

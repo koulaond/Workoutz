@@ -1,24 +1,16 @@
 package com.ondrejkoula.domain.circle;
 
+import com.ondrejkoula.domain.DomainEntity;
 import lombok.*;
 
 import javax.persistence.*;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "circles")
-public class Circle {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
-
-    @Column(name = "status")
-    protected String status;
+public class Circle extends DomainEntity {
 
     @Column(name = "sets_count")
     private Integer setsCount;
@@ -40,4 +32,23 @@ public class Circle {
 
     @Column(name = "breathe_out_time")
     private Integer breatheOutTime;
+
+    @Builder
+    public Circle(Long id, String status, String note, Integer setsCount, Integer circlesInCount, Integer prepareTime,
+                  Integer workTime, Integer restTime, Integer timeBetweenSets, Integer breatheOutTime) {
+        super(id, status, note);
+        this.setsCount = setsCount;
+        this.circlesInCount = circlesInCount;
+        this.prepareTime = prepareTime;
+        this.workTime = workTime;
+        this.restTime = restTime;
+        this.timeBetweenSets = timeBetweenSets;
+        this.breatheOutTime = breatheOutTime;
+    }
+
+    @Override
+    public String loggableString() {
+        return "Circle exercise [sets count: " + setsCount + ", circles count: "
+                + circlesInCount + ", prepare time: " + prepareTime + ", ...]";
+    }
 }

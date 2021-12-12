@@ -1,4 +1,4 @@
-package com.ondrejkoula.service;
+package com.ondrejkoula.service.circle;
 
 import com.ondrejkoula.domain.circle.Circle;
 import com.ondrejkoula.repository.circle.CircleRepository;

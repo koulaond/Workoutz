@@ -10,7 +10,6 @@ public interface SuperSetExerciseRepository extends JpaRepository<SuperSetExerci
 
     List<SuperSetExercise> findSuperSetExercisesBySuperSetIdOrderByPosition(Long superSetId);
 
-
     @Query("select s from SuperSetExercise s where s.superSet.id = ?1 order by s.position")
     List<SuperSetExercise> findBySuperSetId(Long superSetId);
 

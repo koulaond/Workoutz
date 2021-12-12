@@ -1,4 +1,4 @@
-package com.ondrejkoula.service;
+package com.ondrejkoula.service.superset;
 
 import com.ondrejkoula.domain.superset.SuperSet;
 import com.ondrejkoula.repository.superset.SuperSetRepository;

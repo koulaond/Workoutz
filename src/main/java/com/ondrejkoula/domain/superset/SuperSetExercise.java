@@ -1,11 +1,14 @@
 package com.ondrejkoula.domain.superset;
 
+import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.ExercisePrescription;
 import com.ondrejkoula.domain.IncorporatedItem;
 import com.ondrejkoula.dto.SuperSetExerciseDTO;
 import lombok.*;
 
 import javax.persistence.*;
+
+import java.util.Objects;
 
 import static java.util.Objects.isNull;
 
@@ -14,22 +17,10 @@ import static java.util.Objects.isNull;
  */
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 @Entity
 @Table(name = "super_set_exercises")
-public class SuperSetExercise implements IncorporatedItem<SuperSet> {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
-    @Column(name = "status")
-    private String status;
-
-    @Column(name = "note")
-    private String note;
+public class SuperSetExercise extends DomainEntity implements IncorporatedItem<SuperSet> {
 
     @ManyToOne
     @JoinColumn(name = "exercise_prescription_id")
@@ -67,6 +58,23 @@ public class SuperSetExercise implements IncorporatedItem<SuperSet> {
         return superSet;
     }
 
+    @Builder
+    public SuperSetExercise(Long id, String status, String note, ExercisePrescription exercisePrescription, SuperSet superSet,
+                            Integer repetitionsCount, Integer repetitionsCountGoal, Integer weight, Integer weightGoal,
+                            Integer maxTimeSec, Integer maxTimeMin, Integer position) {
+
+        super(id, status, note);
+        this.exercisePrescription = exercisePrescription;
+        this.superSet = superSet;
+        this.repetitionsCount = repetitionsCount;
+        this.repetitionsCountGoal = repetitionsCountGoal;
+        this.weight = weight;
+        this.weightGoal = weightGoal;
+        this.maxTimeSec = maxTimeSec;
+        this.maxTimeMin = maxTimeMin;
+        this.position = position;
+    }
+
     public static SuperSetExercise from(SuperSetExerciseDTO dto) {
         SuperSetExerciseBuilder builder = SuperSetExercise.builder()
                 .status(dto.getStatus())
@@ -85,4 +93,14 @@ public class SuperSetExercise implements IncorporatedItem<SuperSet> {
         return builder.build();
     }
 
+    @Override
+    public String loggableString() {
+
+        String exPrescLoggableString = "null";
+        if (!Objects.isNull(exercisePrescription)) {
+            exPrescLoggableString = exercisePrescription.loggableString();
+        }
+
+        return "Super set exercise item: [position: " + position + "prescription details: " + exPrescLoggableString + "]";
+    }
 }

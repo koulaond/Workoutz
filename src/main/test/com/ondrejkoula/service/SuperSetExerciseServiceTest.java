@@ -2,11 +2,10 @@ package com.ondrejkoula.service;
 
 import com.ondrejkoula.domain.superset.SuperSet;
 import com.ondrejkoula.domain.superset.SuperSetExercise;
-import com.ondrejkoula.dto.SuperSetExerciseChangePositionDTO;
-import com.ondrejkoula.dto.SuperSetExerciseDTO;
 import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.superset.SuperSetRepository;
+import com.ondrejkoula.service.superset.SuperSetExerciseService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,21 +38,14 @@ class SuperSetExerciseServiceTest {
         service = new SuperSetExerciseService(superSetExerciseRepository, superSetRepository);
     }
 
-    @Test
-    void findById() {
-    }
-
-    @Test
-    void findByParentSetId() {
-    }
 
     @Test
     void insertExerciseToSet_shouldSuccessfullyInsert() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
-        SuperSetExerciseDTO newOne = SuperSetExerciseDTO.builder().note("newOne").position(0).build();
-        service.insertExerciseToSet(parentSet.getId(), newOne);
-        List<SuperSetExercise> allExercises = service.findByParentSetId(parentSet.getId());
+        SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").position(0).build();
+        service.assignNewItemToParent(parentSet.getId(), newOne);
+        List<SuperSetExercise> allExercises = service.findByParentId(parentSet.getId());
 
         assertThat(allExercises).hasSize(2)
                 .satisfies(exercises -> {
@@ -70,26 +62,26 @@ class SuperSetExerciseServiceTest {
 
     @Test
     void insertExerciseToSet_shouldFailDueParentNotFound() {
-        SuperSetExerciseDTO newOne = SuperSetExerciseDTO.builder().note("newOne").position(0).build();
-        assertThrows(ValidationException.class, () -> service.insertExerciseToSet(1L, newOne));
+        SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").position(0).build();
+        assertThrows(ValidationException.class, () -> service.assignNewItemToParent(1L, newOne));
     }
 
     @Test
     void insertExerciseToSet_shouldFailDueToMissingPosition() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
-        SuperSetExerciseDTO newOne = SuperSetExerciseDTO.builder().note("newOne").build();
+        SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").build();
 
-        assertThrows(ValidationException.class, () -> service.insertExerciseToSet(1L, newOne));
+        assertThrows(ValidationException.class, () -> service.assignNewItemToParent(1L, newOne));
     }
 
     @Test
     void insertExerciseToSet_shouldFailDueToPositionOutOfRange() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").superSet(parentSet).position(0).build());
-        SuperSetExerciseDTO newOne = SuperSetExerciseDTO.builder().note("newOne").build();
+        SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").build();
 
-        assertThrows(ValidationException.class, () -> service.insertExerciseToSet(2L, newOne));
+        assertThrows(ValidationException.class, () -> service.assignNewItemToParent(2L, newOne));
     }
 
     @Test
@@ -101,12 +93,7 @@ class SuperSetExerciseServiceTest {
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").superSet(parentSet).position(2).build());
         SuperSetExercise formerlyFourth = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").superSet(parentSet).position(3).build());
 
-        service.changeExercisePosition(
-                SuperSetExerciseChangePositionDTO.builder()
-                        .id(formerlyFourth.getId())
-                        .newPosition(0)
-                        .build()
-        );
+        service.changeItemPosition(formerlyFourth.getId(), 0);
 
         List<SuperSetExercise> allExercises = superSetExerciseRepository.findBySuperSetId(parentSet.getId());
         Assertions.assertThat(allExercises).hasSize(4);
@@ -125,12 +112,7 @@ class SuperSetExerciseServiceTest {
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").superSet(parentSet).position(2).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").superSet(parentSet).position(3).build());
 
-        service.changeExercisePosition(
-                SuperSetExerciseChangePositionDTO.builder()
-                        .id(formerlyFirst.getId())
-                        .newPosition(3)
-                        .build()
-        );
+        service.changeItemPosition(formerlyFirst.getId(), 3);
 
         List<SuperSetExercise> allExercises = superSetExerciseRepository.findBySuperSetId(parentSet.getId());
         Assertions.assertThat(allExercises).hasSize(4);
@@ -149,12 +131,7 @@ class SuperSetExerciseServiceTest {
 
         assertThrows(
                 ValidationException.class, () ->
-                        service.changeExercisePosition(
-                                SuperSetExerciseChangePositionDTO.builder()
-                                        .id(formerlyFirst.getId())
-                                        .newPosition(3)
-                                        .build()
-                        ));
+                        service.changeItemPosition(formerlyFirst.getId(), 3));
 
     }
 
@@ -167,12 +144,7 @@ class SuperSetExerciseServiceTest {
 
         assertThrows(
                 ValidationException.class, () ->
-                        service.changeExercisePosition(
-                                SuperSetExerciseChangePositionDTO.builder()
-                                        .id(formerlyFirst.getId())
-                                        .newPosition(-1)
-                                        .build()
-                        ));
+                        service.changeItemPosition(formerlyFirst.getId(), -1));
 
     }
 
@@ -186,7 +158,7 @@ class SuperSetExerciseServiceTest {
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").superSet(parentSet).position(2).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").superSet(parentSet).position(3).build());
 
-        service.removeExerciseFromSet(formerlyFirst.getId());
+        service.removeExistingItemFromParent(formerlyFirst.getId());
 
         List<SuperSetExercise> allExercises = superSetExerciseRepository.findBySuperSetId(parentSet.getId());
 

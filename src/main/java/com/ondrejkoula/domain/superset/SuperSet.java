@@ -1,26 +1,19 @@
 package com.ondrejkoula.domain.superset;
 
+import com.ondrejkoula.domain.DomainEntity;
 import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Setter
-@Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Entity
+@NoArgsConstructor
 @Table(name = "super_sets")
-public class SuperSet {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    protected Long id;
-
-    @Column(name = "status")
-    protected String status;
+public class SuperSet extends DomainEntity {
 
     @Column(name = "series_count")
     private Integer seriesCount;
@@ -31,6 +24,15 @@ public class SuperSet {
     @OneToMany(mappedBy = "superSet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private List<SuperSetExercise> seriesContent;
 
+    @Builder
+    public SuperSet(Long id, String status, String note, Integer seriesCount,
+                    Integer seriesCountGoal, List<SuperSetExercise> seriesContent) {
+        super(id, status, note);
+        this.seriesCount = seriesCount;
+        this.seriesCountGoal = seriesCountGoal;
+        this.seriesContent = seriesContent;
+    }
+
     public void setSeriesContent(List<SuperSetExercise> newContent) {
         this.seriesContent.clear();
         if (!CollectionUtils.isEmpty(newContent)) {
@@ -38,4 +40,15 @@ public class SuperSet {
         }
     }
 
+    @Override
+    public String loggableString() {
+        String contentLoggableString = "null";
+        if (CollectionUtils.isNotEmpty(seriesContent)) {
+            contentLoggableString = seriesContent.stream()
+                    .map(SuperSetExercise::loggableString)
+                    .collect(Collectors.joining(";"));
+        }
+        return "Super set [series count: " + seriesCount + ", series count goal: "
+                + seriesCountGoal + ", exercises: ["+ contentLoggableString + "]]";
+    }
 }

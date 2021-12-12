@@ -1,7 +1,8 @@
-package com.ondrejkoula.service;
+package com.ondrejkoula.service.circle;
 
 import com.ondrejkoula.domain.circle.SuperCircleSetExercise;
 import com.ondrejkoula.repository.circle.SuperCircleSetExerciseRepository;
+import com.ondrejkoula.repository.circle.SuperCircleSetRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -14,16 +15,13 @@ public class SuperCircleSetExerciseService {
     
     private final SuperCircleSetExerciseRepository repository;
 
-    @Autowired
-    public SuperCircleSetExerciseService(SuperCircleSetExerciseRepository repository) {
-        this.repository = repository;
-    }
+    private final SuperCircleSetRepository circleSetRepository;
 
-    public SuperCircleSetExercise save(SuperCircleSetExercise superCircleSetExercise) {
-        log.info("Saving Super-circle set exercise: {}", superCircleSetExercise);
-        SuperCircleSetExercise saved = repository.save(superCircleSetExercise);
-        log.info("Super-circle set exercise successfully saved: {}", saved);
-        return saved;
+    @Autowired
+    public SuperCircleSetExerciseService(SuperCircleSetExerciseRepository repository,
+                                         SuperCircleSetRepository circleSetRepository) {
+        this.repository = repository;
+        this.circleSetRepository = circleSetRepository;
     }
 
     public SuperCircleSetExercise findById(Long id) {

@@ -38,7 +38,7 @@ public class SuperCircleSetAndExercisesRepositoryTest {
 
         SuperCircleSet set = SuperCircleSet.builder().setExercises(new ArrayList<>(singletonList(exercise))).build();
 
-        SuperCircle superCircle = SuperCircle.builder().definedSets(new ArrayList<>(singletonList(set))).build();
+        SuperCircle superCircle = SuperCircle.builder().set(set).build();
 
         superCircle = superCircleRepository.save(superCircle);
 
