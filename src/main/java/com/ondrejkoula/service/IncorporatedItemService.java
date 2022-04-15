@@ -4,7 +4,7 @@ import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.IncorporatedItem;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.ValidationException;
-import com.ondrejkoula.repository.IncorporatedItemRepository;
+import com.ondrejkoula.IncorporatedItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,7 +18,7 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 public abstract class IncorporatedItemService<
-        CH extends IncorporatedItem<P>, CHR extends IncorporatedItemRepository<CH, Long>,
+        CH extends IncorporatedItem<P>, CHR extends IncorporatedItemRepository<CH> & JpaRepository<CH, Long>,
         P extends DomainEntity, PR extends JpaRepository<P, Long>>
         extends GenericService<CH, CHR> {
 
@@ -33,7 +33,7 @@ public abstract class IncorporatedItemService<
         parentRepository.findById(parentId)
                 .orElseThrow(() -> new DataNotFoundException("Parent found", "dataNotFound", singletonMap("parentId", parentId.toString())));
 
-        return repository.findByParentOrderByPosition(parentId);
+        return repository.findByParentIdOrderByPosition(parentId);
     }
 
     public CH assignNewItemToParent(Long parentSetId, CH newItem) {
@@ -44,12 +44,12 @@ public abstract class IncorporatedItemService<
             throwException("Position not defined.");
         }
 
-        long countByParent = repository.countByParent(parentSetId);
+        long countByParent = repository.countByParentId(parentSetId);
         if (countByParent < newItem.getPosition() || newItem.getPosition() < 0) {
             throwException(format("Position %s is out of range. Total items under parent: %s", newItem.getPosition(), countByParent));
         }
 
-        List<CH> found = repository.findByParentAndPositionGreaterThan(parentSetId, newItem.getPosition());
+        List<CH> found = repository.findByParentIdAndPositionGreaterThanEqual(parentSetId, newItem.getPosition());
 
         found.forEach(child -> {
             child.setPosition(child.getPosition() + 1);
@@ -65,7 +65,7 @@ public abstract class IncorporatedItemService<
         CH data = repository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", id.toString())) );
 
-        long totalCount = repository.countByParent(data.getParent().getId());
+        long totalCount = repository.countByParentId(data.getParent().getId());
 
         if (totalCount < newPosition || newPosition < 0) {
             throwException(format("Position %s is out of range. Total items under parent: %s", newPosition, totalCount));
@@ -92,7 +92,7 @@ public abstract class IncorporatedItemService<
         search.ifPresent(itemToRemove -> {
 
             repository.delete(itemToRemove);
-            List<CH> following = repository.findByParentAndPositionGreaterThan(itemToRemove.getParent().getId(), itemToRemove.getPosition());
+            List<CH> following = repository.findByParentIdAndPositionGreaterThanEqual(itemToRemove.getParent().getId(), itemToRemove.getPosition());
 
             following.forEach(next -> {
                 next.setPosition(next.getPosition() - 1);
@@ -107,9 +107,9 @@ public abstract class IncorporatedItemService<
 
     private List<CH> getSiblingsBetweenPositions(Long parentId, Integer leftBound, Integer rightBound) {
         if (leftBound > rightBound) {
-            return repository.findByParentAndPositionBetween(parentId, rightBound, leftBound - 1);
+            return repository.findByParentIdAndPositionBetween(parentId, rightBound, leftBound - 1);
         } else {
-            return repository.findByParentAndPositionBetween(parentId, leftBound + 1, rightBound);
+            return repository.findByParentIdAndPositionBetween(parentId, leftBound + 1, rightBound);
         }
     }
 

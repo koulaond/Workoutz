@@ -1,6 +1,6 @@
 package com.ondrejkoula.app;
 
-import com.ondrejkoula.repository.IncorporatedItemRepository;
+import com.ondrejkoula.IncorporatedItemRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;

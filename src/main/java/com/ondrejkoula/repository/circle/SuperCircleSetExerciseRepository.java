@@ -1,7 +1,9 @@
 package com.ondrejkoula.repository.circle;
 
+import com.ondrejkoula.IncorporatedItemRepository;
 import com.ondrejkoula.domain.circle.SuperCircleSetExercise;
-import com.ondrejkoula.repository.IncorporatedItemRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface SuperCircleSetExerciseRepository extends IncorporatedItemRepository<SuperCircleSetExercise, Long> {
+public interface SuperCircleSetExerciseRepository extends JpaRepository<SuperCircleSetExercise, Long>,
+        IncorporatedItemRepository<SuperCircleSetExercise> {
 }
