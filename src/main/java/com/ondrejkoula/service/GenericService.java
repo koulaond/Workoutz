@@ -2,10 +2,17 @@ package com.ondrejkoula.service;
 
 
 import com.ondrejkoula.domain.DomainEntity;
+import com.ondrejkoula.exception.DataNotFoundException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.List;
 import java.util.Optional;
+
+import static java.util.Collections.singletonMap;
 
 @Slf4j
 public class GenericService<DE extends DomainEntity, R extends JpaRepository<DE, Long>> {
@@ -17,23 +24,27 @@ public class GenericService<DE extends DomainEntity, R extends JpaRepository<DE,
     }
 
     public DE findById(Long id) {
-        log.info("Getting {} with ID: {}", getClass().getSimpleName(), id);
         Optional<DE> found = repository.findById(id);
+        return found.orElseThrow(() -> new DataNotFoundException("Data not found", "notFound", singletonMap("id", id.toString())));
+    }
 
-        if (!found.isPresent()) {
-            log.info("{} with ID: {} not exists.", getClass().getSimpleName(), id);
-            return null; // TODO throw NotFound exception
-        }
+    public List<DE> findAll() {
+        return repository.findAll();
+    }
 
-        log.info("{} with ID: {} found.", getClass().getSimpleName(), id);
-        return found.get();
+    public List<DE> findAll(Sort sort) {
+        return repository.findAll(sort);
+    }
+
+    public Page<DE> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     public DE save(DE toSave) {
-        log.info("Saving {}: {}", getClass().getSimpleName(), toSave.loggableString());
-        DE saved = repository.save(toSave);
+        return repository.save(toSave);
+    }
 
-        log.info("{} successfully saved: {}", getClass().getSimpleName(), saved.loggableString());
-        return saved;
+    public void deleteById(Long id) {
+        repository.deleteById(id);
     }
 }

@@ -7,48 +7,26 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
-
 @Slf4j
 @Component
-public class SetsAndRepetitionsService {
-
-    private final SetsAndRepetitionsRepository repository;
+public class SetsAndRepetitionsService extends GenericService<SetsAndRepetitions, SetsAndRepetitionsRepository>{
 
     @Autowired
     public SetsAndRepetitionsService(SetsAndRepetitionsRepository repository) {
-        this.repository = repository;
-    }
-
-    public SetsAndRepetitions save(SetsAndRepetitions setsAndRepetitions) {
-        log.info("Saving Sets and Repetitions exercise.");
-        return repository.save(setsAndRepetitions);
-    }
-
-    public SetsAndRepetitions findById(Long id) {
-        log.info("Getting Sets and Repetitions exercise with ID:  " + id);
-        Optional<SetsAndRepetitions> found = repository.findById(id);
-        if (!found.isPresent()) {
-            log.info("Sets and Repetitions exercise with ID:  " + id + " not exists.");
-            return null; // TODO throw NotFound exception
-        }
-        log.info("Sets and Repetitions exercise with ID:  " + id + " found.");
-        return found.get();
-    }
-
-    public void deleteById(Long id) {
-        log.info("Deleting Sets and Repetitions exercise with ID:  " + id);
-        repository.deleteById(id);
+        super(repository);
     }
 
     public SetsAndRepetitions markAsReady(Long id) {
         SetsAndRepetitions setsAndRepetitions = findById(id);
         Status status = Status.valueOf(setsAndRepetitions.getStatus());
+
         if (Status.READY.equals(status)) {
             log.info("Sets and repetitions with ID {} are already set as ready", id);
             return setsAndRepetitions;
         }
+
         setsAndRepetitions.setStatus(Status.READY.name());
         return save(setsAndRepetitions);
     }
+
 }

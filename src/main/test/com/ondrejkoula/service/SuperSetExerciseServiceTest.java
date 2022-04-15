@@ -95,7 +95,7 @@ class SuperSetExerciseServiceTest {
 
         service.changeItemPosition(formerlyFourth.getId(), 0);
 
-        List<SuperSetExercise> allExercises = superSetExerciseRepository.findBySuperSetId(parentSet.getId());
+        List<SuperSetExercise> allExercises = superSetExerciseRepository.findByParentOrderByPosition(parentSet.getId());
         Assertions.assertThat(allExercises).hasSize(4);
         Assertions.assertThat(allExercises.get(0).getNote()).isEqualTo("formerlyFourth");
         Assertions.assertThat(allExercises.get(1).getNote()).isEqualTo("formerlyFirst");
@@ -114,7 +114,7 @@ class SuperSetExerciseServiceTest {
 
         service.changeItemPosition(formerlyFirst.getId(), 3);
 
-        List<SuperSetExercise> allExercises = superSetExerciseRepository.findBySuperSetId(parentSet.getId());
+        List<SuperSetExercise> allExercises = superSetExerciseRepository.findByParentOrderByPosition(parentSet.getId());
         Assertions.assertThat(allExercises).hasSize(4);
         Assertions.assertThat(allExercises.get(3).getNote()).isEqualTo("formerlyFirst");
         Assertions.assertThat(allExercises.get(0).getNote()).isEqualTo("formerlySecond");
@@ -160,7 +160,7 @@ class SuperSetExerciseServiceTest {
 
         service.removeExistingItemFromParent(formerlyFirst.getId());
 
-        List<SuperSetExercise> allExercises = superSetExerciseRepository.findBySuperSetId(parentSet.getId());
+        List<SuperSetExercise> allExercises = superSetExerciseRepository.findByParentOrderByPosition(parentSet.getId());
 
         Assertions.assertThat(allExercises).hasSize(3);
         Assertions.assertThat(allExercises.get(0).getNote()).isEqualTo("formerlySecond");
