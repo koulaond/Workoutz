@@ -1,8 +1,8 @@
 package com.ondrejkoula.repository.circle;
 
-import com.ondrejkoula.domain.circle.SuperCircle;
-import com.ondrejkoula.domain.circle.SuperCircleSet;
-import com.ondrejkoula.domain.circle.SuperCircleSetExercise;
+import com.ondrejkoula.domain.exercise.circle.SuperCircle;
+import com.ondrejkoula.domain.exercise.circle.SuperCircleSet;
+import com.ondrejkoula.domain.exercise.circle.SuperCircleSetExercise;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

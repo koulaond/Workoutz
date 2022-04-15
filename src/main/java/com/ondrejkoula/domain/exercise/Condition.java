@@ -1,5 +1,6 @@
-package com.ondrejkoula.domain;
+package com.ondrejkoula.domain.exercise;
 
+import com.ondrejkoula.domain.DomainEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "conditions")
-public class Condition extends DomainEntity{
+public class Condition extends DomainEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")

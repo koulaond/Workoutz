@@ -1,5 +1,6 @@
-package com.ondrejkoula.domain;
+package com.ondrejkoula.domain.exercise;
 
+import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.ExercisePrescriptionDTO;
 import lombok.*;
 
@@ -11,7 +12,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "exercise_prescriptions")
-public class ExercisePrescription extends DomainEntity{
+public class ExercisePrescription extends DomainEntity {
 
     @Column(name = "label")
     private String label;

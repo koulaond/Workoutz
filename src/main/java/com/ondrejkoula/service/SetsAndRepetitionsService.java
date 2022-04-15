@@ -1,6 +1,6 @@
 package com.ondrejkoula.service;
 
-import com.ondrejkoula.domain.SetsAndRepetitions;
+import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
 import com.ondrejkoula.domain.Status;
 import com.ondrejkoula.repository.SetsAndRepetitionsRepository;
 import lombok.extern.slf4j.Slf4j;

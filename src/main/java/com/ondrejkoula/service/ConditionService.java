@@ -1,6 +1,6 @@
 package com.ondrejkoula.service;
 
-import com.ondrejkoula.domain.Condition;
+import com.ondrejkoula.domain.exercise.Condition;
 import com.ondrejkoula.repository.ConditionRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

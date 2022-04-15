@@ -1,6 +1,6 @@
-package com.ondrejkoula.domain.circle;
+package com.ondrejkoula.domain.exercise.circle;
 
-import com.ondrejkoula.domain.ExercisePrescription;
+import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.domain.IncorporatedItem;
 import lombok.Builder;
 import lombok.Getter;

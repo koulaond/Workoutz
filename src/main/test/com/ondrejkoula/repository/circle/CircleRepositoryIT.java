@@ -1,6 +1,6 @@
 package com.ondrejkoula.repository.circle;
 
-import com.ondrejkoula.domain.circle.Circle;
+import com.ondrejkoula.domain.exercise.circle.Circle;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;

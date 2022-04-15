@@ -1,6 +1,6 @@
-package com.ondrejkoula.domain.superset;
+package com.ondrejkoula.domain.exercise.superset;
 
-import com.ondrejkoula.domain.ExercisePrescription;
+import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.domain.IncorporatedItem;
 import com.ondrejkoula.dto.SuperSetExerciseDTO;
 import lombok.Builder;

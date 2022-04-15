@@ -1,6 +1,6 @@
 package com.ondrejkoula.service.circle;
 
-import com.ondrejkoula.domain.circle.Circle;
+import com.ondrejkoula.domain.exercise.circle.Circle;
 import com.ondrejkoula.repository.circle.CircleRepository;
 import com.ondrejkoula.service.GenericService;
 import lombok.extern.slf4j.Slf4j;

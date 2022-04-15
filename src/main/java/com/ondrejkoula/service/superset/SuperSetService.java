@@ -1,6 +1,6 @@
 package com.ondrejkoula.service.superset;
 
-import com.ondrejkoula.domain.superset.SuperSet;
+import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.repository.superset.SuperSetRepository;
 import com.ondrejkoula.service.GenericService;
 import lombok.extern.slf4j.Slf4j;

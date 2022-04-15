@@ -1,5 +1,6 @@
-package com.ondrejkoula.domain;
+package com.ondrejkoula.domain.exercise;
 
+import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.ExerciseTypeDTO;
 import lombok.*;
 

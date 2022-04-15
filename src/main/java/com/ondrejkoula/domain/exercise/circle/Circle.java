@@ -1,4 +1,4 @@
-package com.ondrejkoula.domain.circle;
+package com.ondrejkoula.domain.exercise.circle;
 
 import com.ondrejkoula.domain.DomainEntity;
 import lombok.*;

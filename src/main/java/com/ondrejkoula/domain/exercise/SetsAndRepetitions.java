@@ -1,5 +1,6 @@
-package com.ondrejkoula.domain;
+package com.ondrejkoula.domain.exercise;
 
+import com.ondrejkoula.domain.DomainEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "sets_and_repetitions")
-public class SetsAndRepetitions extends DomainEntity{
+public class SetsAndRepetitions extends DomainEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")

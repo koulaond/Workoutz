@@ -1,6 +1,6 @@
 package com.ondrejkoula.service;
 
-import com.ondrejkoula.domain.ExerciseType;
+import com.ondrejkoula.domain.exercise.ExerciseType;
 import com.ondrejkoula.repository.ExerciseTypeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;

@@ -1,7 +1,7 @@
 package com.ondrejkoula.service.circle;
 
-import com.ondrejkoula.domain.circle.SuperCircleSet;
-import com.ondrejkoula.domain.circle.SuperCircleSetExercise;
+import com.ondrejkoula.domain.exercise.circle.SuperCircleSet;
+import com.ondrejkoula.domain.exercise.circle.SuperCircleSetExercise;
 import com.ondrejkoula.repository.circle.SuperCircleSetExerciseRepository;
 import com.ondrejkoula.repository.circle.SuperCircleSetRepository;
 import com.ondrejkoula.service.IncorporatedItemService;

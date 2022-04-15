@@ -1,4 +1,4 @@
-package com.ondrejkoula.domain.superset;
+package com.ondrejkoula.domain.exercise.superset;
 
 import com.ondrejkoula.domain.DomainEntity;
 import lombok.*;

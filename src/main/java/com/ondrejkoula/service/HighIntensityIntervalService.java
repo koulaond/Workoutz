@@ -1,6 +1,6 @@
 package com.ondrejkoula.service;
 
-import com.ondrejkoula.domain.HighIntensityInterval;
+import com.ondrejkoula.domain.exercise.HighIntensityInterval;
 import com.ondrejkoula.repository.HighIntensityIntervalRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
