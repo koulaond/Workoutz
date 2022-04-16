@@ -1,6 +1,5 @@
 package com.ondrejkoula.domain.exercise;
 
-import com.ondrejkoula.domain.DomainEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,7 +13,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "sets_and_repetitions")
-public class SetsAndRepetitions extends DomainEntity {
+public class SetsAndRepetitions extends Exercise {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
@@ -51,8 +50,10 @@ public class SetsAndRepetitions extends DomainEntity {
     private Integer maxTimeMin;
 
     @Builder
-    public SetsAndRepetitions(ExercisePrescription exercisePrescription, Integer seriesCount, Integer seriesCountGoal, Integer repetitionsCount,
+    public SetsAndRepetitions(Long id, String status, String note, ExercisePrescription exercisePrescription,
+                              Integer seriesCount, Integer seriesCountGoal, Integer repetitionsCount,
                               Integer repetitionsCountGoal, Integer weight, Integer weightGoal, Integer maxTimeSec, Integer maxTimeMin) {
+        super(id, status, note);
         this.exercisePrescription = exercisePrescription;
         this.seriesCount = seriesCount;
         this.seriesCountGoal = seriesCountGoal;

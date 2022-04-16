@@ -1,16 +1,21 @@
 package com.ondrejkoula.domain.exercise.circle;
 
-import com.ondrejkoula.domain.DomainEntity;
-import lombok.*;
+import com.ondrejkoula.domain.exercise.Exercise;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Setter
 @Entity
 @NoArgsConstructor
 @Table(name = "circles")
-public class Circle extends DomainEntity {
+public class Circle extends Exercise {
 
     @Column(name = "sets_count")
     private Integer setsCount;

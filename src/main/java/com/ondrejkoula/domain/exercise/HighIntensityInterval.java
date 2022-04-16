@@ -14,7 +14,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "high_intensity_intervals")
-public class HighIntensityInterval extends DomainEntity {
+public class HighIntensityInterval extends Exercise {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")

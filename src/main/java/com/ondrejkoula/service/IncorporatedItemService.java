@@ -4,7 +4,7 @@ import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.IncorporatedItem;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.ValidationException;
-import com.ondrejkoula.IncorporatedItemRepository;
+import com.ondrejkoula.repository.IncorporatedItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -18,8 +18,11 @@ import static java.util.Objects.isNull;
 
 @Slf4j
 public abstract class IncorporatedItemService<
-        CH extends IncorporatedItem<P>, CHR extends IncorporatedItemRepository<CH> & JpaRepository<CH, Long>,
-        P extends DomainEntity, PR extends JpaRepository<P, Long>>
+        CH extends IncorporatedItem<P>,
+        CHR extends IncorporatedItemRepository<CH> & JpaRepository<CH, Long>,
+        P extends DomainEntity,
+        PR extends JpaRepository<P, Long>>
+
         extends GenericService<CH, CHR> {
 
     protected final PR parentRepository;
@@ -63,7 +66,7 @@ public abstract class IncorporatedItemService<
 
     public CH changeItemPosition(Long id, Integer newPosition) {
         CH data = repository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", id.toString())) );
+                .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", id.toString())));
 
         long totalCount = repository.countByParentId(data.getParent().getId());
 

@@ -1,6 +1,6 @@
 package com.ondrejkoula.domain.exercise.circle;
 
-import com.ondrejkoula.domain.DomainEntity;
+import com.ondrejkoula.domain.exercise.Exercise;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,7 +18,7 @@ import static java.util.Objects.isNull;
 @NoArgsConstructor
 @Entity
 @Table(name = "super_circles")
-public class SuperCircle extends DomainEntity {
+public class SuperCircle extends Exercise {
 
     @Column(name = "prepare_time")
     private Integer prepareTime;

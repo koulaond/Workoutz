@@ -1,7 +1,10 @@
 package com.ondrejkoula.domain.exercise.superset;
 
-import com.ondrejkoula.domain.DomainEntity;
-import lombok.*;
+import com.ondrejkoula.domain.exercise.Exercise;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
@@ -13,7 +16,7 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @Table(name = "super_sets")
-public class SuperSet extends DomainEntity {
+public class SuperSet extends Exercise {
 
     @Column(name = "series_count")
     private Integer seriesCount;

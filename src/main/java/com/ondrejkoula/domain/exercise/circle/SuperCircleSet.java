@@ -19,7 +19,7 @@ import static java.util.stream.Collectors.joining;
 @Table(name = "super_circle_sets")
 public class SuperCircleSet extends DomainEntity {
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SuperCircleSetExercise> setExercises;
 
     @OneToOne(fetch = FetchType.LAZY)
