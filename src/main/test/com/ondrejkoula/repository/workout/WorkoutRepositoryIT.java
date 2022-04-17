@@ -46,7 +46,7 @@ public class WorkoutRepositoryIT {
                 .position(0)
                 .build());
 
-        List<WorkoutExercise> filtered = workoutExerciseRepository.getWorkflowsForExercise(setsAndRepetitions.getId());
+        List<WorkoutExercise> filtered = workoutExerciseRepository.getWorkoutsForExercise(setsAndRepetitions.getId());
 
         assertThat(filtered).hasSize(1).satisfies(list ->{
             WorkoutExercise exercise = list.iterator().next();

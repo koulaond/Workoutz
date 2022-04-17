@@ -39,14 +39,14 @@ public class WorkoutService extends GenericService<Workout, WorkoutRepository> {
                 .collect(Collectors.toList());
     }
 
-    public void assignExerciseToWorkflow(Long workoutId, Long exerciseId, Integer position) {
+    public void assignExerciseToWorkout(Long workoutId, Long exerciseId, Integer position) {
         Exercise exercise = exerciseRepository.findById(exerciseId)
                 .orElseThrow(() -> new DataNotFoundException("Exercise not found", "notFound"));
 
         Workout workout = repository.findById(workoutId)
                 .orElseThrow(() -> new DataNotFoundException("Workout not found", "notFound"));
 
-        List<WorkoutExercise> workoutExercises = workoutExerciseRepository.getWorkflowsForExerciseAfterPosition(exerciseId, position);
+        List<WorkoutExercise> workoutExercises = workoutExerciseRepository.getExercisesForWorkoutAfterPosition(workoutId, position);
 
         workoutExercises.forEach(following -> {
             following.setPosition(following.getPosition() + 1);
@@ -60,7 +60,7 @@ public class WorkoutService extends GenericService<Workout, WorkoutRepository> {
     }
 
     private List<WorkoutExercise> getForExercise(Long exerciseId) {
-        return workoutExerciseRepository.getWorkflowsForExercise(exerciseId);
+        return workoutExerciseRepository.getWorkoutsForExercise(exerciseId);
     }
 
 }

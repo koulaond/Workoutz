@@ -10,11 +10,14 @@ import java.util.List;
 public interface WorkoutExerciseRepository extends JpaRepository<WorkoutExercise, Long> {
 
     @Query("select w from WorkoutExercise w where w.pk.exercise.id = :exerciseId order by w.position")
-    List<WorkoutExercise> getWorkflowsForExercise(@Param("exerciseId") Long exerciseId);
+    List<WorkoutExercise> getWorkoutsForExercise(@Param("exerciseId") Long exerciseId);
 
-    @Query("select w from WorkoutExercise w where w.pk.exercise.id = :exerciseId and w.position > :positionAfter order by w.position")
-    List<WorkoutExercise> getWorkflowsForExerciseAfterPosition(@Param("exerciseId") Long exerciseId,
-                                                               @Param("positionAfter") Integer positionAfter);
+    @Query("select w from WorkoutExercise w where w.pk.workout.id = :workoutId order by w.position")
+    List<WorkoutExercise> getExercisesForWorkout(@Param("workoutId") Long workoutId);
 
+
+    @Query("select w from WorkoutExercise w where w.pk.workout.id = :workoutId and w.position >= :positionAfter order by w.position")
+    List<WorkoutExercise> getExercisesForWorkoutAfterPosition(@Param("workoutId") Long workoutId,
+                                                              @Param("positionAfter") Integer positionAfter);
 
 }
