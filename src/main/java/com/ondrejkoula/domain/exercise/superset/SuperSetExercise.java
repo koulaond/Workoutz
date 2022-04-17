@@ -2,7 +2,7 @@ package com.ondrejkoula.domain.exercise.superset;
 
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.domain.IncorporatedItem;
-import com.ondrejkoula.dto.SuperSetExerciseDTO;
+import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

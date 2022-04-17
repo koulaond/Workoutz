@@ -1,7 +1,7 @@
 package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.dto.ExercisePrescriptionDTO;
+import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
 import lombok.*;
 
 import javax.persistence.*;
@@ -50,10 +50,9 @@ public class ExercisePrescription extends DomainEntity {
         if (!Objects.isNull(exerciseType)) {
             exTypeLS = exerciseType.loggableString();
         }
-        String stringBuilder = "Prescription details: [label: " + label +
+        return "Prescription details: [label: " + label +
                 ", description: " + description +
                 ", exercise type details: " + exTypeLS +
                 "]";
-        return stringBuilder;
     }
 }

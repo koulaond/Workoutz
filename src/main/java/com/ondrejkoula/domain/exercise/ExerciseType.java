@@ -1,7 +1,7 @@
 package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.dto.ExerciseTypeDTO;
+import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
 import lombok.*;
 
 import javax.persistence.*;

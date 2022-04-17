@@ -1,4 +1,4 @@
-package com.ondrejkoula.dto;
+package com.ondrejkoula.dto.exercise.superset;
 
 import lombok.Builder;
 import lombok.Data;
