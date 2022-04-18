@@ -1,6 +1,5 @@
 package com.ondrejkoula.domain.exercise;
 
-import com.ondrejkoula.domain.DomainEntity;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -43,12 +42,12 @@ public class HighIntensityInterval extends Exercise {
 
     @Override
     public String loggableString() {
+        String loggableString = "null";
 
-        String exPrescLoggableString = "null";
         if (!Objects.isNull(exercisePrescription)) {
-            exPrescLoggableString = exercisePrescription.loggableString();
+            loggableString = exercisePrescription.loggableString();
         }
         return "High-intensity interval exercise: [intervals count: " + intervalsCount + ", intensity time: "
-                + intensityIntervalTime + ", calm time: " + calmIntervalTime + ", prescription details: " + exPrescLoggableString + "]";
+                + intensityIntervalTime + ", calm time: " + calmIntervalTime + ", prescription details: " + loggableString + "]";
     }
 }
