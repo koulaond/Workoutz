@@ -8,9 +8,11 @@ import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
 import com.ondrejkoula.service.exercise.ExerciseListService;
+import com.ondrejkoula.service.merger.DataMerger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -29,6 +31,8 @@ class WorkoutServiceTest {
 
     ExerciseListService exerciseListService;
 
+    DataMerger dataMerger = Mockito.mock(DataMerger.class);
+
     @Autowired
     WorkoutRepository workoutRepository;
 
@@ -43,7 +47,7 @@ class WorkoutServiceTest {
 
     @BeforeEach
     void setup() {
-        workoutService = new WorkoutService(workoutRepository, exerciseRepository, workoutExerciseRepository);
+        workoutService = new WorkoutService(workoutRepository, dataMerger, exerciseRepository, workoutExerciseRepository);
         exerciseListService = new ExerciseListService(workoutExerciseRepository);
     }
 
