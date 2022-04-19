@@ -6,10 +6,12 @@ import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.exercise.superset.SuperSetRepository;
 import com.ondrejkoula.service.exercise.superset.SuperSetExerciseService;
+import com.ondrejkoula.service.merger.DataMerger;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -33,9 +35,11 @@ class SuperSetExerciseServiceTest {
 
     SuperSetExerciseService service;
 
+    DataMerger dataMerger = Mockito.mock(DataMerger.class);
+
     @BeforeEach
     void setup() {
-        service = new SuperSetExerciseService(superSetExerciseRepository, superSetRepository);
+        service = new SuperSetExerciseService(superSetExerciseRepository, superSetRepository, dataMerger);
     }
 
 

@@ -5,6 +5,7 @@ import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
 import com.ondrejkoula.repository.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.exercise.superset.SuperSetRepository;
 import com.ondrejkoula.service.IncorporatedItemService;
+import com.ondrejkoula.service.merger.DataMerger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -15,7 +16,8 @@ public class SuperSetExerciseService extends IncorporatedItemService<SuperSetExe
 
     @Autowired
     public SuperSetExerciseService(SuperSetExerciseRepository repository,
-                                   SuperSetRepository superSetRepository) {
-        super(repository, superSetRepository);
+                                   SuperSetRepository superSetRepository,
+                                   DataMerger dataMerger) {
+        super(repository, superSetRepository, dataMerger);
     }
 }

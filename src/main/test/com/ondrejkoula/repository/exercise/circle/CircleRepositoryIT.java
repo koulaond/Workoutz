@@ -24,11 +24,10 @@ public class CircleRepositoryIT {
     void shouldCreateAndDeleteCircleExercise() {
 
         Circle circle = Circle.builder()
-                .id(1L)
                 .status("DRAFT")
                 .prepareTime(15)
                 .build();
-        repository.save(circle);
+        Circle savedCircle = repository.save(circle);
 
         List<Circle> all = repository.findAll();
 
@@ -36,7 +35,7 @@ public class CircleRepositoryIT {
                 .hasSize(1)
                 .satisfies(list -> assertThat(list.get(0))
                         .hasFieldOrPropertyWithValue("status", "DRAFT")
-                        .hasFieldOrPropertyWithValue("id", 1L)
+                        .hasFieldOrPropertyWithValue("id", savedCircle.getId())
                         .hasFieldOrPropertyWithValue("prepareTime", 15));
 
         repository.deleteById(circle.getId());
