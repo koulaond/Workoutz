@@ -3,6 +3,7 @@ package com.ondrejkoula.service;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.exception.DataNotFoundException;
+import com.ondrejkoula.service.merger.DataMerger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,6 +13,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
+import static java.lang.String.format;
 import static java.util.Collections.singletonMap;
 
 @Slf4j
@@ -19,8 +21,11 @@ public class GenericService<DE extends DomainEntity, R extends JpaRepository<DE,
 
     protected final R repository;
 
-    public GenericService(R repository) {
+    protected final DataMerger dataMerger;
+
+    public GenericService(R repository, DataMerger dataMerger) {
         this.repository = repository;
+        this.dataMerger = dataMerger;
     }
 
     public DE findById(Long id) {
@@ -40,8 +45,17 @@ public class GenericService<DE extends DomainEntity, R extends JpaRepository<DE,
         return repository.findAll(pageable);
     }
 
-    public DE save(DE toSave) {
+    public DE create(DE toSave) {
         return repository.save(toSave);
+    }
+
+    public DE update(DE toUpdate) {
+        DE foundExistingRecord = repository.findById(toUpdate.getId()).orElseThrow(()
+                -> new DataNotFoundException(format("%s with id: %s not found",
+                toUpdate.getClass().getSimpleName() , toUpdate.getId()), "notFound"));
+
+        dataMerger.mergeSourceToTarget(toUpdate, foundExistingRecord);
+        return repository.save(foundExistingRecord);
     }
 
     public void deleteById(Long id) {

@@ -4,6 +4,7 @@ import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
 import com.ondrejkoula.domain.Status;
 import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import com.ondrejkoula.service.GenericService;
+import com.ondrejkoula.service.merger.DataMerger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Component;
 public class SetsAndRepetitionsService extends GenericService<SetsAndRepetitions, SetsAndRepetitionsRepository> {
 
     @Autowired
-    public SetsAndRepetitionsService(SetsAndRepetitionsRepository repository) {
-        super(repository);
+    public SetsAndRepetitionsService(SetsAndRepetitionsRepository repository, DataMerger dataMerger) {
+        super(repository, dataMerger);
     }
 
     public SetsAndRepetitions markAsReady(Long id) {
@@ -27,7 +28,7 @@ public class SetsAndRepetitionsService extends GenericService<SetsAndRepetitions
         }
 
         setsAndRepetitions.setStatus(Status.READY.name());
-        return save(setsAndRepetitions);
+        return create(setsAndRepetitions);
     }
 
 }
