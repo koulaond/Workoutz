@@ -29,6 +29,7 @@ public class ExerciseType extends DomainEntity {
     public static ExerciseType from(ExerciseTypeDTO dto) {
         return ExerciseType.builder()
                 .status(dto.getStatus())
+                .note(dto.getNote())
                 .type(dto.getType())
                 .category(dto.getCategory())
                 .build();

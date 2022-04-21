@@ -4,10 +4,7 @@ import com.ondrejkoula.domain.exercise.ExerciseType;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
 import com.ondrejkoula.service.exercise.ExerciseTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1/exercises/types")
@@ -20,7 +17,7 @@ public class ExerciseTypeEndpoint {
         this.exerciseTypeService = exerciseTypeService;
     }
 
-    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @PostMapping(value = "/create", produces = "application/json")
     public ExerciseTypeDTO create(@RequestBody ExerciseTypeDTO exerciseType) {
         ExerciseType toCreate = ExerciseType.from(exerciseType);
 

@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import java.lang.reflect.Field;
 
 @Component
-public abstract class DataMerger {
+public class DataMerger {
 
     @SneakyThrows
     public <DE extends DomainEntity> void mergeSourceToTarget(DE source, DE target) {
