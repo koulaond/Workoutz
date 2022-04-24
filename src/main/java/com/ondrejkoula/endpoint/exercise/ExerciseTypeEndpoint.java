@@ -1,6 +1,7 @@
 package com.ondrejkoula.endpoint.exercise;
 
 import com.ondrejkoula.domain.exercise.ExerciseType;
+import com.ondrejkoula.dto.DataChanges;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
 import com.ondrejkoula.service.exercise.ExerciseTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,10 +19,18 @@ public class ExerciseTypeEndpoint {
     }
 
     @PostMapping(value = "/create", produces = "application/json")
-    public ExerciseTypeDTO create(@RequestBody ExerciseTypeDTO exerciseType) {
-        ExerciseType toCreate = ExerciseType.from(exerciseType);
+    public ExerciseTypeDTO create(@RequestBody ExerciseTypeDTO dto) {
+        ExerciseType toCreate = ExerciseType.from(dto);
 
         ExerciseType saved = exerciseTypeService.create(toCreate);
         return ExerciseTypeDTO.from(saved);
+    }
+
+    @PutMapping(value = "/{id}/update", produces = "application/json")
+    public ExerciseTypeDTO update(@PathVariable("id") Long id, @RequestBody DataChanges dataChanges) {
+
+
+        ExerciseType updated = exerciseTypeService.update(id, dataChanges);
+        return ExerciseTypeDTO.from(updated);
     }
 }

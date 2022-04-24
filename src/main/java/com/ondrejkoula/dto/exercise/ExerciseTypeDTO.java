@@ -30,6 +30,7 @@ public class ExerciseTypeDTO extends AbstractDTO {
                 .id(exerciseType.getId())
                 .status(exerciseType.getStatus())
                 .type(exerciseType.getType())
+                .note(exerciseType.getNote())
                 .category(exerciseType.getCategory())
                 .build();
     }

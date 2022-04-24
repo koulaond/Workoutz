@@ -2,6 +2,7 @@ package com.ondrejkoula.service;
 
 
 import com.ondrejkoula.domain.DomainEntity;
+import com.ondrejkoula.dto.DataChanges;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.service.merger.DataMerger;
 import lombok.extern.slf4j.Slf4j;
@@ -49,12 +50,12 @@ public class GenericService<DE extends DomainEntity, R extends JpaRepository<DE,
         return repository.save(toSave);
     }
 
-    public DE update(DE toUpdate) {
-        DE foundExistingRecord = repository.findById(toUpdate.getId()).orElseThrow(()
-                -> new DataNotFoundException(format("%s with id: %s not found",
-                toUpdate.getClass().getSimpleName() , toUpdate.getId()), "notFound"));
+    public DE update(Long id, DataChanges dataChanges) {
+        DE foundExistingRecord = repository.findById(id).orElseThrow(()
+                -> new DataNotFoundException(format("Item with id: %s not found", id), "notFound"));
 
-        dataMerger.mergeSourceToTarget(toUpdate, foundExistingRecord);
+
+        dataMerger.mergeSourceToTarget(dataChanges, foundExistingRecord);
         return repository.save(foundExistingRecord);
     }
 
