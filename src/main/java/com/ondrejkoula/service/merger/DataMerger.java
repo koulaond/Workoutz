@@ -3,6 +3,8 @@ package com.ondrejkoula.service.merger;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.DataChange;
 import com.ondrejkoula.dto.DataChanges;
+import com.ondrejkoula.exception.InconsistentDataUpdateException;
+import com.ondrejkoula.exception.MissingDataForFieldException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -50,11 +52,11 @@ public class DataMerger {
                 Object newValue = changeForField.getValue();
 
                 if (newValue == null) {
-                    throw new IllegalArgumentException("Missing value"); // TODO throw missing data exception
+                    throw new MissingDataForFieldException(target.getId(), field.getName());
                 }
 
                 if (!field.getType().equals(newValue.getClass())) {
-                    throw new IllegalArgumentException("Incompatible types"); // TODO throw invalid data exception
+                    throw new InconsistentDataUpdateException(target.getId(), field.getName(), field.getType(), newValue);
                 }
 
                 field.set(target, newValue);
