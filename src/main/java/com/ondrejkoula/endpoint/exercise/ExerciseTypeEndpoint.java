@@ -18,7 +18,13 @@ public class ExerciseTypeEndpoint {
         this.exerciseTypeService = exerciseTypeService;
     }
 
-    @PostMapping(value = "/create", produces = "application/json")
+    @GetMapping(value = "/{id}", produces = "application/json")
+    public ExerciseTypeDTO get(@PathVariable("id") Long id) {
+        ExerciseType found = exerciseTypeService.findById(id);
+        return ExerciseTypeDTO.from(found);
+    }
+
+    @PostMapping(produces = "application/json")
     public ExerciseTypeDTO create(@RequestBody ExerciseTypeDTO dto) {
         ExerciseType toCreate = ExerciseType.from(dto);
 
@@ -26,11 +32,15 @@ public class ExerciseTypeEndpoint {
         return ExerciseTypeDTO.from(saved);
     }
 
-    @PutMapping(value = "/{id}/update", produces = "application/json")
+    @PutMapping(value = "/{id}", produces = "application/json")
     public ExerciseTypeDTO update(@PathVariable("id") Long id, @RequestBody DataChanges dataChanges) {
-
 
         ExerciseType updated = exerciseTypeService.update(id, dataChanges);
         return ExerciseTypeDTO.from(updated);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) {
+        exerciseTypeService.deleteById(id);
     }
 }

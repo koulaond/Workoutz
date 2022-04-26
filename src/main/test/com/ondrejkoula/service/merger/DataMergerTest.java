@@ -5,14 +5,12 @@ import com.ondrejkoula.dto.DataChange;
 import com.ondrejkoula.dto.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataUpdateException;
 import com.ondrejkoula.exception.MissingDataForFieldException;
+import com.ondrejkoula.exception.UnsupportedOperationException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.ondrejkoula.dto.DataChange.ChangeType.DELETE;
-import static com.ondrejkoula.dto.DataChange.ChangeType.UPDATE;
 
 class DataMergerTest {
 
@@ -26,16 +24,15 @@ class DataMergerTest {
         Map<String, DataChange> dataChangeMap = new HashMap<>();
 
         dataChangeMap.put("status", DataChange.builder()
-                .changeType(UPDATE).value("new").build());
+                .operation("UPDATE").value("new").build());
 
         dataChangeMap.put("prepareTime", DataChange.builder()
-                .changeType(UPDATE).value(20).build());
+                .operation("UPDATE").value(20).build());
 
-        dataChangeMap.put("workTime", DataChange.builder()
-                .changeType(UPDATE).value(20).build());
+        dataChangeMap.put("workTime", DataChange.builder().value(20).build()); // missing operation - should be update by default
 
         dataChangeMap.put("restTime", DataChange.builder()
-                .changeType(DELETE).build());
+                .operation("DELETE").build());
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
@@ -59,7 +56,7 @@ class DataMergerTest {
         Map<String, DataChange> dataChangeMap = new HashMap<>();
 
         dataChangeMap.put("status", DataChange.builder()
-                .changeType(UPDATE).build());
+                .operation("UPDATE").build());
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
@@ -77,11 +74,29 @@ class DataMergerTest {
         Map<String, DataChange> dataChangeMap = new HashMap<>();
 
         dataChangeMap.put("status", DataChange.builder()
-                .changeType(UPDATE).value(123).build());
+                .operation("UPDATE").value(123).build());
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
         org.junit.jupiter.api.Assertions.assertThrows(InconsistentDataUpdateException.class,
+                () -> dataMerger.mergeSourceToTarget(dataChanges, target));
+    }
+
+    @Test
+    void whenUnsupportedOperationIsGiven_thenUnsupportedOperationExceptionIsThrown() {
+        DataMerger dataMerger = new DataMerger();
+
+        SuperCircle target = SuperCircle.builder().status("old").prepareTime(10)
+                .workTime(10).restTime(10).setsCount(10).build();
+
+        Map<String, DataChange> dataChangeMap = new HashMap<>();
+
+        dataChangeMap.put("status", DataChange.builder()
+                .operation("UPDATEE").value(123).build());
+
+        DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
+
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class,
                 () -> dataMerger.mergeSourceToTarget(dataChanges, target));
     }
 }

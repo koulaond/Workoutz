@@ -5,6 +5,7 @@ import com.ondrejkoula.dto.DataChange;
 import com.ondrejkoula.dto.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataUpdateException;
 import com.ondrejkoula.exception.MissingDataForFieldException;
+import com.ondrejkoula.exception.UnsupportedOperationException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -13,6 +14,8 @@ import javax.persistence.Column;
 import java.lang.reflect.Field;
 import java.util.Map;
 
+import static org.apache.commons.lang3.StringUtils.isBlank;
+
 @Slf4j
 @Component
 public class DataMerger {
@@ -20,17 +23,17 @@ public class DataMerger {
     @SneakyThrows
     public <DE extends DomainEntity> void mergeSourceToTarget(DataChanges dataChanges, DE target) {
 
-        Class<?> c = target.getClass();
-        Map<String, DataChange> changes = dataChanges.getChanges();
+        Class<?> targetObjectClass = target.getClass();
+        Map<String, DataChange> mapOfChanges = dataChanges.getChanges();
 
-        while (c != null) {
-            for (Field field : c.getDeclaredFields()) {
+        while (targetObjectClass != null) {
+            for (Field field : targetObjectClass.getDeclaredFields()) {
                 if (!field.isAnnotationPresent(Column.class)) {
                     continue;
                 }
-                setValueToField(target, changes, field);
+                setValueToField(target, mapOfChanges, field);
             }
-            c = c.getSuperclass();
+            targetObjectClass = targetObjectClass.getSuperclass();
         }
     }
 
@@ -43,12 +46,13 @@ public class DataMerger {
 
         DataChange changeForField = changes.get(field.getName());
 
-        switch (changeForField.getChangeType()) {
-            case DELETE:
+        String changeType = getChangeType(changeForField);
+        switch (changeType) {
+            case "delete":
                 field.set(target, null);
                 break;
 
-            case UPDATE:
+            case "update":
                 Object newValue = changeForField.getValue();
 
                 if (newValue == null) {
@@ -60,7 +64,18 @@ public class DataMerger {
                 }
 
                 field.set(target, newValue);
-
+                break;
+            default:
+                throw new UnsupportedOperationException(target.getId(), field.getName(), changeType);
         }
+    }
+
+    private String getChangeType(DataChange changeForField) {
+        String changeType = changeForField.getOperation();
+
+        if (isBlank(changeType)) {
+            return "update";
+        }
+        return changeType.toLowerCase();
     }
 }

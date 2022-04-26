@@ -12,9 +12,6 @@ public class DataChange {
 
     private Object value;
 
-    private ChangeType changeType;
+    private String operation;
 
-    public enum ChangeType {
-        DELETE, UPDATE
-    }
 }

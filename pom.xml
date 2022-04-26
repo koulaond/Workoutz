@@ -17,22 +17,13 @@
         <version.lombok>1.18.22</version.lombok>
         <version.modelmapper>2.4.4</version.modelmapper>
         <version.apache.collections4>4.4</version.apache.collections4>
-        <version.mariadb.testcontainer>1.16.2</version.mariadb.testcontainer>
+        <version.mariadb.testcontainer>1.16.3</version.mariadb.testcontainer>
         <version.junit>5.8.2</version.junit>
         <version.spring.test>5.3.13</version.spring.test>
+        <version.commons-lang3>3.12.0</version.commons-lang3>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
-
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
@@ -55,6 +46,12 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
             <version>${version.apache.collections4}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>${version.commons-lang3}</version>
         </dependency>
 
         <dependency>
