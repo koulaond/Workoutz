@@ -12,8 +12,13 @@ import org.springframework.stereotype.Component;
 @Component
 public class ExerciseTypeService extends GenericService<ExerciseType, ExerciseTypeRepository> {
 
+    private final ExercisePrescriptionService exercisePrescriptionService;
+
     @Autowired
-    public ExerciseTypeService(ExerciseTypeRepository repository, DataMerger dataMerger) {
+    public ExerciseTypeService(ExerciseTypeRepository repository, DataMerger dataMerger,
+                               ExercisePrescriptionService exercisePrescriptionService) {
         super(repository, dataMerger);
+        this.exercisePrescriptionService = exercisePrescriptionService;
     }
+    
 }

@@ -1,7 +1,6 @@
 package com.ondrejkoula.endpoint.exercise;
 
 import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;
-import com.ondrejkoula.dto.exercise.ExerciseDTOFactory;
 import com.ondrejkoula.dto.exercise.ExercisesForWorkoutDTO;
 import com.ondrejkoula.dto.exercise.WorkoutExerciseListItem;
 import com.ondrejkoula.service.exercise.ExerciseListService;
@@ -29,15 +28,13 @@ public class ExerciseListEndpoint {
     public ExercisesForWorkoutDTO getExercisesForWorkout(@PathVariable("workoutId") Long workoutId) {
         List<ExerciseWithOrderInWorkout> exercisesForWorkout = exerciseListService.getExercisesForWorkout(workoutId);
 
-        ExerciseDTOFactory factory = new ExerciseDTOFactory();
-
         return ExercisesForWorkoutDTO.builder()
                 .workoutId(workoutId)
                 .exercisesCount(exercisesForWorkout.size())
                 .exercises(exercisesForWorkout.stream()
                         .map(exerciseWithOrderInWorkout ->
                                 new WorkoutExerciseListItem(exerciseWithOrderInWorkout.getPosition(),
-                                        factory.getDTOForExercise(exerciseWithOrderInWorkout.getExercise())))
+                                        exerciseWithOrderInWorkout.getExercise().toDTO()))
                         .collect(toList()))
                 .build();
     }

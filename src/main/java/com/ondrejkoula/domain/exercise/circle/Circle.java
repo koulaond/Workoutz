@@ -1,6 +1,7 @@
 package com.ondrejkoula.domain.exercise.circle;
 
 import com.ondrejkoula.domain.exercise.Exercise;
+import com.ondrejkoula.dto.exercise.circle.CircleDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -55,5 +56,21 @@ public class Circle extends Exercise {
     public String loggableString() {
         return "Circle exercise [sets count: " + setsCount + ", circles count: "
                 + circlesInCount + ", prepare time: " + prepareTime + ", ...]";
+    }
+
+    @Override
+    public CircleDTO toDTO() {
+       return CircleDTO.builder()
+               .id(getId())
+               .status(getStatus())
+               .note(getNote())
+               .setsCount(getSetsCount())
+               .circlesInCount(getCirclesInCount())
+               .prepareTime(getPrepareTime())
+               .workTime(getWorkTime())
+               .restTime(getRestTime())
+               .timeBetweenSets(getTimeBetweenSets())
+               .breatheOutTime(getBreatheOutTime())
+               .build();
     }
 }

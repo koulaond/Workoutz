@@ -53,4 +53,18 @@ public class HighIntensityIntervalDTO extends ExerciseDTO {
 
         return builder.build();
     }
+
+    @Override
+    public HighIntensityInterval toDomain() {
+        return HighIntensityInterval.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .intervalsCount(getIntervalsCount())
+                .intervalsCountGoal(getIntervalsCountGoal())
+                .intensityIntervalTime(getIntensityIntervalTime())
+                .calmIntervalTime(getCalmIntervalTime())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDomain() : null)
+                .build();
+    }
 }

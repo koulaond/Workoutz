@@ -44,8 +44,25 @@ public class SuperSetExerciseDTO extends AbstractDTO {
         this.position = position;
     }
 
-    public static SuperSetExerciseDTO from (@NotNull SuperSetExercise superSetExercise) {
+    public static SuperSetExerciseDTO from(@NotNull SuperSetExercise superSetExercise) {
         SuperSetExerciseDTOBuilder builder = SuperSetExerciseDTO.builder();
         return builder.build();
+    }
+
+    @Override
+    public SuperSetExercise toDomain() {
+        return SuperSetExercise.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .repetitionsCount(getRepetitionsCount())
+                .repetitionsCountGoal(getRepetitionsCountGoal())
+                .weight(getWeight())
+                .weightGoal(getWeightGoal())
+                .maxTimeSec(getMaxTimeSec())
+                .maxTimeMin(getMaxTimeMin())
+                .position(getPosition())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDomain() : null)
+                .build();
     }
 }

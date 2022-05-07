@@ -2,7 +2,10 @@ package com.ondrejkoula.dto.exercise;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
@@ -43,6 +46,18 @@ public class ExercisePrescriptionDTO extends ExerciseDTO {
             builder.exerciseType(ExerciseTypeDTO.from(exercisePrescription.getExerciseType()));
         }
         return builder
+                .build();
+    }
+
+    @Override
+    public ExercisePrescription toDomain() {
+        return ExercisePrescription.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .label(getLabel())
+                .description(getDescription())
+                .exerciseType(getExerciseType()!= null ? getExerciseType().toDomain() : null)
                 .build();
     }
 }

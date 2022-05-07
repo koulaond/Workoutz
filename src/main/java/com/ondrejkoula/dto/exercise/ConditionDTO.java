@@ -43,4 +43,15 @@ public class ConditionDTO extends ExerciseDTO {
         return builder.build();
     }
 
+    @Override
+    public Condition toDomain() {
+        return Condition.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .timeSec(getTimeSec())
+                .timeMin(getTimeMin())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDomain() : null)
+                .build();
+    }
 }

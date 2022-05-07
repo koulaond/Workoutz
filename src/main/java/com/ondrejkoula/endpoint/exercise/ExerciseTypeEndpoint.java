@@ -1,46 +1,30 @@
 package com.ondrejkoula.endpoint.exercise;
 
 import com.ondrejkoula.domain.exercise.ExerciseType;
-import com.ondrejkoula.dto.DataChanges;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
+import com.ondrejkoula.endpoint.GenericEndpoint;
 import com.ondrejkoula.service.exercise.ExerciseTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/exercises/types")
-public class ExerciseTypeEndpoint {
-
-    private final ExerciseTypeService exerciseTypeService;
+public class ExerciseTypeEndpoint extends GenericEndpoint<ExerciseType, ExerciseTypeDTO, ExerciseTypeService> {
 
     @Autowired
-    public ExerciseTypeEndpoint(ExerciseTypeService exerciseTypeService) {
-        this.exerciseTypeService = exerciseTypeService;
+    public ExerciseTypeEndpoint(ExerciseTypeService service) {
+        super(service);
     }
 
-    @GetMapping(value = "/{id}", produces = "application/json")
-    public ExerciseTypeDTO get(@PathVariable("id") Long id) {
-        ExerciseType found = exerciseTypeService.findById(id);
-        return ExerciseTypeDTO.from(found);
+    @Override
+    protected ExerciseType toDomain(ExerciseTypeDTO dto) {
+        return dto.toDomain();
     }
 
-    @PostMapping(produces = "application/json")
-    public ExerciseTypeDTO create(@RequestBody ExerciseTypeDTO dto) {
-        ExerciseType toCreate = ExerciseType.from(dto);
-
-        ExerciseType saved = exerciseTypeService.create(toCreate);
-        return ExerciseTypeDTO.from(saved);
+    @Override
+    protected ExerciseTypeDTO toDTO(ExerciseType domainEntity) {
+        return domainEntity.toDTO();
     }
 
-    @PutMapping(value = "/{id}", produces = "application/json")
-    public ExerciseTypeDTO update(@PathVariable("id") Long id, @RequestBody DataChanges dataChanges) {
-
-        ExerciseType updated = exerciseTypeService.update(id, dataChanges);
-        return ExerciseTypeDTO.from(updated);
-    }
-
-    @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        exerciseTypeService.deleteById(id);
-    }
 }

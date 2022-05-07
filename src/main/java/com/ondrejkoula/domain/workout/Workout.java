@@ -1,6 +1,7 @@
 package com.ondrejkoula.domain.workout;
 
 import com.ondrejkoula.domain.DomainEntity;
+import com.ondrejkoula.dto.AbstractDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -35,6 +36,11 @@ public class Workout extends DomainEntity {
 
     @Override
     public String loggableString() {
+        return null;
+    }
+
+    @Override
+    public AbstractDTO toDTO() {
         return null;
     }
 }

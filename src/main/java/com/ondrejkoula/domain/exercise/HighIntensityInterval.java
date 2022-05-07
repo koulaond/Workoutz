@@ -1,5 +1,6 @@
 package com.ondrejkoula.domain.exercise;
 
+import com.ondrejkoula.dto.exercise.HighIntensityIntervalDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -49,5 +50,19 @@ public class HighIntensityInterval extends Exercise {
         }
         return "High-intensity interval exercise: [intervals count: " + intervalsCount + ", intensity time: "
                 + intensityIntervalTime + ", calm time: " + calmIntervalTime + ", prescription details: " + loggableString + "]";
+    }
+
+    @Override
+    public HighIntensityIntervalDTO toDTO() {
+        return HighIntensityIntervalDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .intervalsCount(getIntervalsCount())
+                .intervalsCountGoal(getIntervalsCountGoal())
+                .intensityIntervalTime(getIntensityIntervalTime())
+                .calmIntervalTime(getCalmIntervalTime())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDTO() : null)
+                .build();
     }
 }

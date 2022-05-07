@@ -1,7 +1,7 @@
 package com.ondrejkoula.domain.exercise.superset;
 
-import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.domain.IncorporatedItem;
+import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
 import lombok.Builder;
 import lombok.Getter;
@@ -73,7 +73,7 @@ public class SuperSetExercise extends IncorporatedItem<SuperSet> {
         return "Super set exercise item: [position: " + position + "prescription details: " + exPrescLoggableString + "]";
     }
 
-    public static SuperSetExercise from(SuperSetExerciseDTO dto) {
+    public static SuperSetExercise fromDTO(SuperSetExerciseDTO dto) {
         SuperSetExerciseBuilder builder = SuperSetExercise.builder()
                 .status(dto.getStatus())
                 .note(dto.getNote())
@@ -91,4 +91,21 @@ public class SuperSetExercise extends IncorporatedItem<SuperSet> {
         return builder.build();
     }
 
+    @Override
+    public SuperSetExerciseDTO toDTO() {
+       return SuperSetExerciseDTO.builder()
+               .id(getId())
+               .status(getStatus())
+               .note(getNote())
+               .position(getPosition())
+               .repetitionsCount(getRepetitionsCount())
+               .repetitionsCountGoal(getRepetitionsCountGoal())
+               .weight(getWeight())
+               .weightGoal(getWeightGoal())
+               .maxTimeSec(getMaxTimeSec())
+               .maxTimeMin(getMaxTimeMin())
+               .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDTO() : null)
+               .build();
+
+    }
 }

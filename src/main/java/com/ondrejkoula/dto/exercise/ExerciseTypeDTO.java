@@ -14,14 +14,14 @@ import javax.validation.constraints.NotNull;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExerciseTypeDTO extends AbstractDTO {
 
-    private String type;
+    private String value;
 
     private String category;
 
     @Builder
-    public ExerciseTypeDTO(Long id, String status, String note, String type, String category) {
+    public ExerciseTypeDTO(Long id, String status, String note, String value, String category) {
         super(id, status, note);
-        this.type = type;
+        this.value = value;
         this.category = category;
     }
 
@@ -29,9 +29,20 @@ public class ExerciseTypeDTO extends AbstractDTO {
         return ExerciseTypeDTO.builder()
                 .id(exerciseType.getId())
                 .status(exerciseType.getStatus())
-                .type(exerciseType.getType())
+                .value(exerciseType.getValue())
                 .note(exerciseType.getNote())
                 .category(exerciseType.getCategory())
+                .build();
+    }
+
+    @Override
+    public ExerciseType toDomain() {
+        return ExerciseType.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .value(getValue())
+                .category(getCategory())
                 .build();
     }
 }

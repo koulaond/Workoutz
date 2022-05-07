@@ -41,4 +41,15 @@ public class SuperCircleSetExerciseDTO extends AbstractDTO {
         }
         return builder.build();
     }
+
+    @Override
+    public SuperCircleSetExercise toDomain() {
+        return SuperCircleSetExercise.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .timeOverriddenSec(getTimeOverriddenSec())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDomain() : null)
+                .build();
+    }
 }

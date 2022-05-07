@@ -1,6 +1,8 @@
 package com.ondrejkoula.domain.exercise.circle;
 
 import com.ondrejkoula.domain.DomainEntity;
+import com.ondrejkoula.dto.exercise.circle.SuperCircleSetDTO;
+import com.ondrejkoula.dto.exercise.circle.SuperCircleSetExerciseDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -8,7 +10,9 @@ import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
@@ -42,5 +46,19 @@ public class SuperCircleSet extends DomainEntity {
                     .collect(joining(";"));
         }
         return "Super circle set: [exercises: " + excsLoggableStrings + "]";
+    }
+
+    @Override
+    public SuperCircleSetDTO toDTO() {
+        List<SuperCircleSetExerciseDTO> setExerciseDTOs = CollectionUtils.isNotEmpty(setExercises)
+                ? setExercises.stream().map(SuperCircleSetExercise::toDTO).collect(Collectors.toList())
+                : new ArrayList<>();
+
+        return SuperCircleSetDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .setExercises(setExerciseDTOs)
+                .build();
     }
 }

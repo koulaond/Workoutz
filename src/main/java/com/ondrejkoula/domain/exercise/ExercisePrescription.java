@@ -2,7 +2,10 @@ package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -54,5 +57,17 @@ public class ExercisePrescription extends DomainEntity {
                 ", description: " + description +
                 ", exercise type details: " + exTypeLS +
                 "]";
+    }
+
+    @Override
+    public ExercisePrescriptionDTO toDTO() {
+        return ExercisePrescriptionDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .label(getLabel())
+                .description(getDescription())
+                .exerciseType(getExerciseType() != null ? getExerciseType().toDTO() : null)
+                .build();
     }
 }

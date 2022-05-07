@@ -57,4 +57,20 @@ public class CircleDTO extends ExerciseDTO {
                 .breatheOutTime(circle.getBreatheOutTime())
                 .build();
     }
+
+    @Override
+    public Circle toDomain() {
+        return Circle.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .setsCount(getSetsCount())
+                .circlesInCount(getCirclesInCount())
+                .prepareTime(getPrepareTime())
+                .workTime(getWorkTime())
+                .restTime(getRestTime())
+                .timeBetweenSets(getTimeBetweenSets())
+                .breatheOutTime(getBreatheOutTime())
+                .build();
+    }
 }

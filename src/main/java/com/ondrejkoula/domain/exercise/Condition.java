@@ -1,5 +1,6 @@
 package com.ondrejkoula.domain.exercise;
 
+import com.ondrejkoula.dto.exercise.ConditionDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,5 +43,17 @@ public class Condition extends Exercise {
         }
         return "Condition exercise: [minutes: "+ timeMin + ", seconds: "
                 + timeSec + ", prescription details: " + exPrescLoggableString + "]";
+    }
+
+    @Override
+    public ConditionDTO toDTO() {
+        return ConditionDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .timeMin(getTimeMin())
+                .timeSec(getTimeSec())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDTO() : null)
+                .build();
     }
 }

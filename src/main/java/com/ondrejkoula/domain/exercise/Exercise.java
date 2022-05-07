@@ -3,6 +3,7 @@ package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.dto.exercise.ExerciseDTO;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,7 +14,7 @@ import java.util.List;
 @Setter
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public class Exercise extends DomainEntity {
+public abstract class Exercise extends DomainEntity {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.exercise", cascade = CascadeType.ALL)
     private List<WorkoutExercise> workoutExercises;
@@ -30,4 +31,7 @@ public class Exercise extends DomainEntity {
     public String loggableString() {
         return "";
     }
+
+    @Override
+    public abstract ExerciseDTO toDTO();
 }

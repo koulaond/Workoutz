@@ -1,5 +1,6 @@
 package com.ondrejkoula.domain.exercise;
 
+import com.ondrejkoula.dto.exercise.SetsAndRepetitionsDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -75,6 +76,24 @@ public class SetsAndRepetitions extends Exercise {
 
         return "Sets and repetitions exercise: [series count: " + seriesCount
                 + ", reps count: " + repetitionsCount + ", prescription details : " + exPrescLoggableString + "]";
+    }
+
+    @Override
+    public SetsAndRepetitionsDTO toDTO() {
+        return SetsAndRepetitionsDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .seriesCount(getSeriesCount())
+                .seriesCountGoal(getSeriesCountGoal())
+                .repetitionsCount(getRepetitionsCount())
+                .repetitionsCountGoal(getRepetitionsCountGoal())
+                .weight(getWeight())
+                .weightGoal(getWeightGoal())
+                .maxTimeSec(getMaxTimeSec())
+                .maxTimeMin(getMaxTimeMin())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDTO() : null)
+                .build();
     }
 }
 

@@ -1,6 +1,10 @@
 package com.ondrejkoula.domain;
 
-import lombok.*;
+import com.ondrejkoula.dto.AbstractDTO;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
@@ -23,4 +27,6 @@ public abstract class DomainEntity implements Loggable {
     @Column(name = "note")
     protected String note;
 
+
+  public abstract AbstractDTO toDTO();
 }

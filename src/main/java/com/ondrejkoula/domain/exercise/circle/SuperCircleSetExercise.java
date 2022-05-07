@@ -1,7 +1,8 @@
 package com.ondrejkoula.domain.exercise.circle;
 
-import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.domain.IncorporatedItem;
+import com.ondrejkoula.domain.exercise.ExercisePrescription;
+import com.ondrejkoula.dto.exercise.circle.SuperCircleSetExerciseDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,8 +39,8 @@ public class SuperCircleSetExercise extends IncorporatedItem<SuperCircleSet> {
 
     @Override
     public String loggableString() {
-
         String exPrescLoggableString = "null";
+
         if (!Objects.isNull(exercisePrescription)) {
             exPrescLoggableString = exercisePrescription.loggableString();
         }
@@ -50,5 +51,16 @@ public class SuperCircleSetExercise extends IncorporatedItem<SuperCircleSet> {
                 position +
                 ", prescription details: " +
                 exPrescLoggableString + "]";
+    }
+
+    @Override
+    public SuperCircleSetExerciseDTO toDTO() {
+        return SuperCircleSetExerciseDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .timeOverriddenSec(getTimeOverriddenSec())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDTO() : null)
+                .build();
     }
 }

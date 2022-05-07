@@ -18,7 +18,7 @@ import static java.lang.String.format;
 import static java.util.Collections.singletonMap;
 
 @Slf4j
-public class GenericService<DE extends DomainEntity, R extends JpaRepository<DE, Long>> {
+public abstract class GenericService<DE extends DomainEntity, R extends JpaRepository<DE, Long>> {
 
     protected final R repository;
 
@@ -53,7 +53,6 @@ public class GenericService<DE extends DomainEntity, R extends JpaRepository<DE,
     public DE update(Long id, DataChanges dataChanges) {
         DE foundExistingRecord = repository.findById(id).orElseThrow(()
                 -> new DataNotFoundException(format("Item with id: %s not found", id), "notFound"));
-
 
         dataMerger.mergeSourceToTarget(dataChanges, foundExistingRecord);
         return repository.save(foundExistingRecord);

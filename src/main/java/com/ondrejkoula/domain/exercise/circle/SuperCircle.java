@@ -1,6 +1,7 @@
 package com.ondrejkoula.domain.exercise.circle;
 
 import com.ondrejkoula.domain.exercise.Exercise;
+import com.ondrejkoula.dto.exercise.circle.SuperCircleDTO;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -59,5 +60,21 @@ public class SuperCircle extends Exercise {
         String setDefinition = !isNull(set) ? set.loggableString() : "null";
         return "Circle exercise [sets count: " + setsCount + ", prepare time: " + prepareTime + ", set definition: "
         + setDefinition + "...]";
+    }
+
+    @Override
+    public SuperCircleDTO toDTO() {
+        return SuperCircleDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .setsCount(getSetsCount())
+                .prepareTime(getPrepareTime())
+                .workTime(getWorkTime())
+                .restTime(getRestTime())
+                .timeBetweenSets(getTimeBetweenSets())
+                .breatheOutTime(getBreatheOutTime())
+                .set(getSet() != null ? getSet().toDTO() : null)
+                .build();
     }
 }

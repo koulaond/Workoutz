@@ -2,11 +2,16 @@ package com.ondrejkoula.dto.exercise.superset;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.superset.SuperSet;
+import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
 import com.ondrejkoula.dto.exercise.ExerciseDTO;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,5 +51,21 @@ public class SuperSetDTO extends ExerciseDTO {
                     .collect(Collectors.toList()));
         }
         return builder.build();
+    }
+
+    @Override
+    public SuperSet toDomain() {
+        List<SuperSetExercise> seriesContentAsDomain = CollectionUtils.isNotEmpty(seriesContent)
+                ? seriesContent.stream().map(SuperSetExerciseDTO::toDomain).collect(Collectors.toList())
+                : new ArrayList<>();
+
+        return SuperSet.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .seriesCount(getSeriesCount())
+                .seriesCountGoal(getSeriesCountGoal())
+                .seriesContent(seriesContentAsDomain)
+                .build();
     }
 }

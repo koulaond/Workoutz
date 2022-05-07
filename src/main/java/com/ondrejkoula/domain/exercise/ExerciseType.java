@@ -2,9 +2,14 @@ package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -14,15 +19,15 @@ import javax.persistence.*;
 public class ExerciseType extends DomainEntity {
 
     @Column(name = "type")
-    private String type;
+    private String value;
 
     @Column(name = "category")
     private String category;
 
     @Builder
-    public ExerciseType(Long id, String status, String note, String type, String category) {
+    public ExerciseType(Long id, String status, String note, String value, String category) {
         super(id, status, note);
-        this.type = type;
+        this.value = value;
         this.category = category;
     }
 
@@ -30,13 +35,24 @@ public class ExerciseType extends DomainEntity {
         return ExerciseType.builder()
                 .status(dto.getStatus())
                 .note(dto.getNote())
-                .type(dto.getType())
+                .value(dto.getValue())
                 .category(dto.getCategory())
                 .build();
     }
 
     @Override
     public String loggableString() {
-        return "Exercise type: [type: " + type + ", category: " + category + "]";
+        return "Exercise type: [value: " + value + ", category: " + category + "]";
+    }
+
+    @Override
+    public ExerciseTypeDTO toDTO() {
+        return ExerciseTypeDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .value(getValue())
+                .category(getCategory())
+                .build();
     }
 }

@@ -2,7 +2,10 @@ package com.ondrejkoula.dto.exercise;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
-import lombok.*;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 
@@ -68,5 +71,23 @@ public class SetsAndRepetitionsDTO extends ExerciseDTO {
             builder.exercisePrescription(ExercisePrescriptionDTO.from(setsAndRepetitions.getExercisePrescription()));
         }
         return builder.build();
+    }
+
+    @Override
+    public SetsAndRepetitions toDomain() {
+        return SetsAndRepetitions.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .seriesCount(getSeriesCount())
+                .seriesCountGoal(getSeriesCountGoal())
+                .repetitionsCount(getRepetitionsCount())
+                .repetitionsCountGoal(getRepetitionsCountGoal())
+                .weight(getWeight())
+                .weightGoal(getWeightGoal())
+                .maxTimeSec(getMaxTimeSec())
+                .maxTimeMin(getMaxTimeMin())
+                .exercisePrescription(getExercisePrescription() != null ? getExercisePrescription().toDomain() : null)
+                .build();
     }
 }
