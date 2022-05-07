@@ -52,4 +52,6 @@ public abstract class GenericEndpoint<DE extends DomainEntity, DTO extends Abstr
 
     protected abstract DTO toDTO(DE domainEntity);
 
+
+
 }

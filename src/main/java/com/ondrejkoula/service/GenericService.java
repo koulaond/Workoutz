@@ -3,6 +3,7 @@ package com.ondrejkoula.service;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.DataChanges;
+import com.ondrejkoula.exception.CascadeDependenciesException;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.service.merger.DataMerger;
 import lombok.extern.slf4j.Slf4j;
@@ -11,11 +12,15 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import static java.lang.String.format;
 import static java.util.Collections.singletonMap;
+import static java.util.stream.Collectors.toMap;
+import static org.apache.commons.collections4.MapUtils.isNotEmpty;
 
 @Slf4j
 public abstract class GenericService<DE extends DomainEntity, R extends JpaRepository<DE, Long>> {
@@ -59,6 +64,25 @@ public abstract class GenericService<DE extends DomainEntity, R extends JpaRepos
     }
 
     public void deleteById(Long id) {
+        Map<String, List<? extends DomainEntity>> allDependencies = findAllDependencies(id);
+
+        if (isNotEmpty(allDependencies)) {
+            Map<String, Integer> occurrences = allDependencies.entrySet().stream()
+                    .collect(toMap(Map.Entry::getKey, entry -> entry.getValue().size()));
+
+            throw new CascadeDependenciesException(id, occurrences);
+        }
         repository.deleteById(id);
     }
+
+    public Map<String, List<? extends DomainEntity>> findAllDependencies(Long id) {
+        Map<String, List<? extends DomainEntity>> allDependencies = new HashMap<>();
+        doFindAllDependencies(id, allDependencies);
+        return allDependencies;
+    }
+
+    protected void doFindAllDependencies(Long id, Map<String, List<? extends DomainEntity>> allDependencies) {
+
+    }
+
 }
