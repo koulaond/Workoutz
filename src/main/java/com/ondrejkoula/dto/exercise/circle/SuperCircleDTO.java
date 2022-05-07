@@ -44,25 +44,6 @@ public class SuperCircleDTO extends ExerciseDTO {
         this.set = set;
     }
 
-    public static SuperCircleDTO from(@NotNull SuperCircle superCircle) {
-        SuperCircleDTOBuilder builder = SuperCircleDTO.builder()
-                .id(superCircle.getId())
-                .status(superCircle.getStatus())
-                .note(superCircle.getNote())
-                .prepareTime(superCircle.getPrepareTime())
-                .workTime(superCircle.getWorkTime())
-                .restTime(superCircle.getRestTime())
-                .timeBetweenSets(superCircle.getTimeBetweenSets())
-                .breatheOutTime(superCircle.getBreatheOutTime())
-                .setsCount(superCircle.getSetsCount());
-
-        if (superCircle.getSet() != null) {
-            builder.set(SuperCircleSetDTO.from(superCircle.getSet()));
-        }
-
-        return builder.build();
-    }
-
     @Override
     public SuperCircle toDomain() {
         return SuperCircle.builder()

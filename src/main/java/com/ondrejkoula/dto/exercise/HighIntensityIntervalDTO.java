@@ -37,23 +37,6 @@ public class HighIntensityIntervalDTO extends ExerciseDTO {
         this.calmIntervalTime = calmIntervalTime;
     }
 
-    public static HighIntensityIntervalDTO from(HighIntensityInterval highIntensityInterval) {
-        HighIntensityIntervalDTOBuilder builder = HighIntensityIntervalDTO.builder()
-                .id(highIntensityInterval.getId())
-                .status(highIntensityInterval.getStatus())
-                .note(highIntensityInterval.getNote())
-                .intervalsCount(highIntensityInterval.getIntervalsCount())
-                .intervalsCountGoal(highIntensityInterval.getIntervalsCountGoal())
-                .intensityIntervalTime(highIntensityInterval.getIntensityIntervalTime())
-                .calmIntervalTime(highIntensityInterval.getCalmIntervalTime());
-
-        if (highIntensityInterval.getExercisePrescription() != null) {
-            builder.exercisePrescription(ExercisePrescriptionDTO.from(highIntensityInterval.getExercisePrescription()));
-        }
-
-        return builder.build();
-    }
-
     @Override
     public HighIntensityInterval toDomain() {
         return HighIntensityInterval.builder()

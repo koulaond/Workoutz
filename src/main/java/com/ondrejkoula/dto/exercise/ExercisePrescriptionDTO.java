@@ -7,8 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -32,21 +30,6 @@ public class ExercisePrescriptionDTO extends ExerciseDTO {
         this.label = label;
         this.exerciseType = exerciseType;
         this.description = description;
-    }
-
-    public static ExercisePrescriptionDTO from(@NotNull ExercisePrescription exercisePrescription) {
-        ExercisePrescriptionDTOBuilder builder = ExercisePrescriptionDTO.builder()
-                .id(exercisePrescription.getId())
-                .status(exercisePrescription.getStatus())
-                .note(exercisePrescription.getNote())
-                .label(exercisePrescription.getLabel())
-                .description(exercisePrescription.getDescription());
-
-        if (exercisePrescription.getExerciseType() != null) {
-            builder.exerciseType(ExerciseTypeDTO.from(exercisePrescription.getExerciseType()));
-        }
-        return builder
-                .build();
     }
 
     @Override

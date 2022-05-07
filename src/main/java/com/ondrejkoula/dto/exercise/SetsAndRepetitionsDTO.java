@@ -7,8 +7,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -54,23 +52,6 @@ public class SetsAndRepetitionsDTO extends ExerciseDTO {
         this.weightGoal = weightGoal;
         this.maxTimeSec = maxTimeSec;
         this.maxTimeMin = maxTimeMin;
-    }
-
-    public static SetsAndRepetitionsDTO from(@NotNull SetsAndRepetitions setsAndRepetitions) {
-        SetsAndRepetitionsDTOBuilder builder = SetsAndRepetitionsDTO.builder()
-                .seriesCount(setsAndRepetitions.getSeriesCount())
-                .seriesCountGoal(setsAndRepetitions.getSeriesCountGoal())
-                .repetitionsCount(setsAndRepetitions.getRepetitionsCount())
-                .repetitionsCountGoal(setsAndRepetitions.getRepetitionsCountGoal())
-                .weight(setsAndRepetitions.getWeight())
-                .weightGoal(setsAndRepetitions.getWeightGoal())
-                .maxTimeSec(setsAndRepetitions.getMaxTimeSec())
-                .maxTimeMin(setsAndRepetitions.getMaxTimeMin());
-
-        if (setsAndRepetitions.getExercisePrescription() != null) {
-            builder.exercisePrescription(ExercisePrescriptionDTO.from(setsAndRepetitions.getExercisePrescription()));
-        }
-        return builder.build();
     }
 
     @Override

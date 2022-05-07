@@ -11,8 +11,6 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.util.Objects;
 
-import static java.util.Objects.isNull;
-
 /**
  * Embedded exercise in Super set series.
  */
@@ -71,24 +69,6 @@ public class SuperSetExercise extends IncorporatedItem<SuperSet> {
         }
 
         return "Super set exercise item: [position: " + position + "prescription details: " + exPrescLoggableString + "]";
-    }
-
-    public static SuperSetExercise fromDTO(SuperSetExerciseDTO dto) {
-        SuperSetExerciseBuilder builder = SuperSetExercise.builder()
-                .status(dto.getStatus())
-                .note(dto.getNote())
-                .repetitionsCount(dto.getRepetitionsCount())
-                .repetitionsCountGoal(dto.getRepetitionsCountGoal())
-                .weight(dto.getWeight())
-                .weightGoal(dto.getWeightGoal())
-                .maxTimeSec(dto.getMaxTimeSec())
-                .maxTimeMin(dto.getMaxTimeMin())
-                .position(dto.getPosition());
-
-        if (!isNull(dto.getExercisePrescription())) {
-            builder.exercisePrescription(ExercisePrescription.from(dto.getExercisePrescription()));
-        }
-        return builder.build();
     }
 
     @Override

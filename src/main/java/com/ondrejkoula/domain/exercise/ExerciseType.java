@@ -31,15 +31,6 @@ public class ExerciseType extends DomainEntity {
         this.category = category;
     }
 
-    public static ExerciseType from(ExerciseTypeDTO dto) {
-        return ExerciseType.builder()
-                .status(dto.getStatus())
-                .note(dto.getNote())
-                .value(dto.getValue())
-                .category(dto.getCategory())
-                .build();
-    }
-
     @Override
     public String loggableString() {
         return "Exercise type: [value: " + value + ", category: " + category + "]";

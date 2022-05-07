@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 public class SuperSetExerciseDTO extends AbstractDTO {
@@ -42,11 +40,6 @@ public class SuperSetExerciseDTO extends AbstractDTO {
         this.maxTimeSec = maxTimeSec;
         this.maxTimeMin = maxTimeMin;
         this.position = position;
-    }
-
-    public static SuperSetExerciseDTO from(@NotNull SuperSetExercise superSetExercise) {
-        SuperSetExerciseDTOBuilder builder = SuperSetExerciseDTO.builder();
-        return builder.build();
     }
 
     @Override

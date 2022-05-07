@@ -9,8 +9,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -27,19 +25,6 @@ public class SuperCircleSetExerciseDTO extends AbstractDTO {
         super(id, status, note);
         this.exercisePrescription = exercisePrescription;
         this.timeOverriddenSec = timeOverriddenSec;
-    }
-
-    public static SuperCircleSetExerciseDTO from(@NotNull SuperCircleSetExercise superCircleSetExercise) {
-        SuperCircleSetExerciseDTOBuilder builder = SuperCircleSetExerciseDTO.builder()
-                .id(superCircleSetExercise.getId())
-                .status(superCircleSetExercise.getStatus())
-                .note(superCircleSetExercise.getNote())
-                .timeOverriddenSec(superCircleSetExercise.getTimeOverriddenSec());
-
-        if (superCircleSetExercise.getExercisePrescription() != null) {
-            builder.exercisePrescription(ExercisePrescriptionDTO.from(superCircleSetExercise.getExercisePrescription()));
-        }
-        return builder.build();
     }
 
     @Override

@@ -7,8 +7,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -23,16 +21,6 @@ public class ExerciseTypeDTO extends AbstractDTO {
         super(id, status, note);
         this.value = value;
         this.category = category;
-    }
-
-    public static ExerciseTypeDTO from(@NotNull ExerciseType exerciseType) {
-        return ExerciseTypeDTO.builder()
-                .id(exerciseType.getId())
-                .status(exerciseType.getStatus())
-                .value(exerciseType.getValue())
-                .note(exerciseType.getNote())
-                .category(exerciseType.getCategory())
-                .build();
     }
 
     @Override

@@ -8,8 +8,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
-
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
@@ -41,21 +39,6 @@ public class CircleDTO extends ExerciseDTO {
         this.restTime = restTime;
         this.timeBetweenSets = timeBetweenSets;
         this.breatheOutTime = breatheOutTime;
-    }
-
-    public static CircleDTO from(@NotNull Circle circle) {
-        return CircleDTO.builder()
-                .id(circle.getId())
-                .status(circle.getStatus())
-                .note(circle.getNote())
-                .setsCount(circle.getSetsCount())
-                .circlesInCount(circle.getCirclesInCount())
-                .prepareTime(circle.getPrepareTime())
-                .workTime(circle.getWorkTime())
-                .restTime(circle.getRestTime())
-                .timeBetweenSets(circle.getTimeBetweenSets())
-                .breatheOutTime(circle.getBreatheOutTime())
-                .build();
     }
 
     @Override

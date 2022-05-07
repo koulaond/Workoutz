@@ -29,20 +29,6 @@ public class ConditionDTO extends ExerciseDTO {
         this.timeMin = timeMin;
     }
 
-    public static ConditionDTO from(Condition condition) {
-        ConditionDTOBuilder builder = ConditionDTO.builder()
-                .id(condition.getId())
-                .status(condition.getStatus())
-                .note(condition.getNote())
-                .timeSec(condition.getTimeSec())
-                .timeMin(condition.getTimeMin());
-
-        if (condition.getExercisePrescription() != null) {
-            builder.exercisePrescription(ExercisePrescriptionDTO.from(condition.getExercisePrescription()));
-        }
-        return builder.build();
-    }
-
     @Override
     public Condition toDomain() {
         return Condition.builder()

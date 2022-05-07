@@ -35,18 +35,6 @@ public class ExercisePrescription extends DomainEntity {
         this.description = description;
     }
 
-    public static ExercisePrescription from(ExercisePrescriptionDTO dto) {
-        ExercisePrescriptionBuilder builder = ExercisePrescription.builder()
-                .status(dto.getStatus())
-                .label(dto.getLabel())
-                .description(dto.getDescription());
-
-        if (!Objects.isNull(dto.getExerciseType())) {
-            builder.exerciseType(ExerciseType.from(dto.getExerciseType()));
-        }
-        return builder.build();
-    }
-
     @Override
     public String loggableString() {
         String exTypeLS = "null";
