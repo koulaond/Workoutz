@@ -15,7 +15,7 @@ public class SetsAndRepetitionsService extends GenericService<SetsAndRepetitions
 
     @Autowired
     public SetsAndRepetitionsService(SetsAndRepetitionsRepository repository, DataMerger dataMerger) {
-        super(repository, dataMerger);
+        super(repository, dataMerger, dataValidator);
     }
 
     public SetsAndRepetitions markAsReady(Long id) {

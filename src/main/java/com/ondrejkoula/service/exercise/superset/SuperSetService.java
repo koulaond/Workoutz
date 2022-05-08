@@ -14,6 +14,6 @@ public class SuperSetService extends GenericService<SuperSet, SuperSetRepository
 
     @Autowired
     public SuperSetService(SuperSetRepository repository, DataMerger dataMerger) {
-       super(repository, dataMerger);
+       super(repository, dataMerger, dataValidator);
     }
 }

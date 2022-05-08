@@ -14,7 +14,7 @@ public class CircleService extends GenericService<Circle, CircleRepository> {
 
     @Autowired
     public CircleService(CircleRepository repository, DataMerger dataMerger) {
-        super(repository, dataMerger);
+        super(repository, dataMerger, dataValidator);
     }
 
 }

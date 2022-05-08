@@ -6,6 +6,7 @@ import com.ondrejkoula.dto.DataChanges;
 import com.ondrejkoula.exception.CascadeDependenciesException;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.service.merger.DataMerger;
+import com.ondrejkoula.service.validation.DataValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,9 +30,12 @@ public abstract class GenericService<DE extends DomainEntity, R extends JpaRepos
 
     protected final DataMerger dataMerger;
 
-    public GenericService(R repository, DataMerger dataMerger) {
+    protected final DataValidator<DE> dataValidator;
+
+    public GenericService(R repository, DataMerger dataMerger, DataValidator<DE> dataValidator) {
         this.repository = repository;
         this.dataMerger = dataMerger;
+        this.dataValidator = dataValidator;
     }
 
     public DE findById(Long id) {
@@ -52,6 +56,7 @@ public abstract class GenericService<DE extends DomainEntity, R extends JpaRepos
     }
 
     public DE create(DE toSave) {
+        dataValidator.validateAllMandatoryDataPresent(toSave);
         return repository.save(toSave);
     }
 

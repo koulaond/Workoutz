@@ -6,6 +6,7 @@ import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.IncorporatedItemRepository;
 import com.ondrejkoula.service.merger.DataMerger;
+import com.ondrejkoula.service.validation.DataValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -28,8 +29,12 @@ public abstract class IncorporatedItemService<
 
     protected final PR parentRepository;
 
-    public IncorporatedItemService(CHR repository, PR parentRepository, DataMerger dataMerger) {
-        super(repository, dataMerger);
+    public IncorporatedItemService(CHR repository,
+                                   DataMerger dataMerger,
+                                   DataValidator<CH> dataValidator,
+                                   PR parentRepository) {
+
+        super(repository, dataMerger, dataValidator);
         this.parentRepository = parentRepository;
     }
 

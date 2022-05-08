@@ -30,7 +30,7 @@ public class WorkoutService extends GenericService<Workout, WorkoutRepository> {
                           DataMerger dataMerger,
                           ExerciseRepository exerciseRepository,
                           WorkoutExerciseRepository workoutExerciseRepository) {
-        super(repository, dataMerger);
+        super(repository, dataMerger, dataValidator);
         this.exerciseRepository = exerciseRepository;
         this.workoutExerciseRepository = workoutExerciseRepository;
     }

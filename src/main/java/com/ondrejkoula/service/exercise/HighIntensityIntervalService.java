@@ -12,6 +12,6 @@ import org.springframework.stereotype.Component;
 public class HighIntensityIntervalService extends GenericService<HighIntensityInterval, HighIntensityIntervalRepository> {
 
     public HighIntensityIntervalService(HighIntensityIntervalRepository repository, DataMerger dataMerger) {
-        super(repository, dataMerger);
+        super(repository, dataMerger, dataValidator);
     }
 }
