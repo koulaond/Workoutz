@@ -5,17 +5,16 @@ import com.ondrejkoula.exception.Errors;
 import java.util.Map;
 import java.util.Objects;
 
-public class RequiredReferenceValidator implements FieldValidator {
+public class RequiredReferenceFieldValidator implements FieldValidator {
 
     private final String fieldName;
 
     private final Object fieldValue;
 
-    public RequiredReferenceValidator(String fieldName, Object fieldValue) {
+    public RequiredReferenceFieldValidator(String fieldName, Object fieldValue) {
         this.fieldName = fieldName;
         this.fieldValue = fieldValue;
     }
-
 
     @Override
     public void validateFieldValue(Map<String, String> validationMessages) {

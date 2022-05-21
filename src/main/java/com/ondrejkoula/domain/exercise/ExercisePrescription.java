@@ -2,6 +2,8 @@ package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
+import com.ondrejkoula.service.validation.annotation.Required;
+import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,9 +19,11 @@ import java.util.Objects;
 @Table(name = "exercise_prescriptions")
 public class ExercisePrescription extends DomainEntity {
 
+    @Required
     @Column(name = "label")
     private String label;
 
+    @RequiredReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_type_id")
     private ExerciseType exerciseType;

@@ -2,7 +2,7 @@ package com.ondrejkoula.service.validation;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.exception.MissingDataOnSaveException;
-import org.springframework.stereotype.Component;
+import lombok.extern.slf4j.Slf4j;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -14,6 +14,7 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 import static org.apache.commons.collections4.MapUtils.isNotEmpty;
 
+@Slf4j
 public class DataValidator {
 
     public <DE extends DomainEntity> void validateAllMandatoryDataPresent(DE toSave) {
@@ -29,9 +30,28 @@ public class DataValidator {
     private <DE extends DomainEntity> void doValidation(DE toSave, Map<String, String> validationMessages) {
         List<Field> allFieldsFromTargetClass = getAllFieldsFromTargetClass(toSave.getClass());
 
-        allFieldsFromTargetClass.forEach(field -> {
-            Annotation[] fieldAnnotations = field.getDeclaredAnnotations();
-        });
+        allFieldsFromTargetClass.forEach(field
+                -> validateSingleFieldValue(field, getFieldValue(toSave, field), validationMessages));
+    }
+
+    private <DE extends DomainEntity> Object getFieldValue(DE toSave, Field field) {
+        field.setAccessible(true);
+        try {
+            return field.get(toSave);
+        } catch (IllegalAccessException e) {
+            log.warn("Field {} not accessible on class {}.", field.getName(), toSave.getClass().getSimpleName());
+            return null;
+        }
+    }
+
+    private void validateSingleFieldValue(Field field, Object fieldValue, Map<String, String> validationMessages) {
+        Annotation[] fieldValidationAnnotations = field.getDeclaredAnnotations();
+        FieldValidatorFactory fieldValidatorFactory = new FieldValidatorFactory(field, fieldValue);
+
+        for (Annotation fieldAnnotation : fieldValidationAnnotations) {
+            FieldValidator fieldValidator = fieldValidatorFactory.getFieldValidatorForAnnotation(fieldAnnotation);
+            fieldValidator.validateFieldValue(validationMessages);
+        }
     }
 
     private List<Field> getAllFieldsFromTargetClass(Class<?> targetClass) {
