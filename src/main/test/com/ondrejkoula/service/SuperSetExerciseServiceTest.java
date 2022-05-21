@@ -35,11 +35,9 @@ class SuperSetExerciseServiceTest {
 
     SuperSetExerciseService service;
 
-    DataMerger dataMerger = Mockito.mock(DataMerger.class);
-
     @BeforeEach
     void setup() {
-        service = new SuperSetExerciseService(superSetExerciseRepository, superSetRepository, dataMerger);
+        service = new SuperSetExerciseService(superSetExerciseRepository, superSetRepository);
     }
 
 

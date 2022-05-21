@@ -31,8 +31,6 @@ class WorkoutServiceTest {
 
     ExerciseListService exerciseListService;
 
-    DataMerger dataMerger = Mockito.mock(DataMerger.class);
-
     @Autowired
     WorkoutRepository workoutRepository;
 
@@ -47,7 +45,7 @@ class WorkoutServiceTest {
 
     @BeforeEach
     void setup() {
-        workoutService = new WorkoutService(workoutRepository, dataMerger, exerciseRepository, workoutExerciseRepository);
+        workoutService = new WorkoutService(workoutRepository, exerciseRepository, workoutExerciseRepository);
         exerciseListService = new ExerciseListService(workoutExerciseRepository);
     }
 

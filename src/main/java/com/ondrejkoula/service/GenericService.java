@@ -65,6 +65,7 @@ public abstract class GenericService<DE extends DomainEntity, R extends JpaRepos
                 -> new DataNotFoundException(format("Item with id: %s not found", id), "notFound"));
 
         dataMerger.mergeSourceToTarget(dataChanges, foundExistingRecord);
+        dataValidator.validateAllMandatoryDataPresent(foundExistingRecord);
         return repository.save(foundExistingRecord);
     }
 
