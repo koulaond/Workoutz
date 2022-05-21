@@ -27,10 +27,9 @@ public class WorkoutService extends GenericService<Workout, WorkoutRepository> {
 
     @Autowired
     public WorkoutService(WorkoutRepository repository,
-                          DataMerger dataMerger,
                           ExerciseRepository exerciseRepository,
                           WorkoutExerciseRepository workoutExerciseRepository) {
-        super(repository, dataMerger, dataValidator);
+        super(repository);
         this.exerciseRepository = exerciseRepository;
         this.workoutExerciseRepository = workoutExerciseRepository;
     }

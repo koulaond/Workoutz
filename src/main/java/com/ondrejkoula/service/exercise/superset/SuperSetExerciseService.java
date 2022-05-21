@@ -16,8 +16,7 @@ public class SuperSetExerciseService extends IncorporatedItemService<SuperSetExe
 
     @Autowired
     public SuperSetExerciseService(SuperSetExerciseRepository repository,
-                                   SuperSetRepository superSetRepository,
-                                   DataMerger dataMerger) {
-        super(repository, superSetRepository, dataMerger);
+                                   SuperSetRepository superSetRepository) {
+        super(repository, superSetRepository);
     }
 }

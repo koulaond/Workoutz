@@ -23,9 +23,8 @@ public class ExerciseTypeService extends GenericService<ExerciseType, ExerciseTy
     private final ExercisePrescriptionService exercisePrescriptionService;
 
     @Autowired
-    public ExerciseTypeService(ExerciseTypeRepository repository, DataMerger dataMerger,
-                               ExercisePrescriptionService exercisePrescriptionService) {
-        super(repository, dataMerger, new ExerciseTypeDataValidator());
+    public ExerciseTypeService(ExerciseTypeRepository repository, ExercisePrescriptionService exercisePrescriptionService) {
+        super(repository);
         this.exercisePrescriptionService = exercisePrescriptionService;
     }
 
@@ -37,20 +36,6 @@ public class ExerciseTypeService extends GenericService<ExerciseType, ExerciseTy
 
         if (CollectionUtils.isNotEmpty(allPrescriptionsForExerciseType)) {
             allDependencies.put("ExercisePrescription", allPrescriptionsForExerciseType);
-        }
-    }
-
-    private static class ExerciseTypeDataValidator extends DataValidator<ExerciseType> {
-
-
-        @Override
-        protected void doValidateOnCreate(ExerciseType toSave, Map<String, String> validationMessages) {
-
-        }
-
-        @Override
-        protected void doValidateOnUpdate(DataChanges dataChanges, Map<String, String> validationMessages) {
-
         }
     }
 }

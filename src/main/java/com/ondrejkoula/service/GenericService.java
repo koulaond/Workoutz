@@ -30,12 +30,12 @@ public abstract class GenericService<DE extends DomainEntity, R extends JpaRepos
 
     protected final DataMerger dataMerger;
 
-    protected final DataValidator<DE> dataValidator;
+    protected final DataValidator dataValidator;
 
-    public GenericService(R repository, DataMerger dataMerger, DataValidator<DE> dataValidator) {
+    public GenericService(R repository) {
         this.repository = repository;
-        this.dataMerger = dataMerger;
-        this.dataValidator = dataValidator;
+        this.dataMerger = new DataMerger();
+        this.dataValidator = new DataValidator();
     }
 
     public DE findById(Long id) {

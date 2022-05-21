@@ -15,8 +15,8 @@ import org.springframework.stereotype.Component;
 public class SuperCircleSetExerciseService extends IncorporatedItemService<SuperCircleSetExercise, SuperCircleSetExerciseRepository, SuperCircleSet, SuperCircleSetRepository> {
 
     @Autowired
-    public SuperCircleSetExerciseService(SuperCircleSetExerciseRepository repository, SuperCircleSetRepository parentRepository, DataMerger dataMerger) {
-        super(repository, parentRepository, dataMerger);
+    public SuperCircleSetExerciseService(SuperCircleSetExerciseRepository repository, SuperCircleSetRepository parentRepository) {
+        super(repository, parentRepository);
     }
 
 }

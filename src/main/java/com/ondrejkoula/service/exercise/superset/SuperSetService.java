@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 public class SuperSetService extends GenericService<SuperSet, SuperSetRepository> {
 
     @Autowired
-    public SuperSetService(SuperSetRepository repository, DataMerger dataMerger) {
-       super(repository, dataMerger, dataValidator);
+    public SuperSetService(SuperSetRepository repository) {
+       super(repository);
     }
 }

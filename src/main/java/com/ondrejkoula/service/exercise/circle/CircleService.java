@@ -13,8 +13,8 @@ import org.springframework.stereotype.Component;
 public class CircleService extends GenericService<Circle, CircleRepository> {
 
     @Autowired
-    public CircleService(CircleRepository repository, DataMerger dataMerger) {
-        super(repository, dataMerger, dataValidator);
+    public CircleService(CircleRepository repository) {
+        super(repository);
     }
 
 }

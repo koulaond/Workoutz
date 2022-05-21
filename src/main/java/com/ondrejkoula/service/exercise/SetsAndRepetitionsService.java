@@ -14,8 +14,8 @@ import org.springframework.stereotype.Component;
 public class SetsAndRepetitionsService extends GenericService<SetsAndRepetitions, SetsAndRepetitionsRepository> {
 
     @Autowired
-    public SetsAndRepetitionsService(SetsAndRepetitionsRepository repository, DataMerger dataMerger) {
-        super(repository, dataMerger, dataValidator);
+    public SetsAndRepetitionsService(SetsAndRepetitionsRepository repository) {
+        super(repository);
     }
 
     public SetsAndRepetitions markAsReady(Long id) {

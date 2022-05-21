@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class SuperCircleSetService extends GenericService<SuperCircleSet, SuperCircleSetRepository> {
 
-    public SuperCircleSetService(SuperCircleSetRepository repository, DataMerger dataMerger) {
-        super(repository, dataMerger, dataValidator);
+    public SuperCircleSetService(SuperCircleSetRepository repository) {
+        super(repository);
     }
 }

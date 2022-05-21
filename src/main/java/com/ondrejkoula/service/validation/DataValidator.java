@@ -2,6 +2,7 @@ package com.ondrejkoula.service.validation;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.exception.MissingDataOnSaveException;
+import org.springframework.stereotype.Component;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

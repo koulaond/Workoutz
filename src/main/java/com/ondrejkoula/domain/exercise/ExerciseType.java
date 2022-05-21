@@ -2,7 +2,7 @@ package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
-import com.ondrejkoula.service.validation.annotation.Mandatory;
+import com.ondrejkoula.service.validation.annotation.Required;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,11 +19,11 @@ import javax.persistence.Table;
 @Table(name = "exercise_types")
 public class ExerciseType extends DomainEntity {
 
-    @Mandatory
+    @Required
     @Column(name = "type")
     private String value;
 
-    @Mandatory
+    @Required
     @Column(name = "category")
     private String category;
 

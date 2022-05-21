@@ -30,11 +30,9 @@ public abstract class IncorporatedItemService<
     protected final PR parentRepository;
 
     public IncorporatedItemService(CHR repository,
-                                   DataMerger dataMerger,
-                                   DataValidator<CH> dataValidator,
                                    PR parentRepository) {
 
-        super(repository, dataMerger, dataValidator);
+        super(repository);
         this.parentRepository = parentRepository;
     }
 

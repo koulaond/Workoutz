@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConditionService extends GenericService<Condition, ConditionRepository> {
 
-    public ConditionService(ConditionRepository repository, DataMerger dataMerger) {
-        super(repository, dataMerger, dataValidator);
+    public ConditionService(ConditionRepository repository) {
+        super(repository);
     }
 }
