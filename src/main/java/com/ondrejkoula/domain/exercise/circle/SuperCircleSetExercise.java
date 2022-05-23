@@ -3,6 +3,7 @@ package com.ondrejkoula.domain.exercise.circle;
 import com.ondrejkoula.domain.IncorporatedItem;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleSetExerciseDTO;
+import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +23,7 @@ import java.util.Objects;
 public class SuperCircleSetExercise extends IncorporatedItem<SuperCircleSet> {
 
 
+    @RequiredReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;

@@ -3,6 +3,8 @@ package com.ondrejkoula.domain.exercise.circle;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleSetDTO;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleSetExerciseDTO;
+import com.ondrejkoula.service.validation.annotation.Required;
+import com.ondrejkoula.service.validation.annotation.RequiredReferences;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +25,7 @@ import static java.util.stream.Collectors.joining;
 @Table(name = "super_circle_sets")
 public class SuperCircleSet extends DomainEntity {
 
+    @RequiredReferences
     @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<SuperCircleSetExercise> setExercises;
 

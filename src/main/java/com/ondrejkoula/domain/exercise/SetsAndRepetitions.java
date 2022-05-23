@@ -1,6 +1,7 @@
 package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.dto.exercise.SetsAndRepetitionsDTO;
+import com.ondrejkoula.service.validation.annotation.Required;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,14 +22,15 @@ public class SetsAndRepetitions extends Exercise {
     private ExercisePrescription exercisePrescription;
 
     // Series values
+    @Required
     @Column(name = "series_count")
     private Integer seriesCount;
 
     @Column(name = "series_count_goal")
     private Integer seriesCountGoal;
 
-
     // Repetitions values
+    @Required
     @Column(name = "repetitions_count")
     private Integer repetitionsCount;
 
@@ -37,6 +39,7 @@ public class SetsAndRepetitions extends Exercise {
 
 
     // Weight values
+    @Required
     @Column(name = "weight")
     private Integer weight;
 
@@ -44,9 +47,11 @@ public class SetsAndRepetitions extends Exercise {
     private Integer weightGoal;
 
     // Time values
+    @Required
     @Column(name = "max_time_sec")
     private Integer maxTimeSec;
 
+    @Required
     @Column(name = "max_time_min")
     private Integer maxTimeMin;
 

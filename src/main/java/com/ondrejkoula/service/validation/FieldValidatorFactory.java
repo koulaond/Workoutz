@@ -2,6 +2,7 @@ package com.ondrejkoula.service.validation;
 
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredReference;
+import com.ondrejkoula.service.validation.annotation.RequiredReferences;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -22,6 +23,9 @@ public class FieldValidatorFactory {
             return new RequiredFieldValidator(field.getName(), fieldValue);
         }
         if (annotation.annotationType().equals(RequiredReference.class)) {
+            return new RequiredReferenceFieldValidator(field.getName(), fieldValue);
+        }
+        if (annotation.annotationType().equals(RequiredReferences.class)) {
             return new RequiredReferenceFieldValidator(field.getName(), fieldValue);
         }
         return new DefaultFieldValidator();

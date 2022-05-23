@@ -4,6 +4,7 @@ package com.ondrejkoula.domain.exercise;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.workout.WorkoutExercise;
 import com.ondrejkoula.dto.exercise.ExerciseDTO;
+import com.ondrejkoula.service.validation.annotation.RequiredReferences;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Exercise extends DomainEntity {
 
+    @RequiredReferences
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.exercise", cascade = CascadeType.ALL)
     private List<WorkoutExercise> workoutExercises;
 

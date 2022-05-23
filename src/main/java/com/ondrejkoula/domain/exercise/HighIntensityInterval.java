@@ -1,6 +1,8 @@
 package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.dto.exercise.HighIntensityIntervalDTO;
+import com.ondrejkoula.service.validation.annotation.Required;
+import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,18 +18,26 @@ import java.util.Objects;
 @Table(name = "high_intensity_intervals")
 public class HighIntensityInterval extends Exercise {
 
+    @RequiredReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 
     // Intervals count
+    @Required
+    @Column(name = "intervals_count")
     private Integer intervalsCount;
 
+    @Column(name = "intervals_count_goal")
     private Integer intervalsCountGoal;
 
     // Interval times
+    @Required
+    @Column(name = "intensity_interval_time")
     private Integer intensityIntervalTime;
 
+    @Required
+    @Column(name = "calm_interval_time")
     private Integer calmIntervalTime;
 
     @Builder

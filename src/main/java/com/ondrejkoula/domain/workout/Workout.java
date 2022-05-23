@@ -2,6 +2,8 @@ package com.ondrejkoula.domain.workout;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.AbstractDTO;
+import com.ondrejkoula.service.validation.annotation.Required;
+import com.ondrejkoula.service.validation.annotation.RequiredReferences;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,12 +19,14 @@ import java.util.List;
 @Table(name = "workouts")
 public class Workout extends DomainEntity {
 
+    @Required
     @Column(name = "label")
     private String label;
 
     @Column(name = "expected_duration")
     private Integer expectedDuration;
 
+    @RequiredReferences
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.workout", cascade = CascadeType.ALL)
     private List<WorkoutExercise> workoutExercises;
 

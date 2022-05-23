@@ -1,6 +1,8 @@
 package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.dto.exercise.ConditionDTO;
+import com.ondrejkoula.service.validation.annotation.Required;
+import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,13 +18,16 @@ import java.util.Objects;
 @Table(name = "conditions")
 public class Condition extends Exercise {
 
+    @RequiredReference
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
     private ExercisePrescription exercisePrescription;
 
+    @Required
     @Column(name = "time_sec")
     private Integer timeSec;
 
+    @Required
     @Column(name = "time_min")
     private Integer timeMin;
 

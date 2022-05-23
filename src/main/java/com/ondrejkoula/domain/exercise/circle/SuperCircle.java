@@ -2,6 +2,8 @@ package com.ondrejkoula.domain.exercise.circle;
 
 import com.ondrejkoula.domain.exercise.Exercise;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleDTO;
+import com.ondrejkoula.service.validation.annotation.Required;
+import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,24 +23,30 @@ import static java.util.Objects.isNull;
 @Table(name = "super_circles")
 public class SuperCircle extends Exercise {
 
+    @Required
     @Column(name = "prepare_time")
     private Integer prepareTime;
 
+    @Required
     @Column(name = "work_time")
     private Integer workTime;
 
+    @Required
     @Column(name = "rest_time")
     private Integer restTime;
 
+    @Required
     @Column(name = "time_between_sets")
     private Integer timeBetweenSets;
 
     @Column(name = "breathe_out_time")
     private Integer breatheOutTime;
 
+    @Required
     @Column(name = "sets_count")
     private Integer setsCount;
 
+    @RequiredReference
     @OneToOne(mappedBy = "superCircle", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     private SuperCircleSet set;
 
