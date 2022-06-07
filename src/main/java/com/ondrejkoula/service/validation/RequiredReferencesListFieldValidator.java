@@ -42,8 +42,8 @@ public class RequiredReferencesListFieldValidator implements FieldValidator {
             if (!DomainEntity.class.isAssignableFrom(next.getClass())) {
                 validationMessages.put(fieldName + '[' + index + ']', Errors.VALIDATION_REFERENCE_IS_NOT_DOMAIN_TYPE);
 
-            } else if(isNull(((DomainEntity) fieldValue).getId())) {
-                validationMessages.put(fieldName+ '[' + index + ']', Errors.VALIDATION_REFERENCE_ID_IS_MISSING);
+            } else if (isNull(((DomainEntity) next).getId())) {
+                validationMessages.put(fieldName + '[' + index + ']', Errors.VALIDATION_REFERENCE_ID_IS_MISSING);
             }
             index++;
         }

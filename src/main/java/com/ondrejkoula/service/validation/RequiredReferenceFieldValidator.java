@@ -26,7 +26,7 @@ public class RequiredReferenceFieldValidator implements FieldValidator {
         } else if (!DomainEntity.class.isAssignableFrom(fieldValue.getClass())) {
             validationMessages.put(fieldName, Errors.VALIDATION_REFERENCE_IS_NOT_DOMAIN_TYPE);
 
-        } else if(isNull(((DomainEntity) fieldValue).getId())) {
+        } else if (isNull(((DomainEntity) fieldValue).getId())) {
             validationMessages.put(fieldName, Errors.VALIDATION_REFERENCE_ID_IS_MISSING);
         }
     }
