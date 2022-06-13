@@ -1,12 +1,10 @@
 package com.ondrejkoula.service;
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.domain.IncorporatedItem;
+import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.ValidationException;
-import com.ondrejkoula.repository.IncorporatedItemRepository;
-import com.ondrejkoula.service.merger.DataMerger;
-import com.ondrejkoula.service.validation.DataValidator;
+import com.ondrejkoula.repository.CompositionChildRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -19,9 +17,9 @@ import static java.util.Collections.singletonMap;
 import static java.util.Objects.isNull;
 
 @Slf4j
-public abstract class IncorporatedItemService<
-        CH extends IncorporatedItem<P>,
-        CHR extends IncorporatedItemRepository<CH> & JpaRepository<CH, Long>,
+public abstract class CompositionChildService<
+        CH extends CompositionChild<P>,
+        CHR extends CompositionChildRepository<CH> & JpaRepository<CH, Long>,
         P extends DomainEntity,
         PR extends JpaRepository<P, Long>>
 
@@ -29,7 +27,7 @@ public abstract class IncorporatedItemService<
 
     protected final PR parentRepository;
 
-    public IncorporatedItemService(CHR repository,
+    public CompositionChildService(CHR repository,
                                    PR parentRepository) {
 
         super(repository);
@@ -43,17 +41,17 @@ public abstract class IncorporatedItemService<
         return repository.findByParentIdOrderByPosition(parentId);
     }
 
-    public CH assignNewItemToParent(Long parentSetId, CH newItem) {
+    public P assignNewItemToParent(Long parentSetId, CH newItem) {
         P parent = parentRepository.findById(parentSetId)
                 .orElseThrow(() -> new ValidationException("Parent not found.", this.getClass().getSimpleName()));
 
         if (isNull(newItem.getPosition())) {
-            throwException("Position not defined.");
+            throwValidationException("Position not defined.");
         }
 
         long countByParent = repository.countByParentId(parentSetId);
         if (countByParent < newItem.getPosition() || newItem.getPosition() < 0) {
-            throwException(format("Position %s is out of range. Total items under parent: %s", newItem.getPosition(), countByParent));
+            throwValidationException(format("Position %s is out of range. Total items under parent: %s", newItem.getPosition(), countByParent));
         }
 
         List<CH> found = repository.findByParentIdAndPositionGreaterThanEqual(parentSetId, newItem.getPosition());
@@ -65,21 +63,21 @@ public abstract class IncorporatedItemService<
 
         newItem.setParent(parent);
 
-        return repository.save(newItem);
+        return repository.save(newItem).getParent();
     }
 
-    public CH changeItemPosition(Long id, Integer newPosition) {
-        CH data = repository.findById(id)
+    public P changeItemPosition(Long id, Integer newPosition) {
+        CH child = repository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", id.toString())));
 
-        long totalCount = repository.countByParentId(data.getParent().getId());
+        long totalCount = repository.countByParentId(child.getParent().getId());
 
         if (totalCount < newPosition || newPosition < 0) {
-            throwException(format("Position %s is out of range. Total items under parent: %s", newPosition, totalCount));
+            throwValidationException(format("Position %s is out of range. Total items under parent: %s", newPosition, totalCount));
         }
 
-        Integer oldPosition = data.getPosition();
-        List<CH> siblingsBetween = getSiblingsBetweenPositions(data.getParent().getId(), oldPosition, newPosition);
+        Integer oldPosition = child.getPosition();
+        List<CH> siblingsBetween = getChildrenBetweenPositions(child.getParent().getId(), oldPosition, newPosition);
 
         siblingsBetween.forEach(sibling -> {
             if (Objects.equals(newPosition, oldPosition)) {
@@ -88,9 +86,10 @@ public abstract class IncorporatedItemService<
             sibling.setPosition(newPosition > oldPosition ? sibling.getPosition() - 1 : sibling.getPosition() + 1);
             repository.save(sibling);
         });
-        data.setPosition(newPosition);
 
-        return repository.save(data);
+        child.setPosition(newPosition);
+
+        return repository.save(child).getParent();
     }
 
     public void removeExistingItemFromParent(Long idToRemove) {
@@ -112,7 +111,7 @@ public abstract class IncorporatedItemService<
         repository.deleteById(id);
     }
 
-    private List<CH> getSiblingsBetweenPositions(Long parentId, Integer leftBound, Integer rightBound) {
+    private List<CH> getChildrenBetweenPositions(Long parentId, Integer leftBound, Integer rightBound) {
         if (leftBound > rightBound) {
             return repository.findByParentIdAndPositionBetween(parentId, rightBound, leftBound - 1);
         } else {
@@ -120,7 +119,7 @@ public abstract class IncorporatedItemService<
         }
     }
 
-    private void throwException(String message) {
+    private void throwValidationException(String message) {
         log.warn(message);
         throw new ValidationException(message, this.getClass().getSimpleName());
     }

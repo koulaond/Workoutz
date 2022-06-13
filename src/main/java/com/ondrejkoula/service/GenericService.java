@@ -2,7 +2,7 @@ package com.ondrejkoula.service;
 
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.dto.DataChanges;
+import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.CascadeDependenciesException;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.service.merger.DataMerger;

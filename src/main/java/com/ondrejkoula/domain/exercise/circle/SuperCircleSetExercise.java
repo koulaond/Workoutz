@@ -1,6 +1,6 @@
 package com.ondrejkoula.domain.exercise.circle;
 
-import com.ondrejkoula.domain.IncorporatedItem;
+import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleSetExerciseDTO;
 import com.ondrejkoula.service.validation.annotation.RequiredReference;
@@ -20,7 +20,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "super_circle_set_exercises")
-public class SuperCircleSetExercise extends IncorporatedItem<SuperCircleSet> {
+public class SuperCircleSetExercise extends CompositionChild<SuperCircleSet> {
 
 
     @RequiredReference

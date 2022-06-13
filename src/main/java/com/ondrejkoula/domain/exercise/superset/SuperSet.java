@@ -1,5 +1,6 @@
 package com.ondrejkoula.domain.exercise.superset;
 
+import com.ondrejkoula.domain.Composite;
 import com.ondrejkoula.domain.exercise.Exercise;
 import com.ondrejkoula.dto.exercise.superset.SuperSetDTO;
 import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @Table(name = "super_sets")
-public class SuperSet extends Exercise {
+public class SuperSet extends Exercise implements Composite<SuperSet> {
 
     @Column(name = "series_count")
     private Integer seriesCount;
@@ -72,5 +73,10 @@ public class SuperSet extends Exercise {
                 .seriesCountGoal(getSeriesCountGoal())
                 .seriesContent(seriesContentDTOs)
                 .build();
+    }
+
+    @Override
+    public List<SuperSetExercise> getChildren() {
+        return seriesContent;
     }
 }

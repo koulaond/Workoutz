@@ -6,12 +6,10 @@ import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.exercise.superset.SuperSetRepository;
 import com.ondrejkoula.service.exercise.superset.SuperSetExerciseService;
-import com.ondrejkoula.service.merger.DataMerger;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -131,9 +129,8 @@ class SuperSetExerciseServiceTest {
 
         SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
-        assertThrows(
-                ValidationException.class, () ->
-                        service.changeItemPosition(formerlyFirst.getId(), 3));
+        assertThrows(ValidationException.class,
+                () -> service.changeItemPosition(formerlyFirst.getId(), 3));
 
     }
 
@@ -144,9 +141,8 @@ class SuperSetExerciseServiceTest {
 
         SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
-        assertThrows(
-                ValidationException.class, () ->
-                        service.changeItemPosition(formerlyFirst.getId(), -1));
+        assertThrows(ValidationException.class,
+                () -> service.changeItemPosition(formerlyFirst.getId(), -1));
 
     }
 

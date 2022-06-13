@@ -9,7 +9,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @MappedSuperclass
-public abstract class IncorporatedItem<PARENT extends DomainEntity> extends DomainEntity{
+public abstract class CompositionChild<PARENT extends DomainEntity> extends DomainEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "parent_id")
@@ -18,7 +18,7 @@ public abstract class IncorporatedItem<PARENT extends DomainEntity> extends Doma
     @Column(name = "position")
     protected Integer position;
 
-    public IncorporatedItem(Long id, String status, String note, PARENT parent, Integer position) {
+    public CompositionChild(Long id, String status, String note, PARENT parent, Integer position) {
         super(id, status, note);
         this.parent = parent;
         this.position = position;

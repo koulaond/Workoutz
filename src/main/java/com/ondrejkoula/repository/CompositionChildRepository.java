@@ -1,11 +1,11 @@
 package com.ondrejkoula.repository;
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.domain.IncorporatedItem;
+import com.ondrejkoula.domain.CompositionChild;
 
 import java.util.List;
 
-public interface IncorporatedItemRepository<T extends IncorporatedItem<? extends DomainEntity>> {
+public interface CompositionChildRepository<T extends CompositionChild<? extends DomainEntity>> {
 
     List<T> findByParentIdOrderByPosition(Long parentId);
 

@@ -1,6 +1,6 @@
 package com.ondrejkoula.domain.exercise.superset;
 
-import com.ondrejkoula.domain.IncorporatedItem;
+import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
 import lombok.Builder;
@@ -19,7 +19,7 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "super_set_exercises")
-public class SuperSetExercise extends IncorporatedItem<SuperSet> {
+public class SuperSetExercise extends CompositionChild<SuperSet> {
 
     @ManyToOne
     @JoinColumn(name = "exercise_prescription_id")

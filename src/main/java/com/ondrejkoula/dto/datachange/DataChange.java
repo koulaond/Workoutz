@@ -1,4 +1,4 @@
-package com.ondrejkoula.dto;
+package com.ondrejkoula.dto.datachange;
 
 
 import lombok.Builder;

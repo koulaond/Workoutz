@@ -1,8 +1,8 @@
 package com.ondrejkoula.service.merger;
 
 import com.ondrejkoula.domain.exercise.circle.SuperCircle;
-import com.ondrejkoula.dto.DataChange;
-import com.ondrejkoula.dto.DataChanges;
+import com.ondrejkoula.dto.datachange.DataChange;
+import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataUpdateException;
 import com.ondrejkoula.exception.MissingDataForFieldException;
 import com.ondrejkoula.exception.UnsupportedOperationException;
