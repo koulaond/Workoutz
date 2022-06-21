@@ -24,15 +24,15 @@ import static java.util.stream.Collectors.toMap;
 import static org.apache.commons.collections4.MapUtils.isNotEmpty;
 
 @Slf4j
-public abstract class GenericService<DE extends DomainEntity, R extends JpaRepository<DE, Long>> {
+public abstract class GenericService<DE extends DomainEntity> {
 
-    protected final R repository;
+    protected final JpaRepository<DE, Long> repository;
 
     protected final DataMerger dataMerger;
 
     protected final DataValidator dataValidator;
 
-    public GenericService(R repository) {
+    public GenericService(JpaRepository<DE, Long> repository) {
         this.repository = repository;
         this.dataMerger = new DataMerger();
         this.dataValidator = new DataValidator();

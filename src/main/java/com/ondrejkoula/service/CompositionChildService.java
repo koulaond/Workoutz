@@ -17,60 +17,54 @@ import static java.util.Collections.singletonMap;
 import static java.util.Objects.isNull;
 
 @Slf4j
-public abstract class CompositionChildService<
-        CH extends CompositionChild<P>,
-        CHR extends CompositionChildRepository<CH> & JpaRepository<CH, Long>,
-        P extends DomainEntity,
-        PR extends JpaRepository<P, Long>>
+public abstract class CompositionChildService<CH extends CompositionChild<P>, P extends DomainEntity>
+        extends GenericService<P> {
 
-        extends GenericService<CH, CHR> {
+    protected final CompositionChildRepository<CH> childRepository;
 
-    protected final PR parentRepository;
-
-    public CompositionChildService(CHR repository,
-                                   PR parentRepository) {
-
-        super(repository);
-        this.parentRepository = parentRepository;
+    public CompositionChildService(CompositionChildRepository<CH> childRepository,
+                                   JpaRepository<P, Long> parentRepository) {
+        super(parentRepository);
+        this.childRepository = childRepository;
     }
 
     public List<CH> findByParentId(Long parentId) {
-        parentRepository.findById(parentId)
+        repository.findById(parentId)
                 .orElseThrow(() -> new DataNotFoundException("Parent found", "dataNotFound", singletonMap("parentId", parentId.toString())));
 
-        return repository.findByParentIdOrderByPosition(parentId);
+        return childRepository.findByParentIdOrderByPosition(parentId);
     }
 
     public P assignNewItemToParent(Long parentSetId, CH newItem) {
-        P parent = parentRepository.findById(parentSetId)
+        P parent = repository.findById(parentSetId)
                 .orElseThrow(() -> new ValidationException("Parent not found.", this.getClass().getSimpleName()));
 
         if (isNull(newItem.getPosition())) {
             throwValidationException("Position not defined.");
         }
 
-        long countByParent = repository.countByParentId(parentSetId);
+        long countByParent = childRepository.countByParentId(parentSetId);
         if (countByParent < newItem.getPosition() || newItem.getPosition() < 0) {
             throwValidationException(format("Position %s is out of range. Total items under parent: %s", newItem.getPosition(), countByParent));
         }
 
-        List<CH> found = repository.findByParentIdAndPositionGreaterThanEqual(parentSetId, newItem.getPosition());
+        List<CH> found = childRepository.findByParentIdAndPositionGreaterThanEqual(parentSetId, newItem.getPosition());
 
         found.forEach(child -> {
             child.setPosition(child.getPosition() + 1);
-            repository.save(child);
+            childRepository.save(child);
         });
 
         newItem.setParent(parent);
 
-        return repository.save(newItem).getParent();
+        return childRepository.save(newItem).getParent();
     }
 
     public P changeItemPosition(Long id, Integer newPosition) {
-        CH child = repository.findById(id)
+        CH child = childRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", id.toString())));
 
-        long totalCount = repository.countByParentId(child.getParent().getId());
+        long totalCount = childRepository.countByParentId(child.getParent().getId());
 
         if (totalCount < newPosition || newPosition < 0) {
             throwValidationException(format("Position %s is out of range. Total items under parent: %s", newPosition, totalCount));
@@ -84,25 +78,25 @@ public abstract class CompositionChildService<
                 return;
             }
             sibling.setPosition(newPosition > oldPosition ? sibling.getPosition() - 1 : sibling.getPosition() + 1);
-            repository.save(sibling);
+            childRepository.save(sibling);
         });
 
         child.setPosition(newPosition);
 
-        return repository.save(child).getParent();
+        return childRepository.save(child).getParent();
     }
 
     public void removeExistingItemFromParent(Long idToRemove) {
-        Optional<CH> search = repository.findById(idToRemove);
+        Optional<CH> search = childRepository.findById(idToRemove);
 
         search.ifPresent(itemToRemove -> {
 
-            repository.delete(itemToRemove);
-            List<CH> following = repository.findByParentIdAndPositionGreaterThanEqual(itemToRemove.getParent().getId(), itemToRemove.getPosition());
+            childRepository.delete(itemToRemove);
+            List<CH> following = childRepository.findByParentIdAndPositionGreaterThanEqual(itemToRemove.getParent().getId(), itemToRemove.getPosition());
 
             following.forEach(next -> {
                 next.setPosition(next.getPosition() - 1);
-                repository.save(next);
+                childRepository.save(next);
             });
         });
     }
@@ -113,9 +107,9 @@ public abstract class CompositionChildService<
 
     private List<CH> getChildrenBetweenPositions(Long parentId, Integer leftBound, Integer rightBound) {
         if (leftBound > rightBound) {
-            return repository.findByParentIdAndPositionBetween(parentId, rightBound, leftBound - 1);
+            return childRepository.findByParentIdAndPositionBetween(parentId, rightBound, leftBound - 1);
         } else {
-            return repository.findByParentIdAndPositionBetween(parentId, leftBound + 1, rightBound);
+            return childRepository.findByParentIdAndPositionBetween(parentId, leftBound + 1, rightBound);
         }
     }
 

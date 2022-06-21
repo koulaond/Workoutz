@@ -15,7 +15,7 @@ import java.util.Map;
 
 @Slf4j
 @Component
-public class ExerciseTypeService extends GenericService<ExerciseType, ExerciseTypeRepository> {
+public class ExerciseTypeService extends GenericService<ExerciseType> {
 
     private final ExercisePrescriptionService exercisePrescriptionService;
 

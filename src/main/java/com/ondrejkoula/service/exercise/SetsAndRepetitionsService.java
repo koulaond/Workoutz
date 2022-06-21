@@ -1,17 +1,16 @@
 package com.ondrejkoula.service.exercise;
 
-import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
 import com.ondrejkoula.domain.Status;
+import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
 import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import com.ondrejkoula.service.GenericService;
-import com.ondrejkoula.service.merger.DataMerger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SetsAndRepetitionsService extends GenericService<SetsAndRepetitions, SetsAndRepetitionsRepository> {
+public class SetsAndRepetitionsService extends GenericService<SetsAndRepetitions> {
 
     @Autowired
     public SetsAndRepetitionsService(SetsAndRepetitionsRepository repository) {

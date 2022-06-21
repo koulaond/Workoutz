@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SuperSetExerciseService extends CompositionChildService<SuperSetExercise, SuperSetExerciseRepository, SuperSet, SuperSetRepository> {
+public class SuperSetExerciseService extends CompositionChildService<SuperSetExercise, SuperSet> {
 
     @Autowired
     public SuperSetExerciseService(SuperSetExerciseRepository repository,

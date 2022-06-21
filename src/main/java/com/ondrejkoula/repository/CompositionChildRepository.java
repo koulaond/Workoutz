@@ -2,10 +2,13 @@ package com.ondrejkoula.repository;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.CompositionChild;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
-public interface CompositionChildRepository<T extends CompositionChild<? extends DomainEntity>> {
+@NoRepositoryBean
+public interface CompositionChildRepository<T extends CompositionChild<? extends DomainEntity>> extends JpaRepository<T, Long> {
 
     List<T> findByParentIdOrderByPosition(Long parentId);
 

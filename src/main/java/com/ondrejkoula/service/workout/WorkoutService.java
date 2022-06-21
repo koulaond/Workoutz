@@ -9,7 +9,6 @@ import com.ondrejkoula.repository.ExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
 import com.ondrejkoula.service.GenericService;
-import com.ondrejkoula.service.merger.DataMerger;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,7 +18,7 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class WorkoutService extends GenericService<Workout, WorkoutRepository> {
+public class WorkoutService extends GenericService<Workout> {
 
     private final ExerciseRepository exerciseRepository;
 

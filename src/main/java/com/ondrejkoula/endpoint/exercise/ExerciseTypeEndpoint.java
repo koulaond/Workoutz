@@ -2,7 +2,7 @@ package com.ondrejkoula.endpoint.exercise;
 
 import com.ondrejkoula.domain.exercise.ExerciseType;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
-import com.ondrejkoula.endpoint.CrudEndpoint;
+import com.ondrejkoula.endpoint.UpdateEndpoint;
 import com.ondrejkoula.service.exercise.ExerciseTypeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/exercises/types")
-public class ExerciseTypeEndpoint extends CrudEndpoint<ExerciseType, ExerciseTypeDTO, ExerciseTypeService> {
+public class ExerciseTypeEndpoint extends UpdateEndpoint<ExerciseType, ExerciseTypeDTO, ExerciseTypeService> {
 
     @Autowired
     public ExerciseTypeEndpoint(ExerciseTypeService service) {
