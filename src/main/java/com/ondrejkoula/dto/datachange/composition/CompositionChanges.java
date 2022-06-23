@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class CompositionChanges {
 
-    private List<CompositionChange> changes;
+    private List<CompositionChangeRaw> changes;
 }

@@ -1,4 +1,4 @@
-package com.ondrejkoula.endpoint;
+package com.ondrejkoula.endpoint.processor;
 
 import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.domain.DomainEntity;

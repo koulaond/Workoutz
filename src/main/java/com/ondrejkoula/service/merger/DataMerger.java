@@ -5,7 +5,7 @@ import com.ondrejkoula.dto.datachange.DataChange;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataUpdateException;
 import com.ondrejkoula.exception.MissingDataForFieldException;
-import com.ondrejkoula.exception.UnsupportedOperationException;
+import com.ondrejkoula.exception.UnsupportedChangeTypeException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -66,7 +66,7 @@ public class DataMerger {
                 field.set(target, newValue);
                 break;
             default:
-                throw new UnsupportedOperationException(target.getId(), field.getName(), changeType);
+                throw new UnsupportedChangeTypeException(target.getId(), field.getName(), changeType);
         }
     }
 

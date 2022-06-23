@@ -5,7 +5,7 @@ import com.ondrejkoula.dto.datachange.DataChange;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataUpdateException;
 import com.ondrejkoula.exception.MissingDataForFieldException;
-import com.ondrejkoula.exception.UnsupportedOperationException;
+import com.ondrejkoula.exception.UnsupportedChangeTypeException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -96,7 +96,7 @@ class DataMergerTest {
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
-        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedOperationException.class,
+        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedChangeTypeException.class,
                 () -> dataMerger.mergeSourceToTarget(dataChanges, target));
     }
 }

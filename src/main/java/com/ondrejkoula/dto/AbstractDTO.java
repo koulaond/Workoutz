@@ -1,6 +1,7 @@
 package com.ondrejkoula.dto;
 
 import com.ondrejkoula.domain.DomainEntity;
+import com.ondrejkoula.dto.datachange.composition.CompositionChangeValue;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -8,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public abstract class AbstractDTO {
+public abstract class AbstractDTO implements CompositionChangeValue {
 
     protected Long id;
 

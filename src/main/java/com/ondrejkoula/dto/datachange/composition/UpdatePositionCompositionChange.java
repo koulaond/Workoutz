@@ -3,7 +3,7 @@ package com.ondrejkoula.dto.datachange.composition;
 import lombok.Data;
 
 @Data
-public class UpdatePositionCompositionChange {
+public class UpdatePositionCompositionChange implements CompositionChangeValue {
 
     private Long childId;
 
