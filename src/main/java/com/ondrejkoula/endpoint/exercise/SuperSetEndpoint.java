@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class SuperSetEndpoint extends CompositionEndpoint<SuperSet, SuperSetDTO, SuperSetExercise, SuperSetExerciseDTO> {
 
     @Autowired
-    public SuperSetEndpoint(SuperSetService superSetService, SuperSetExerciseService exerciseService) {
-        super(superSetService, exerciseService);
+    public SuperSetEndpoint(SuperSetExerciseService exerciseService, SuperSetService superSetService) {
+        super(exerciseService, superSetService);
     }
 
     @Override

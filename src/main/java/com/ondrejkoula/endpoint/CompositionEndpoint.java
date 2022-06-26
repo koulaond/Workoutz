@@ -12,43 +12,45 @@ import com.ondrejkoula.exception.UnsupportedCompositeChangeTypeException;
 import com.ondrejkoula.service.CompositionChildService;
 import com.ondrejkoula.service.GenericService;
 import lombok.SneakyThrows;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends AbstractDTO, CH extends CompositionChild<P>, CDTO extends AbstractDTO>
-        extends CrdEndpoint<P, PDTO, CompositionChildService<CH, P>> {
+        extends UpdateEndpoint<P, PDTO, CompositionChildService<CH, P>> {
 
-    private final GenericService<P> parentService;
+    private final GenericService<CH> childService;
 
-    public CompositionEndpoint(GenericService<P> parentService, CompositionChildService<CH, P> childService) {
-        super(childService);
-        this.parentService = parentService;
+    public CompositionEndpoint(GenericService<CH> childService, CompositionChildService<CH, P> parentService) {
+        super(parentService);
+        this.childService = childService;
     }
 
-    @PutMapping(value = "/{id}", produces = "application/json")
-    public PDTO update(@PathVariable("id") Long id, @RequestBody CompositionChanges dataChanges) {
+    @PatchMapping(value = "/{id}", produces = "application/json")
+    public PDTO updateChildren(@PathVariable("id") Long id, @RequestBody CompositionChanges dataChanges) {
+        P parent = service.findById(id);
+
         dataChanges.getChanges().forEach(compositionChange -> {
             DataChangeOperation operation = compositionChange.getOperation();
             JsonNode value = compositionChange.getValue();
-            processChange(operation, value);
+            processChange(operation, value, parent);
         });
         return null;
     }
 
     @SneakyThrows // TODO throw custom exception
-    public void processChange(DataChangeOperation operation, JsonNode value)  {
+    private void processChange(DataChangeOperation operation, JsonNode value, P parent)  {
         ObjectMapper objectMapper = new ObjectMapper();
 
         switch (operation) {
             case DELETE:
-                processDeleteChild(value, objectMapper);
+                processDeleteChild(value, objectMapper, parent);
             case ADD:
-                processAssignNewChild(value, objectMapper);
+                processAssignNewChild(value, objectMapper, parent);
             case UPDATE:
-                processUpdateChild(value, objectMapper);
+                processUpdateChild(value, objectMapper, parent);
             case CHANGE_POSITION:
-                processChangeChildPosition(value, objectMapper);
+                processChangeChildPosition(value, objectMapper, parent);
             default:
                 throw new UnsupportedCompositeChangeTypeException(operation.name());
         }
@@ -58,27 +60,36 @@ public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends A
 
     protected abstract CH convertChildDtoToDomain(CDTO childDto);
 
-    private void processChangeChildPosition(JsonNode value, ObjectMapper objectMapper) throws JsonProcessingException {
+    private void processChangeChildPosition(JsonNode value, ObjectMapper objectMapper, P parent) throws JsonProcessingException {
         UpdatePositionCompositionChange updatePositionCompositionChange = objectMapper.treeToValue(value, UpdatePositionCompositionChange.class);
-        service.changeItemPosition(updatePositionCompositionChange.getChildId(), updatePositionCompositionChange.getNewPosition());
+        validateChildBelongsToParent(updatePositionCompositionChange.getChildId(), parent.getId());
+        service.changeChildPosition(updatePositionCompositionChange.getChildId(), updatePositionCompositionChange.getNewPosition());
     }
 
-    private void processUpdateChild(JsonNode value, ObjectMapper objectMapper) throws JsonProcessingException {
+
+    private void processUpdateChild(JsonNode value, ObjectMapper objectMapper, P parent) throws JsonProcessingException {
         UpdateChildCompositionChange updateChildCompositionChange = objectMapper.treeToValue(value, UpdateChildCompositionChange.class);
+        validateChildBelongsToParent(updateChildCompositionChange.getChildId(), parent.getId());
         service.update(updateChildCompositionChange.getChildId(), updateChildCompositionChange.getChildChanges());
     }
 
-    private void processAssignNewChild(JsonNode value, ObjectMapper objectMapper) {
+    private void processAssignNewChild(JsonNode value, ObjectMapper objectMapper, P parent) {
         AddNewChildCompositionChange<CDTO> valueForCreate = getValueForCreate(objectMapper, value);
         CDTO dataDto = valueForCreate.getData();
         CH data = convertChildDtoToDomain(dataDto);
-        service.assignNewItemToParent(valueForCreate.getPosition(), data);
+        service.assignNewChildToParent(valueForCreate.getPosition(), data);
     }
 
-    private void processDeleteChild(JsonNode value, ObjectMapper objectMapper) throws JsonProcessingException {
+    private void processDeleteChild(JsonNode value, ObjectMapper objectMapper, P parent) throws JsonProcessingException {
         DeleteChildCompositionChange deleteChildCompositionChange = objectMapper.treeToValue(value, DeleteChildCompositionChange.class);
-        service.deleteById(deleteChildCompositionChange.getId());
+        validateChildBelongsToParent(deleteChildCompositionChange.getId(), parent.getId());
+        service.removeExistingChildFromParent(deleteChildCompositionChange.getId());
     }
 
-
+    private void validateChildBelongsToParent(Long childId, Long id) {
+        CH child = childService.findById(childId);
+        if (!id.equals(child.getParent().getId())) {
+            // TODO throw validation exception
+        }
+    }
 }

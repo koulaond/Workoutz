@@ -28,14 +28,14 @@ public abstract class CompositionChildService<CH extends CompositionChild<P>, P 
         this.childRepository = childRepository;
     }
 
-    public List<CH> findByParentId(Long parentId) {
+    public List<CH> findChildrenByParent(Long parentId) {
         repository.findById(parentId)
                 .orElseThrow(() -> new DataNotFoundException("Parent found", "dataNotFound", singletonMap("parentId", parentId.toString())));
 
         return childRepository.findByParentIdOrderByPosition(parentId);
     }
 
-    public P assignNewItemToParent(Long parentSetId, CH newItem) {
+    public P assignNewChildToParent(Long parentSetId, CH newItem) {
         P parent = repository.findById(parentSetId)
                 .orElseThrow(() -> new ValidationException("Parent not found.", this.getClass().getSimpleName()));
 
@@ -60,7 +60,7 @@ public abstract class CompositionChildService<CH extends CompositionChild<P>, P 
         return childRepository.save(newItem).getParent();
     }
 
-    public P changeItemPosition(Long id, Integer newPosition) {
+    public P changeChildPosition(Long id, Integer newPosition) {
         CH child = childRepository.findById(id)
                 .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", id.toString())));
 
@@ -86,7 +86,7 @@ public abstract class CompositionChildService<CH extends CompositionChild<P>, P 
         return childRepository.save(child).getParent();
     }
 
-    public void removeExistingItemFromParent(Long idToRemove) {
+    public void removeExistingChildFromParent(Long idToRemove) {
         Optional<CH> search = childRepository.findById(idToRemove);
 
         search.ifPresent(itemToRemove -> {
@@ -99,10 +99,6 @@ public abstract class CompositionChildService<CH extends CompositionChild<P>, P 
                 childRepository.save(next);
             });
         });
-    }
-
-    public void deleteById(Long id) {
-        repository.deleteById(id);
     }
 
     private List<CH> getChildrenBetweenPositions(Long parentId, Integer leftBound, Integer rightBound) {
