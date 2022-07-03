@@ -87,7 +87,7 @@ public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends A
     private void processUpdateChild(JsonNode value, ObjectMapper objectMapper, Long parentId) throws JsonProcessingException {
         UpdateChildCompositionChange updateChildCompositionChange = objectMapper.treeToValue(value, UpdateChildCompositionChange.class);
         validateChildBelongsToParent(updateChildCompositionChange.getChildId(), parentId);
-        service.update(updateChildCompositionChange.getChildId(), updateChildCompositionChange.getChildChanges());
+        service.update(updateChildCompositionChange.getChildId(), updateChildCompositionChange.getData());
     }
 
     private void processAssignNewChild(JsonNode value, ObjectMapper objectMapper, Long parentId) {

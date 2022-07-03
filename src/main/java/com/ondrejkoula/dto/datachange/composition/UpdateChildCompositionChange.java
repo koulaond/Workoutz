@@ -8,5 +8,5 @@ public class UpdateChildCompositionChange {
 
     private Long childId;
 
-    private DataChanges childChanges;
+    private DataChanges data;
 }

@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonAnyGetter;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.ondrejkoula.dto.datachange.composition.CompositionChangeValue;
 import lombok.Builder;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Map;
 
+@Data
 @NoArgsConstructor
 public class DataChanges implements CompositionChangeValue {
 
