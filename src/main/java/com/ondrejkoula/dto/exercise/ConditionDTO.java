@@ -1,17 +1,11 @@
 package com.ondrejkoula.dto.exercise;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.Condition;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 
-@Getter
-@Setter
-@EqualsAndHashCode(callSuper = true)
-@JsonIgnoreProperties(ignoreUnknown = true)
+@Data
 public class ConditionDTO extends ExerciseDTO {
 
     private ExercisePrescriptionDTO exercisePrescription;

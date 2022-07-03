@@ -3,10 +3,7 @@ package com.ondrejkoula.domain.exercise.superset;
 import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -14,8 +11,7 @@ import java.util.Objects;
 /**
  * Embedded exercise in Super set series.
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "super_set_exercises")
@@ -51,6 +47,7 @@ public class SuperSetExercise extends CompositionChild<SuperSet> {
                             ExercisePrescription exercisePrescription, Integer repetitionsCount, Integer repetitionsCountGoal,
                             Integer weight, Integer weightGoal, Integer maxTimeSec, Integer maxTimeMin) {
         super(id, status, note, parent, position);
+
         this.exercisePrescription = exercisePrescription;
         this.repetitionsCount = repetitionsCount;
         this.repetitionsCountGoal = repetitionsCountGoal;

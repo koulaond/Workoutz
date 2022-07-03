@@ -1,10 +1,7 @@
 package com.ondrejkoula.endpoint.exercise;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
-import com.ondrejkoula.dto.datachange.composition.AddNewChildCompositionChange;
 import com.ondrejkoula.dto.exercise.superset.SuperSetDTO;
 import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
 import com.ondrejkoula.endpoint.CompositionEndpoint;
@@ -24,8 +21,8 @@ public class SuperSetEndpoint extends CompositionEndpoint<SuperSet, SuperSetDTO,
     }
 
     @Override
-    protected AddNewChildCompositionChange<SuperSetExerciseDTO> getValueForCreate(ObjectMapper objectMapper, JsonNode value) {
-        return null;
+    protected Class<SuperSetExerciseDTO> getDtoClass() {
+        return SuperSetExerciseDTO.class;
     }
 
     @Override

@@ -17,13 +17,13 @@ import static java.util.Collections.singletonMap;
 import static java.util.Objects.isNull;
 
 @Slf4j
-public abstract class CompositionChildService<CH extends CompositionChild<P>, P extends DomainEntity>
+public abstract class CompositionService<CH extends CompositionChild<P>, P extends DomainEntity>
         extends GenericService<P> {
 
     protected final CompositionChildRepository<CH> childRepository;
 
-    public CompositionChildService(CompositionChildRepository<CH> childRepository,
-                                   JpaRepository<P, Long> parentRepository) {
+    public CompositionService(CompositionChildRepository<CH> childRepository,
+                              JpaRepository<P, Long> parentRepository) {
         super(parentRepository);
         this.childRepository = childRepository;
     }
@@ -35,20 +35,20 @@ public abstract class CompositionChildService<CH extends CompositionChild<P>, P 
         return childRepository.findByParentIdOrderByPosition(parentId);
     }
 
-    public P assignNewChildToParent(Long parentSetId, CH newItem) {
-        P parent = repository.findById(parentSetId)
+    public P assignNewChildToParent(Long parentId, CH newItem) {
+        P parent = repository.findById(parentId)
                 .orElseThrow(() -> new ValidationException("Parent not found.", this.getClass().getSimpleName()));
 
         if (isNull(newItem.getPosition())) {
             throwValidationException("Position not defined.");
         }
 
-        long countByParent = childRepository.countByParentId(parentSetId);
+        long countByParent = childRepository.countByParentId(parentId);
         if (countByParent < newItem.getPosition() || newItem.getPosition() < 0) {
             throwValidationException(format("Position %s is out of range. Total items under parent: %s", newItem.getPosition(), countByParent));
         }
 
-        List<CH> found = childRepository.findByParentIdAndPositionGreaterThanEqual(parentSetId, newItem.getPosition());
+        List<CH> found = childRepository.findByParentIdAndPositionGreaterThanEqual(parentId, newItem.getPosition());
 
         found.forEach(child -> {
             child.setPosition(child.getPosition() + 1);
@@ -60,9 +60,9 @@ public abstract class CompositionChildService<CH extends CompositionChild<P>, P 
         return childRepository.save(newItem).getParent();
     }
 
-    public P changeChildPosition(Long id, Integer newPosition) {
-        CH child = childRepository.findById(id)
-                .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", id.toString())));
+    public P changeChildPosition(Long childId, Integer newPosition) {
+        CH child = childRepository.findById(childId)
+                .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", childId.toString())));
 
         long totalCount = childRepository.countByParentId(child.getParent().getId());
 

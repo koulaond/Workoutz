@@ -4,14 +4,14 @@ import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
 import com.ondrejkoula.repository.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.exercise.superset.SuperSetRepository;
-import com.ondrejkoula.service.CompositionChildService;
+import com.ondrejkoula.service.CompositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class SuperSetService extends CompositionChildService<SuperSetExercise, SuperSet> {
+public class SuperSetService extends CompositionService<SuperSetExercise, SuperSet> {
 
     @Autowired
     public SuperSetService(SuperSetExerciseRepository superSetExerciseRepository, SuperSetRepository superSetRepository) {

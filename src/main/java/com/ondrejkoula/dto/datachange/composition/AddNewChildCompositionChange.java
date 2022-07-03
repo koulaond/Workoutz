@@ -1,9 +1,9 @@
 package com.ondrejkoula.dto.datachange.composition;
 
 import com.ondrejkoula.dto.AbstractDTO;
-import lombok.Value;
+import lombok.Data;
 
-@Value
+@Data
 public class AddNewChildCompositionChange<T extends AbstractDTO> {
 
     Long position;

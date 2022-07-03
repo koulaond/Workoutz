@@ -4,11 +4,11 @@ import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
 import com.ondrejkoula.dto.AbstractDTO;
 import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Getter
-@Setter
+@Data
+@NoArgsConstructor
 public class SuperSetExerciseDTO extends AbstractDTO {
 
     private ExercisePrescriptionDTO exercisePrescription;

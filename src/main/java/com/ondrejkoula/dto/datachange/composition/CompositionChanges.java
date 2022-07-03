@@ -1,5 +1,6 @@
 package com.ondrejkoula.dto.datachange.composition;
 
+import lombok.Builder;
 import lombok.Data;
 
 import java.util.List;
@@ -7,5 +8,10 @@ import java.util.List;
 @Data
 public class CompositionChanges {
 
-    private List<CompositionChangeRaw> changes;
+    List<CompositionChangeRaw> changes;
+
+    @Builder
+    public CompositionChanges(List<CompositionChangeRaw> changes) {
+        this.changes = changes;
+    }
 }
