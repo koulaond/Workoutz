@@ -1,4 +1,4 @@
-package com.ondrejkoula.endpoint.exercise;
+package com.ondrejkoula.endpoint.exercise.superset;
 
 import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;

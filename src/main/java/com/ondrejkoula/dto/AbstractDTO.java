@@ -19,6 +19,8 @@ public abstract class AbstractDTO implements CompositionChangeValue {
         this.note = note;
     }
 
+
+
     protected String note;
 
     public abstract DomainEntity toDomain();

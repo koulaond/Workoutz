@@ -11,7 +11,7 @@ import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.dto.datachange.composition.CompositionChangeRaw;
 import com.ondrejkoula.dto.datachange.composition.CompositionChanges;
 import com.ondrejkoula.dto.exercise.superset.SuperSetDTO;
-import com.ondrejkoula.endpoint.exercise.SuperSetEndpoint;
+import com.ondrejkoula.endpoint.exercise.superset.SuperSetEndpoint;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.IncorrectParentException;
 import com.ondrejkoula.exception.ParentNotFoundException;

@@ -1,7 +1,7 @@
 package com.ondrejkoula.domain.workout;
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.dto.AbstractDTO;
+import com.ondrejkoula.dto.workout.WorkoutDTO;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredReferences;
 import lombok.Builder;
@@ -44,7 +44,7 @@ public class Workout extends DomainEntity {
     }
 
     @Override
-    public AbstractDTO toDTO() {
+    public WorkoutDTO toDTO() {
         return null;
     }
 }
