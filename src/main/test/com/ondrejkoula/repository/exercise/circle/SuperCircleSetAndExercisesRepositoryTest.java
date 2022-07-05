@@ -1,24 +1,18 @@
 package com.ondrejkoula.repository.exercise.circle;
 
+import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.circle.SuperCircle;
 import com.ondrejkoula.domain.exercise.circle.SuperCircleSet;
 import com.ondrejkoula.domain.exercise.circle.SuperCircleSetExercise;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.ArrayList;
 
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class SuperCircleSetAndExercisesRepositoryTest {
+public class SuperCircleSetAndExercisesRepositoryTest extends PersistenceTest {
 
     @Autowired
     SuperCircleRepository superCircleRepository;

@@ -1,5 +1,6 @@
 package com.ondrejkoula.service.workout;
 
+import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;
 import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
 import com.ondrejkoula.domain.workout.Workout;
@@ -8,24 +9,15 @@ import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
 import com.ondrejkoula.service.exercise.ExerciseListService;
-import com.ondrejkoula.service.merger.DataMerger;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-class WorkoutServiceTest {
+class WorkoutServiceTest extends PersistenceTest {
 
     WorkoutService workoutService;
 

@@ -9,14 +9,19 @@ import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.AbstractDTO;
 import com.ondrejkoula.dto.datachange.DataChangeOperation;
 import com.ondrejkoula.dto.datachange.composition.*;
+import com.ondrejkoula.exception.DataNotFoundException;
+import com.ondrejkoula.exception.IncorrectParentException;
+import com.ondrejkoula.exception.ParentNotFoundException;
 import com.ondrejkoula.exception.UnsupportedCompositeChangeTypeException;
 import com.ondrejkoula.service.CompositionService;
 import com.ondrejkoula.service.GenericService;
 import lombok.SneakyThrows;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
+@Slf4j
 public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends AbstractDTO, CH extends CompositionChild<P>, CDTO extends AbstractDTO>
         extends UpdateEndpoint<P, PDTO, CompositionService<CH, P>> {
 
@@ -41,10 +46,16 @@ public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends A
     }
 
     private void verifyParentExists(Long parentId) {
-        service.findById(parentId);
+        try {
+            service.findById(parentId);
+
+        } catch (DataNotFoundException e) {
+            log.warn("Parent with ID {} not found.", parentId);
+            throw new ParentNotFoundException(e);
+        }
     }
 
-    @SneakyThrows // TODO throw custom exception
+    @SneakyThrows
     private void processChange(DataChangeOperation operation, JsonNode value, Long parentId) {
         ObjectMapper objectMapper = new ObjectMapper();
 
@@ -62,7 +73,7 @@ public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends A
                 processChangeChildPosition(value, objectMapper, parentId);
                 break;
             default:
-                throw new UnsupportedCompositeChangeTypeException(operation.name());
+                throw new UnsupportedCompositeChangeTypeException(operation.name(), parentId);
         }
     }
 
@@ -103,10 +114,11 @@ public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends A
         service.removeExistingChildFromParent(deleteChildCompositionChange.getId());
     }
 
-    private void validateChildBelongsToParent(Long childId, Long id) {
+    private void validateChildBelongsToParent(Long childId, Long parentId) {
         CH child = childService.findById(childId);
-        if (!id.equals(child.getParent().getId())) {
-            // TODO throw validation exception
+
+        if (!parentId.equals(child.getParent().getId())) {
+            throw new IncorrectParentException(childId, parentId);
         }
     }
 }

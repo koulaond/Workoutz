@@ -1,13 +1,16 @@
 package com.ondrejkoula.exception;
 
-import lombok.Value;
+import lombok.Getter;
 
-@Value
+@Getter
 public class UnsupportedCompositeChangeTypeException extends RuntimeException {
 
-    String unsupportedChangeType;
+    private final String unsupportedChangeType;
 
-    public UnsupportedCompositeChangeTypeException(String unsupportedChangeType) {
+    private final Long parentEntityId;
+
+    public UnsupportedCompositeChangeTypeException(String unsupportedChangeType, Long parentEntityId) {
         this.unsupportedChangeType = unsupportedChangeType;
+        this.parentEntityId = parentEntityId;
     }
 }

@@ -1,25 +1,19 @@
 package com.ondrejkoula.repository.workout;
 
+import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
 import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.domain.workout.WorkoutExercise;
 import com.ondrejkoula.domain.workout.WorkoutExerciseId;
 import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-@ExtendWith(SpringExtension.class)
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-public class WorkoutRepositoryIT {
+public class WorkoutRepositoryIT extends PersistenceTest {
 
     @Autowired
     WorkoutRepository workoutRepository;

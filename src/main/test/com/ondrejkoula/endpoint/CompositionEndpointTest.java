@@ -13,6 +13,8 @@ import com.ondrejkoula.dto.datachange.composition.CompositionChanges;
 import com.ondrejkoula.dto.exercise.superset.SuperSetDTO;
 import com.ondrejkoula.endpoint.exercise.SuperSetEndpoint;
 import com.ondrejkoula.exception.DataNotFoundException;
+import com.ondrejkoula.exception.IncorrectParentException;
+import com.ondrejkoula.exception.ParentNotFoundException;
 import com.ondrejkoula.service.exercise.superset.SuperSetExerciseService;
 import com.ondrejkoula.service.exercise.superset.SuperSetService;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,7 +60,6 @@ class CompositionEndpointTest {
         dataOfChildUpdateChanges = objectMapper.readTree("{\"childId\": 1, \"data\":  {\"changes\":  {\"field\":  {\"value\":  1, \"operation\": \"update\"}}}}");
         dataOfChangePositionDto = objectMapper.readTree("{\"childId\": 1, \"newPosition\":  2}");
         dataOfDeleteChildDto = objectMapper.readTree("{\"id\": 1}");
-
     }
 
     @Test
@@ -74,11 +75,21 @@ class CompositionEndpointTest {
     }
 
     @Test
-    void whenParentDoesNotExist_thenExceptionIsThrown() {
+    void whenParentDoesNotExist_thenParentNotFoundExceptionIsThrown() {
         Mockito.doThrow(DataNotFoundException.class).when(superSetService).findById(10L);
 
         CompositionChanges changes = prepareChangesDtoForEndpoint();
-        assertThrows(DataNotFoundException.class, () -> superSetEndpoint.updateChildren(10L, changes));
+        assertThrows(ParentNotFoundException.class, () -> superSetEndpoint.updateChildren(10L, changes));
+    }
+
+    @Test
+    void whenChildBelongsToForeignParent_thenIncorrectParentExceptionIsThrown() {
+        doReturn(prepareSuperSetExercise()).when(superSetExerciseService).findById(1L);
+        doReturn(SuperSet.builder().id(11L).build()).when(superSetService).findById(11L);
+
+        CompositionChanges changes = prepareChangesDtoForEndpoint();
+        assertThrows(IncorrectParentException.class, () -> superSetEndpoint.updateChildren(11L, changes));
+
     }
 
     private void verifyAllNecessaryServicesCalled() {

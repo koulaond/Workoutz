@@ -4,10 +4,6 @@ import java.util.Map;
 
 public class DataNotFoundException extends InternalException {
 
-    public DataNotFoundException(String message, Throwable cause) {
-        super(message, cause);
-    }
-
     public DataNotFoundException(String message, String messageCode) {
         super(message, messageCode);
     }
