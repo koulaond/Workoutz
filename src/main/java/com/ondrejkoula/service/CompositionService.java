@@ -45,7 +45,6 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
         }
 
         int countByParent = childRepository.countByParentId(parentId);
-
         validatePositionIsInRange(newItem.getPosition(), countByParent);
 
         List<CH> found = childRepository.findByParentIdAndPositionGreaterThanEqual(parentId, newItem.getPosition());
@@ -56,7 +55,6 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
         });
 
         newItem.setParent(parent);
-
         childRepository.save(newItem);
     }
 
