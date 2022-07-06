@@ -3,9 +3,12 @@ package com.ondrejkoula.endpoint.exercise;
 import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;
 import com.ondrejkoula.dto.exercise.ExercisesForWorkoutDTO;
 import com.ondrejkoula.dto.exercise.WorkoutExerciseListItem;
-import com.ondrejkoula.service.exercise.ExerciseListService;
+import com.ondrejkoula.dto.workout.AssignExerciseToWorkoutDTO;
+import com.ondrejkoula.dto.workout.WorkoutDTO;
+import com.ondrejkoula.service.exercise.WorkoutExercisesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,18 +18,20 @@ import static java.util.stream.Collectors.toList;
 
 @RestController
 @RequestMapping("/api/v1/exercises")
-public class ExerciseListEndpoint {
+public class WorkoutExercisesEndpoint {
 
-    private final ExerciseListService exerciseListService;
+    private final WorkoutExercisesService workoutExercisesService;
+
+
 
     @Autowired
-    public ExerciseListEndpoint(ExerciseListService exerciseListService) {
-        this.exerciseListService = exerciseListService;
+    public WorkoutExercisesEndpoint(WorkoutExercisesService workoutExercisesService) {
+        this.workoutExercisesService = workoutExercisesService;
     }
 
     @RequestMapping(value = "workout/{workoutId}")
     public ExercisesForWorkoutDTO getExercisesForWorkout(@PathVariable("workoutId") Long workoutId) {
-        List<ExerciseWithOrderInWorkout> exercisesForWorkout = exerciseListService.getExercisesForWorkout(workoutId);
+        List<ExerciseWithOrderInWorkout> exercisesForWorkout = workoutExercisesService.getExercisesForWorkout(workoutId);
 
         return ExercisesForWorkoutDTO.builder()
                 .workoutId(workoutId)
@@ -37,5 +42,10 @@ public class ExerciseListEndpoint {
                                         exerciseWithOrderInWorkout.getExercise().toDTO()))
                         .collect(toList()))
                 .build();
+    }
+
+    @RequestMapping(value = "assign-to-workout")
+    public WorkoutDTO assignExerciseToWorkout(@RequestBody AssignExerciseToWorkoutDTO dto) {
+        return null;
     }
 }

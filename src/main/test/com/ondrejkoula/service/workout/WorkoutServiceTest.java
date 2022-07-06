@@ -8,7 +8,7 @@ import com.ondrejkoula.repository.ExerciseRepository;
 import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
-import com.ondrejkoula.service.exercise.ExerciseListService;
+import com.ondrejkoula.service.exercise.WorkoutExercisesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ class WorkoutServiceTest extends PersistenceTest {
 
     WorkoutService workoutService;
 
-    ExerciseListService exerciseListService;
+    WorkoutExercisesService workoutExercisesService;
 
     @Autowired
     WorkoutRepository workoutRepository;
@@ -38,7 +38,7 @@ class WorkoutServiceTest extends PersistenceTest {
     @BeforeEach
     void setup() {
         workoutService = new WorkoutService(workoutRepository, exerciseRepository, workoutExerciseRepository);
-        exerciseListService = new ExerciseListService(workoutExerciseRepository);
+        workoutExercisesService = new WorkoutExercisesService(workoutExerciseRepository);
     }
 
     @Test
@@ -52,7 +52,7 @@ class WorkoutServiceTest extends PersistenceTest {
         workoutService.assignExerciseToWorkout(saved.getId(), ex2.getId(), 0);
 
         Workout found = workoutService.findById(saved.getId());
-        List<ExerciseWithOrderInWorkout> exercisesForWorkout = exerciseListService.getExercisesForWorkout(found.getId());
+        List<ExerciseWithOrderInWorkout> exercisesForWorkout = workoutExercisesService.getExercisesForWorkout(found.getId());
 
         assertThat(exercisesForWorkout).hasSize(2)
                 .satisfies(exercises -> {

@@ -11,12 +11,12 @@ import java.util.stream.Collectors;
 
 @Slf4j
 @Component
-public class ExerciseListService {
+public class WorkoutExercisesService {
 
     private final WorkoutExerciseRepository workoutExerciseRepository;
 
     @Autowired
-    public ExerciseListService(WorkoutExerciseRepository workoutExerciseRepository) {
+    public WorkoutExercisesService(WorkoutExerciseRepository workoutExerciseRepository) {
         this.workoutExerciseRepository = workoutExerciseRepository;
     }
 
