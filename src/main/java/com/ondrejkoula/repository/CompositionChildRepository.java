@@ -14,7 +14,7 @@ public interface CompositionChildRepository<T extends CompositionChild<? extends
 
     List<T> findByParentIdAndPositionGreaterThanEqual(Long parentId, Integer position);
 
-    long countByParentId(Long parentId);
+    int countByParentId(Long parentId);
 
     List<T> findByParentIdAndPositionBetween(Long parentId, Integer positionFrom, Integer positionTo);
 }

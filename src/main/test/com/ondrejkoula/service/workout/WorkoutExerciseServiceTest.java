@@ -17,7 +17,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WorkoutServiceTest extends PersistenceTest {
+class WorkoutExerciseServiceTest extends PersistenceTest {
 
     WorkoutService workoutService;
 
@@ -37,8 +37,8 @@ class WorkoutServiceTest extends PersistenceTest {
 
     @BeforeEach
     void setup() {
-        workoutService = new WorkoutService(workoutRepository, exerciseRepository, workoutExerciseRepository);
-        workoutExercisesService = new WorkoutExercisesService(workoutExerciseRepository);
+        workoutService = new WorkoutService(workoutRepository, workoutExerciseRepository);
+        workoutExercisesService = new WorkoutExercisesService(exerciseRepository, workoutRepository, workoutExerciseRepository);
     }
 
     @Test
@@ -48,8 +48,8 @@ class WorkoutServiceTest extends PersistenceTest {
 
         Workout saved = workoutRepository.save(Workout.builder().id(10L).build());
 
-        workoutService.assignExerciseToWorkout(saved.getId(), ex1.getId(), 0);
-        workoutService.assignExerciseToWorkout(saved.getId(), ex2.getId(), 0);
+        workoutExercisesService.assignExerciseToWorkout(saved.getId(), ex1.getId(), 0);
+        workoutExercisesService.assignExerciseToWorkout(saved.getId(), ex2.getId(), 0);
 
         Workout found = workoutService.findById(saved.getId());
         List<ExerciseWithOrderInWorkout> exercisesForWorkout = workoutExercisesService.getExercisesForWorkout(found.getId());

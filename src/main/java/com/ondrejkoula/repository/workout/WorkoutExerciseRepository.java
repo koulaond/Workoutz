@@ -17,7 +17,7 @@ public interface WorkoutExerciseRepository extends JpaRepository<WorkoutExercise
 
 
     @Query("select w from WorkoutExercise w where w.pk.workout.id = :workoutId and w.position >= :positionAfter order by w.position")
-    List<WorkoutExercise> getExercisesForWorkoutAfterPosition(@Param("workoutId") Long workoutId,
-                                                              @Param("positionAfter") Integer positionAfter);
+    List<WorkoutExercise> getExercisesForWorkoutAfterPositionIncluding(@Param("workoutId") Long workoutId,
+                                                                       @Param("positionAfter") Integer positionAfter);
 
 }

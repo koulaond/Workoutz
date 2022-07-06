@@ -1,8 +1,9 @@
 package com.ondrejkoula.service;
 
-import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.CompositionChild;
+import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.exception.DataNotFoundException;
+import com.ondrejkoula.exception.PositionOutOfRangeException;
 import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.CompositionChildRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -12,7 +13,6 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 
-import static java.lang.String.format;
 import static java.util.Collections.singletonMap;
 import static java.util.Objects.isNull;
 
@@ -35,18 +35,18 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
         return childRepository.findByParentIdOrderByPosition(parentId);
     }
 
-    public P assignNewChildToParent(Long parentId, CH newItem) {
+    public void assignNewChildToParent(Long parentId, CH newItem) {
         P parent = repository.findById(parentId)
                 .orElseThrow(() -> new ValidationException("Parent not found.", this.getClass().getSimpleName()));
 
         if (isNull(newItem.getPosition())) {
-            throwValidationException("Position not defined.");
+            log.warn("Position not defined.");
+            throw new ValidationException("Position not defined.", this.getClass().getSimpleName());
         }
 
-        long countByParent = childRepository.countByParentId(parentId);
-        if (countByParent < newItem.getPosition() || newItem.getPosition() < 0) {
-            throwValidationException(format("Position %s is out of range. Total items under parent: %s", newItem.getPosition(), countByParent));
-        }
+        int countByParent = childRepository.countByParentId(parentId);
+
+        validatePositionIsInRange(newItem.getPosition(), countByParent);
 
         List<CH> found = childRepository.findByParentIdAndPositionGreaterThanEqual(parentId, newItem.getPosition());
 
@@ -57,18 +57,16 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
 
         newItem.setParent(parent);
 
-        return childRepository.save(newItem).getParent();
+        childRepository.save(newItem);
     }
 
-    public P changeChildPosition(Long childId, Integer newPosition) {
+    public void changeChildPosition(Long childId, Integer newPosition) {
         CH child = childRepository.findById(childId)
                 .orElseThrow(() -> new DataNotFoundException("Data found", "dataNotFound", singletonMap("id", childId.toString())));
 
-        long totalCount = childRepository.countByParentId(child.getParent().getId());
+        int countByParent = childRepository.countByParentId(child.getParent().getId());
 
-        if (totalCount < newPosition || newPosition < 0) {
-            throwValidationException(format("Position %s is out of range. Total items under parent: %s", newPosition, totalCount));
-        }
+        validatePositionIsInRange(newPosition, countByParent);
 
         Integer oldPosition = child.getPosition();
         List<CH> siblingsBetween = getChildrenBetweenPositions(child.getParent().getId(), oldPosition, newPosition);
@@ -83,8 +81,9 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
 
         child.setPosition(newPosition);
 
-        return childRepository.save(child).getParent();
+        childRepository.save(child);
     }
+
 
     public void removeExistingChildFromParent(Long idToRemove) {
         Optional<CH> search = childRepository.findById(idToRemove);
@@ -109,8 +108,10 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
         }
     }
 
-    private void throwValidationException(String message) {
-        log.warn(message);
-        throw new ValidationException(message, this.getClass().getSimpleName());
+
+    private void validatePositionIsInRange(Integer newPosition, int totalCount) {
+        if (totalCount < newPosition || newPosition < 0) {
+            throw new PositionOutOfRangeException(totalCount, newPosition);
+        }
     }
 }

@@ -23,7 +23,6 @@ public class WorkoutExercisesEndpoint {
     private final WorkoutExercisesService workoutExercisesService;
 
 
-
     @Autowired
     public WorkoutExercisesEndpoint(WorkoutExercisesService workoutExercisesService) {
         this.workoutExercisesService = workoutExercisesService;
@@ -46,6 +45,9 @@ public class WorkoutExercisesEndpoint {
 
     @RequestMapping(value = "assign-to-workout")
     public WorkoutDTO assignExerciseToWorkout(@RequestBody AssignExerciseToWorkoutDTO dto) {
+        List<ExerciseWithOrderInWorkout> exercisesForWorkout = workoutExercisesService.assignExerciseToWorkout(dto.getWorkoutId(), dto.getExerciseId(), dto.getPosition());
+
+
         return null;
     }
 }

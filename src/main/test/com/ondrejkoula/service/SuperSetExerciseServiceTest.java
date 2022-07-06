@@ -3,6 +3,7 @@ package com.ondrejkoula.service;
 import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
+import com.ondrejkoula.exception.PositionOutOfRangeException;
 import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.exercise.superset.SuperSetRepository;
@@ -122,7 +123,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
 
         SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
-        assertThrows(ValidationException.class,
+        assertThrows(PositionOutOfRangeException.class,
                 () -> service.changeChildPosition(formerlyFirst.getId(), 3));
 
     }
@@ -134,7 +135,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
 
         SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
-        assertThrows(ValidationException.class,
+        assertThrows(PositionOutOfRangeException.class,
                 () -> service.changeChildPosition(formerlyFirst.getId(), -1));
 
     }
