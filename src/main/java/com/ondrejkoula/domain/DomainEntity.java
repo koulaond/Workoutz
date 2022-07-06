@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
-public abstract class DomainEntity implements Loggable {
+public abstract class DomainEntity implements Loggable, ConvertibleFromDomainToDTO {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -28,5 +28,6 @@ public abstract class DomainEntity implements Loggable {
     protected String note;
 
 
+    @Override
   public abstract AbstractDTO toDTO();
 }

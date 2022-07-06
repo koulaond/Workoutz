@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public abstract class AbstractDTO implements CompositionChangeValue {
+public abstract class AbstractDTO implements CompositionChangeValue, ConvertibleFromDTOToDomain {
 
     protected Long id;
 
@@ -23,5 +23,6 @@ public abstract class AbstractDTO implements CompositionChangeValue {
 
     protected String note;
 
+    @Override
     public abstract DomainEntity toDomain();
 }

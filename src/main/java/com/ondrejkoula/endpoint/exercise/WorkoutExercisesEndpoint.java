@@ -4,7 +4,7 @@ import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;
 import com.ondrejkoula.dto.exercise.ExercisesForWorkoutDTO;
 import com.ondrejkoula.dto.exercise.WorkoutExerciseListItem;
 import com.ondrejkoula.dto.workout.AssignExerciseToWorkoutDTO;
-import com.ondrejkoula.dto.workout.WorkoutDTO;
+import com.ondrejkoula.dto.workout.ExerciseWithOrderInWorkoutDTO;
 import com.ondrejkoula.service.exercise.WorkoutExercisesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -44,10 +44,11 @@ public class WorkoutExercisesEndpoint {
     }
 
     @RequestMapping(value = "assign-to-workout")
-    public WorkoutDTO assignExerciseToWorkout(@RequestBody AssignExerciseToWorkoutDTO dto) {
-        List<ExerciseWithOrderInWorkout> exercisesForWorkout = workoutExercisesService.assignExerciseToWorkout(dto.getWorkoutId(), dto.getExerciseId(), dto.getPosition());
+    public List<ExerciseWithOrderInWorkoutDTO> assignExerciseToWorkout(@RequestBody AssignExerciseToWorkoutDTO dto) {
 
+        List<ExerciseWithOrderInWorkout> exercisesForWorkout
+                = workoutExercisesService.assignExerciseToWorkout(dto.getWorkoutId(), dto.getExerciseId(), dto.getPosition());
 
-        return null;
+        return exercisesForWorkout.stream().map(ExerciseWithOrderInWorkout::toDTO).collect(toList());
     }
 }

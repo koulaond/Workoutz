@@ -2,6 +2,7 @@ package com.ondrejkoula.dto.exercise;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
+import com.ondrejkoula.dto.AbstractDTO;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -11,7 +12,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class ExercisePrescriptionDTO extends ExerciseDTO {
+public class ExercisePrescriptionDTO extends AbstractDTO {
 
     private String label;
 
