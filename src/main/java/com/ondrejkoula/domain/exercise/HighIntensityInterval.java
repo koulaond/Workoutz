@@ -3,16 +3,12 @@ package com.ondrejkoula.domain.exercise;
 import com.ondrejkoula.dto.exercise.HighIntensityIntervalDTO;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredReference;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "high_intensity_intervals")

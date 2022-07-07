@@ -5,10 +5,7 @@ import com.ondrejkoula.dto.exercise.circle.SuperCircleSetDTO;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleSetExerciseDTO;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredReferences;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
@@ -18,8 +15,7 @@ import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.joining;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "super_circle_sets")

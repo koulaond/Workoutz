@@ -1,16 +1,12 @@
 package com.ondrejkoula.domain;
 
 import com.ondrejkoula.dto.AbstractDTO;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -24,8 +20,10 @@ public abstract class DomainEntity implements Loggable, ConvertibleFromDomainToD
     @Column(name = "status")
     protected String status;
 
+
     @Column(name = "note")
     protected String note;
+
 
 
     @Override

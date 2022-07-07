@@ -4,10 +4,7 @@ import com.ondrejkoula.domain.exercise.Exercise;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleDTO;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredReference;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -16,8 +13,7 @@ import static java.util.Objects.isNull;
 /**
  * Adjusted circle training where each set has exercises specified.
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "super_circles")

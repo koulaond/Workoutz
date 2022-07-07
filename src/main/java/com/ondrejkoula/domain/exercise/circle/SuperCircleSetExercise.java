@@ -4,10 +4,7 @@ import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.exercise.circle.SuperCircleSetExerciseDTO;
 import com.ondrejkoula.service.validation.annotation.RequiredReference;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Objects;
@@ -15,8 +12,7 @@ import java.util.Objects;
 /**
  * Embedded exercise in circle set. DOes not exist as standalone exercise definition.
  */
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "super_circle_set_exercises")

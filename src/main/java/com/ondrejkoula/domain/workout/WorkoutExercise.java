@@ -1,14 +1,10 @@
 package com.ondrejkoula.domain.workout;
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
-@Setter
+@Data
 @Builder
 @NoArgsConstructor
 @Entity

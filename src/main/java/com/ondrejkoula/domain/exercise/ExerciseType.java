@@ -3,17 +3,13 @@ package com.ondrejkoula.domain.exercise;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
 import com.ondrejkoula.service.validation.annotation.Required;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-@Getter
-@Setter
+@Data
 @Entity
 @NoArgsConstructor
 @Table(name = "exercise_types")

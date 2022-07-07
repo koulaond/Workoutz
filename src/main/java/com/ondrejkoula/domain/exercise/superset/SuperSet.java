@@ -4,10 +4,7 @@ import com.ondrejkoula.domain.Composite;
 import com.ondrejkoula.domain.exercise.Exercise;
 import com.ondrejkoula.dto.exercise.superset.SuperSetDTO;
 import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 
 import javax.persistence.*;
@@ -15,8 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Getter
-@Setter
+@Data
 @Entity
 @NoArgsConstructor
 @Table(name = "super_sets")
