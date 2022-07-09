@@ -4,7 +4,7 @@ import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;
 import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
 import com.ondrejkoula.domain.workout.Workout;
-import com.ondrejkoula.repository.ExerciseRepository;
+import com.ondrejkoula.repository.exercise.NonSpecificExerciseRepository;
 import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
@@ -30,7 +30,7 @@ class WorkoutExerciseServiceTest extends PersistenceTest {
     WorkoutExerciseRepository workoutExerciseRepository;
 
     @Autowired
-    ExerciseRepository exerciseRepository;
+    NonSpecificExerciseRepository exerciseRepository;
 
     @Autowired
     SetsAndRepetitionsRepository setsAndRepetitionsRepository;

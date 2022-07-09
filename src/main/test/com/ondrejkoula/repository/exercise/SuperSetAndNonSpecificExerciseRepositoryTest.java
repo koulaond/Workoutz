@@ -15,7 +15,7 @@ import java.util.List;
 import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class SuperSetAndExerciseRepositoryIT extends PersistenceTest {
+public class SuperSetAndNonSpecificExerciseRepositoryTest extends PersistenceTest {
 
     @Autowired
     SuperSetRepository superSetRepository;
@@ -44,6 +44,7 @@ public class SuperSetAndExerciseRepositoryIT extends PersistenceTest {
         assertThat(allExercises).hasSize(2); // There should be still 2 exercises
 
         superSetRepository.delete(savedSet);
+
         allExercises = exerciseRepository.findAll();
         assertThat(allExercises).hasSize(0); // No exercise left after parent set was deleted
     }

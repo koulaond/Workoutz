@@ -10,18 +10,24 @@ public class WorkoutDTO extends AbstractDTO {
 
     private final String label;
 
-    private final Integer expectedDuration;
+    private final Integer expectedDurationInMins;
 
     @Builder
-    public WorkoutDTO(Long id, String status, String note, String label, Integer expectedDuration) {
+    public WorkoutDTO(Long id, String status, String note, String label, Integer expectedDurationInMins) {
         super(id, status, note);
         this.label = label;
-        this.expectedDuration = expectedDuration;
+        this.expectedDurationInMins = expectedDurationInMins;
     }
 
     @Override
     public Workout toDomain() {
 
-        return null;
+        return Workout.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .label(getLabel())
+                .expectedDurationInMins(getExpectedDurationInMins())
+                .build();
     }
 }

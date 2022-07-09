@@ -7,7 +7,7 @@ import com.ondrejkoula.domain.workout.WorkoutExercise;
 import com.ondrejkoula.domain.workout.WorkoutExerciseId;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.PositionOutOfRangeException;
-import com.ondrejkoula.repository.ExerciseRepository;
+import com.ondrejkoula.repository.exercise.NonSpecificExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -21,14 +21,14 @@ import java.util.stream.Collectors;
 @Component
 public class WorkoutExercisesService {
 
-    private final ExerciseRepository exerciseRepository;
+    private final NonSpecificExerciseRepository exerciseRepository;
 
     private final WorkoutRepository workoutRepository;
 
     private final WorkoutExerciseRepository workoutExerciseRepository;
 
     @Autowired
-    public WorkoutExercisesService(ExerciseRepository exerciseRepository,
+    public WorkoutExercisesService(NonSpecificExerciseRepository exerciseRepository,
                                    WorkoutRepository workoutRepository,
                                    WorkoutExerciseRepository workoutExerciseRepository) {
 

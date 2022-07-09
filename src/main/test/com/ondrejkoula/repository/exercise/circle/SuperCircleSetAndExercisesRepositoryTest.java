@@ -29,9 +29,7 @@ public class SuperCircleSetAndExercisesRepositoryTest extends PersistenceTest {
     @Test
     void shouldCreateAndDeleteSuperCircleCompleteStructure() {
         SuperCircleSetExercise exercise = SuperCircleSetExercise.builder().build();
-
         SuperCircleSet set = SuperCircleSet.builder().setExercises(new ArrayList<>(singletonList(exercise))).build();
-
         SuperCircle superCircle = SuperCircle.builder().set(set).build();
 
         superCircle = superCircleRepository.save(superCircle);

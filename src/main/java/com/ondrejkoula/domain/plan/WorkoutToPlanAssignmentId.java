@@ -21,5 +21,4 @@ public class WorkoutToPlanAssignmentId implements Serializable {
     @ManyToOne
     private Plan plan;
 
-    // TODO scheduled date and time
 }

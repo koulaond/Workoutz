@@ -10,20 +10,19 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.assertThat;
 
 
-public class CircleRepositoryIT extends PersistenceTest {
+public class CircleRepositoryTest extends PersistenceTest {
 
     @Autowired
     CircleRepository repository;
 
     @Test
     void shouldCreateAndDeleteCircleExercise() {
-
         Circle circle = Circle.builder()
                 .status("DRAFT")
                 .prepareTime(15)
                 .build();
-        Circle savedCircle = repository.save(circle);
 
+        Circle savedCircle = repository.save(circle);
         List<Circle> all = repository.findAll();
 
         assertThat(all)

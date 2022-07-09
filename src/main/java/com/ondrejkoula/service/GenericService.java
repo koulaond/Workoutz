@@ -88,7 +88,7 @@ public abstract class GenericService<DE extends DomainEntity> {
     }
 
     protected void doFindAllDependencies(Long id, Map<String, List<? extends DomainEntity>> allDependencies) {
-
+        // TODO implement dependencies collector pattern for each type and separate from this service
     }
 
 }

@@ -25,7 +25,12 @@ public class Workout extends DomainEntity {
     private List<WorkoutExercise> workoutExercises;
 
     @Builder
-    public Workout(Long id, String status, String note, String label, Integer expectedDurationInMins, List<WorkoutExercise> workoutExercises) {
+    public Workout(Long id,
+                   String status,
+                   String note,
+                   String label,
+                   Integer expectedDurationInMins,
+                   List<WorkoutExercise> workoutExercises) {
         super(id, status, note);
         this.label = label;
         this.expectedDurationInMins = expectedDurationInMins;
@@ -33,12 +38,19 @@ public class Workout extends DomainEntity {
     }
 
     @Override
+    public WorkoutDTO toDTO() {
+        return WorkoutDTO.builder()
+                .id(getId())
+                .status(getStatus())
+                .note(getNote())
+                .label(getLabel())
+                .expectedDurationInMins(getExpectedDurationInMins())
+                .build();
+    }
+
+    @Override
     public String loggableString() {
         return null;
     }
 
-    @Override
-    public WorkoutDTO toDTO() {
-        return null;
-    }
 }
