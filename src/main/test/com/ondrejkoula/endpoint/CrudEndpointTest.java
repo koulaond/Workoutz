@@ -17,7 +17,7 @@ import static com.ondrejkoula.domain.exercise.ExerciseType.builder;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-class UpdateEndpointTest {
+class CrudEndpointTest {
 
     @Mock
     ExerciseTypeService exerciseTypeService;

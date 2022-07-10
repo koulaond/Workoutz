@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
 public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends AbstractDTO, CH extends CompositionChild<P>, CDTO extends AbstractDTO>
-        extends UpdateEndpoint<P, PDTO, CompositionService<CH, P>> {
+        extends CrudEndpoint<P, PDTO, CompositionService<CH, P>> {
 
     private final GenericService<CH> childService;
 
