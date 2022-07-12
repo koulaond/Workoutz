@@ -2,6 +2,8 @@ package com.ondrejkoula.domain.plan;
 
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.plan.PlanDTO;
+import com.ondrejkoula.service.validation.annotation.Before;
+import com.ondrejkoula.service.validation.annotation.Required;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,7 +12,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDateTime;
-import java.time.ZonedDateTime;
 
 @Data
 @Entity
@@ -21,9 +22,12 @@ public class Plan extends DomainEntity {
     @Column(name = "title")
     private String title;
 
+    @Required
+    @Before(otherFieldName = "expectedPlanEnd", minimumHours = 1)
     @Column(name = "expected_plan_start")
     private LocalDateTime expectedPlanStart;
 
+    @Required
     @Column(name = "expected_plan_end")
     private LocalDateTime expectedPlanEnd;
 

@@ -1,5 +1,6 @@
 package com.ondrejkoula.service.validation;
 
+import com.ondrejkoula.service.validation.annotation.Before;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import com.ondrejkoula.service.validation.annotation.RequiredReferences;
@@ -13,9 +14,12 @@ public class FieldValidatorFactory {
 
     private final Object fieldValue;
 
-    public FieldValidatorFactory(Field field, Object fieldValue) {
+    private final Object fieldOwner;
+
+    public FieldValidatorFactory(Field field, Object fieldValue, Object fieldOwner) {
         this.field = field;
         this.fieldValue = fieldValue;
+        this.fieldOwner = fieldOwner;
     }
 
     public FieldValidator getFieldValidatorForAnnotation(Annotation annotation) {
@@ -27,6 +31,9 @@ public class FieldValidatorFactory {
         }
         if (annotation.annotationType().equals(RequiredReferences.class)) {
             return new RequiredReferenceFieldValidator(field.getName(), fieldValue);
+        }
+        if (annotation.annotationType().equals(Before.class)) {
+            return new DateFieldIsBeforeValidator(field, fieldValue, fieldOwner);
         }
         return new DefaultFieldValidator();
     }

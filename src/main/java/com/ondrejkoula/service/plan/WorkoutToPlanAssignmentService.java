@@ -5,6 +5,7 @@ import com.ondrejkoula.domain.plan.WorkoutToPlanAssignment;
 import com.ondrejkoula.domain.plan.WorkoutToPlanAssignmentId;
 import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.exception.DataNotFoundException;
+import com.ondrejkoula.exception.OutOfTimeWindowException;
 import com.ondrejkoula.repository.plan.PlanRepository;
 import com.ondrejkoula.repository.plan.WorkoutToPlanAssignmentRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
@@ -35,8 +36,9 @@ public class WorkoutToPlanAssignmentService {
 
     public void assignWorkoutToPlan(Long workoutId, Long planId, LocalDateTime dateAndTimeScheduled) {
         Workout workout = getWorkoutOrThrowException(workoutId);
-
         Plan plan = getPlanOrThrowException(planId);
+
+        validateAssignedTimeIsWithinPlanWindow(plan, dateAndTimeScheduled);
 
         assignmentRepository.save(WorkoutToPlanAssignment.builder()
                 .pk(WorkoutToPlanAssignmentId.builder().plan(plan).workout(workout).build())
@@ -56,6 +58,15 @@ public class WorkoutToPlanAssignmentService {
     private Plan getPlanOrThrowException(Long planId) {
         return planRepository.findById(planId)
                 .orElseThrow(() -> new DataNotFoundException("Plan not found", "notFound"));
+    }
+
+    private void validateAssignedTimeIsWithinPlanWindow(Plan plan, LocalDateTime dateAndTimeScheduled) {
+        if (dateAndTimeScheduled.isBefore(plan.getExpectedPlanStart())) {
+            throw OutOfTimeWindowException.before(dateAndTimeScheduled, plan.getExpectedPlanStart());
+        }
+        if (dateAndTimeScheduled.isAfter(plan.getExpectedPlanEnd())) {
+            throw OutOfTimeWindowException.after(dateAndTimeScheduled, plan.getExpectedPlanEnd());
+        }
     }
 
 }

@@ -27,11 +27,11 @@ public class DataValidator {
         }
     }
 
-    private <DE extends DomainEntity> void doValidation(DE toSave, Map<String, String> validationMessages) {
-        List<Field> allFieldsFromTargetClass = getAllFieldsFromTargetClass(toSave.getClass());
+    private <DE extends DomainEntity> void doValidation(DE toValidate, Map<String, String> validationMessages) {
+        List<Field> allFieldsFromTargetClass = getAllFieldsFromTargetClass(toValidate.getClass());
 
         allFieldsFromTargetClass.forEach(field
-                -> validateSingleFieldValue(field, getFieldValue(toSave, field), validationMessages));
+                -> validateSingleFieldValue(field, toValidate, validationMessages));
     }
 
     private <DE extends DomainEntity> Object getFieldValue(DE toSave, Field field) {
@@ -44,9 +44,10 @@ public class DataValidator {
         }
     }
 
-    private void validateSingleFieldValue(Field field, Object fieldValue, Map<String, String> validationMessages) {
+    private <DE extends DomainEntity> void validateSingleFieldValue(Field field, DE fieldOwner, Map<String, String> validationMessages) {
+        Object fieldValue = getFieldValue(fieldOwner, field);
         Annotation[] fieldValidationAnnotations = field.getDeclaredAnnotations();
-        FieldValidatorFactory fieldValidatorFactory = new FieldValidatorFactory(field, fieldValue);
+        FieldValidatorFactory fieldValidatorFactory = new FieldValidatorFactory(field, fieldValue, fieldOwner);
 
         for (Annotation fieldAnnotation : fieldValidationAnnotations) {
             FieldValidator fieldValidator = fieldValidatorFactory.getFieldValidatorForAnnotation(fieldAnnotation);
