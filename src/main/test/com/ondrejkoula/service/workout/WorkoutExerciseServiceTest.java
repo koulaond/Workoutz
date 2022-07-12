@@ -8,7 +8,6 @@ import com.ondrejkoula.repository.exercise.NonSpecificExerciseRepository;
 import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
-import com.ondrejkoula.service.exercise.WorkoutExercisesService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

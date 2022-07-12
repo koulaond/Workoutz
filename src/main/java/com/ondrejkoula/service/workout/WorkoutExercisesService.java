@@ -1,4 +1,4 @@
-package com.ondrejkoula.service.exercise;
+package com.ondrejkoula.service.workout;
 
 import com.ondrejkoula.domain.exercise.Exercise;
 import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;

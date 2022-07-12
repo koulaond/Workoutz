@@ -5,7 +5,7 @@ import com.ondrejkoula.dto.exercise.ExercisesForWorkoutDTO;
 import com.ondrejkoula.dto.exercise.WorkoutExerciseListItem;
 import com.ondrejkoula.dto.workout.AssignExerciseToWorkoutDTO;
 import com.ondrejkoula.dto.workout.ExerciseWithOrderInWorkoutDTO;
-import com.ondrejkoula.service.exercise.WorkoutExercisesService;
+import com.ondrejkoula.service.workout.WorkoutExercisesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;

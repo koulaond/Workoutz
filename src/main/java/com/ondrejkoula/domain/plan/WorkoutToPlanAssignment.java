@@ -1,5 +1,7 @@
 package com.ondrejkoula.domain.plan;
 
+import com.ondrejkoula.domain.ConvertibleFromDomainToDTO;
+import com.ondrejkoula.dto.plan.WorkoutToPlanAssignmentDTO;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +19,7 @@ import java.time.LocalDateTime;
         @AssociationOverride(name = "pk.plan",
                 joinColumns = @JoinColumn(name = "plan_id"))
 })
-public class WorkoutToPlanAssignment {
+public class WorkoutToPlanAssignment implements ConvertibleFromDomainToDTO {
 
     @EmbeddedId
     private WorkoutToPlanAssignmentId pk;
@@ -29,5 +31,14 @@ public class WorkoutToPlanAssignment {
     public WorkoutToPlanAssignment(WorkoutToPlanAssignmentId pk, LocalDateTime dateAndTimeScheduled) {
         this.pk = pk;
         this.dateAndTimeScheduled = dateAndTimeScheduled;
+    }
+
+    @Override
+    public WorkoutToPlanAssignmentDTO toDTO() {
+        return WorkoutToPlanAssignmentDTO.builder()
+                .workout(pk.getWorkout().toDTO())
+                .plan(pk.getPlan().toDTO())
+                .dateAndTimeScheduled(dateAndTimeScheduled)
+                .build();
     }
 }

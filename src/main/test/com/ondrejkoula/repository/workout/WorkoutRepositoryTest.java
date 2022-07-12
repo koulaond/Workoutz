@@ -13,7 +13,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class WorkoutRepositoryIT extends PersistenceTest {
+public class WorkoutRepositoryTest extends PersistenceTest {
 
     @Autowired
     WorkoutRepository workoutRepository;
