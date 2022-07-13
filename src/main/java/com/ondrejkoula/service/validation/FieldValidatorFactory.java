@@ -33,7 +33,7 @@ public class FieldValidatorFactory {
             return new RequiredReferenceFieldValidator(field.getName(), fieldValue);
         }
         if (annotation.annotationType().equals(Before.class)) {
-            return new DateFieldIsBeforeValidator(field, fieldValue, fieldOwner);
+            return new DateFieldIsBeforeOtherValidator(field, fieldOwner);
         }
         return new DefaultFieldValidator();
     }
