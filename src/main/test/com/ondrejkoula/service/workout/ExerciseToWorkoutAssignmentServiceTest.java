@@ -2,10 +2,10 @@ package com.ondrejkoula.service.workout;
 
 import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;
-import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
+import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.repository.exercise.NonSpecificExerciseRepository;
-import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
+import com.ondrejkoula.repository.exercise.WeightsRepository;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +16,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-class WorkoutExerciseServiceTest extends PersistenceTest {
+class ExerciseToWorkoutAssignmentServiceTest extends PersistenceTest {
 
     WorkoutService workoutService;
 
@@ -32,7 +32,7 @@ class WorkoutExerciseServiceTest extends PersistenceTest {
     NonSpecificExerciseRepository exerciseRepository;
 
     @Autowired
-    SetsAndRepetitionsRepository setsAndRepetitionsRepository;
+    WeightsRepository weightsRepository;
 
     @BeforeEach
     void setup() {
@@ -42,8 +42,8 @@ class WorkoutExerciseServiceTest extends PersistenceTest {
 
     @Test
     void shouldAssignExercisesToWorkout() {
-        SetsAndRepetitions ex1 = setsAndRepetitionsRepository.save(SetsAndRepetitions.builder().note("ex1").build());
-        SetsAndRepetitions ex2 = setsAndRepetitionsRepository.save(SetsAndRepetitions.builder().note("ex2").build());
+        Weights ex1 = weightsRepository.save(Weights.builder().note("ex1").build());
+        Weights ex2 = weightsRepository.save(Weights.builder().note("ex2").build());
 
         Workout saved = workoutRepository.save(Workout.builder().id(10L).build());
 

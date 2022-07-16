@@ -12,11 +12,11 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-class DataMergerTest {
+class ColumnFieldDataMergerTest {
 
     @Test
     void shouldMergeCorrectly() {
-        DataMerger dataMerger = new DataMerger();
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
 
         SuperCircle target = SuperCircle.builder().status("old").prepareTime(10)
                 .workTime(10).restTime(10).setsCount(10).build();
@@ -48,7 +48,7 @@ class DataMergerTest {
 
     @Test
     void whenMissingValueForFieldUpdate_thenMissingDataExceptionIsThrown() {
-        DataMerger dataMerger = new DataMerger();
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
 
         SuperCircle target = SuperCircle.builder().status("old").prepareTime(10)
                 .workTime(10).restTime(10).setsCount(10).build();
@@ -66,7 +66,7 @@ class DataMergerTest {
 
     @Test
     void whenIncompatibleValueIsSet_thenInconsistentDataExceptionIsThrown() {
-        DataMerger dataMerger = new DataMerger();
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
 
         SuperCircle target = SuperCircle.builder().status("old").prepareTime(10)
                 .workTime(10).restTime(10).setsCount(10).build();
@@ -84,7 +84,7 @@ class DataMergerTest {
 
     @Test
     void whenUnsupportedOperationIsGiven_thenUnsupportedOperationExceptionIsThrown() {
-        DataMerger dataMerger = new DataMerger();
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
 
         SuperCircle target = SuperCircle.builder().status("old").prepareTime(10)
                 .workTime(10).restTime(10).setsCount(10).build();

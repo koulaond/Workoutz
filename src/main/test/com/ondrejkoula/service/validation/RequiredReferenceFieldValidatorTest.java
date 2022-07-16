@@ -1,7 +1,7 @@
 package com.ondrejkoula.service.validation;
 
 import com.ondrejkoula.domain.workout.Workout;
-import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -9,7 +9,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.ondrejkoula.exception.Errors.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RequiredReferenceFieldValidatorTest {
 
@@ -25,7 +24,7 @@ class RequiredReferenceFieldValidatorTest {
 
     @Test
     void whenFieldValueIsNotDomainType_thenPutErrorToMessages() {
-        RequiredReferenceFieldValidator validator = new RequiredReferenceFieldValidator("field", new WorkoutExercise());
+        RequiredReferenceFieldValidator validator = new RequiredReferenceFieldValidator("field", new ExerciseToWorkoutAssignment());
         HashMap<String, String> validationMessages = new HashMap<>();
 
         validator.validateFieldValue(validationMessages);

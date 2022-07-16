@@ -1,7 +1,7 @@
 package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.domain.ConvertibleFromDomainToDTO;
-import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
 import com.ondrejkoula.dto.workout.ExerciseWithOrderInWorkoutDTO;
 import lombok.Builder;
 import lombok.Data;
@@ -14,10 +14,10 @@ public class ExerciseWithOrderInWorkout implements ConvertibleFromDomainToDTO {
 
     private Integer position;
 
-    public static ExerciseWithOrderInWorkout of(WorkoutExercise workoutExercise) {
+    public static ExerciseWithOrderInWorkout of(ExerciseToWorkoutAssignment exerciseToWorkoutAssignment) {
         return ExerciseWithOrderInWorkout.builder()
-                .exercise(workoutExercise.getPk().getExercise())
-                .position(workoutExercise.getPosition())
+                .exercise(exerciseToWorkoutAssignment.getPk().getExercise())
+                .position(exerciseToWorkoutAssignment.getPosition())
                 .build();
     }
 

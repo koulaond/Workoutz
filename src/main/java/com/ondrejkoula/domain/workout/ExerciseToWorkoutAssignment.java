@@ -8,14 +8,14 @@ import javax.persistence.*;
 @Builder
 @NoArgsConstructor
 @Entity
-@Table(name = "workouts_exercises")
+@Table(name = "exercises_workouts_assignments")
 @AssociationOverrides({
         @AssociationOverride(name = "pk.workout",
         joinColumns = @JoinColumn(name = "workout_id")),
         @AssociationOverride(name = "pk.exercise",
         joinColumns = @JoinColumn(name = "exercise_id"))
 })
-public class WorkoutExercise {
+public class ExerciseToWorkoutAssignment {
 
     @EmbeddedId
     private WorkoutExerciseId pk = new WorkoutExerciseId();
@@ -23,7 +23,7 @@ public class WorkoutExercise {
     private Integer position;
 
     @Builder
-    public WorkoutExercise(WorkoutExerciseId pk, Integer position) {
+    public ExerciseToWorkoutAssignment(WorkoutExerciseId pk, Integer position) {
         this.pk = pk;
         this.position = position;
     }

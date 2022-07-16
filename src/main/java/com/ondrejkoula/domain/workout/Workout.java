@@ -22,7 +22,7 @@ public class Workout extends DomainEntity {
     private Integer expectedDurationInMins;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.workout", cascade = CascadeType.ALL)
-    private List<WorkoutExercise> workoutExercises;
+    private List<ExerciseToWorkoutAssignment> exerciseToWorkoutAssignments;
 
     @Builder
     public Workout(Long id,
@@ -30,11 +30,11 @@ public class Workout extends DomainEntity {
                    String note,
                    String label,
                    Integer expectedDurationInMins,
-                   List<WorkoutExercise> workoutExercises) {
+                   List<ExerciseToWorkoutAssignment> exerciseToWorkoutAssignments) {
         super(id, status, note);
         this.label = label;
         this.expectedDurationInMins = expectedDurationInMins;
-        this.workoutExercises = workoutExercises;
+        this.exerciseToWorkoutAssignments = exerciseToWorkoutAssignments;
     }
 
     @Override

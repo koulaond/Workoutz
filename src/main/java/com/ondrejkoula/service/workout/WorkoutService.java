@@ -1,7 +1,7 @@
 package com.ondrejkoula.service.workout;
 
 import com.ondrejkoula.domain.workout.Workout;
-import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
 import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.workout.WorkoutRepository;
 import com.ondrejkoula.service.GenericService;
@@ -26,7 +26,7 @@ public class WorkoutService extends GenericService<Workout> {
     }
 
     public List<Workout> getWorkoutsForExercise(Long exerciseId) {
-        List<WorkoutExercise> workoutsForExercise = workoutExerciseRepository.getWorkoutsForExercise(exerciseId);
+        List<ExerciseToWorkoutAssignment> workoutsForExercise = workoutExerciseRepository.getWorkoutsForExercise(exerciseId);
 
         return workoutsForExercise.stream()
                 .map(workoutExercise -> workoutExercise.getPk().getWorkout())

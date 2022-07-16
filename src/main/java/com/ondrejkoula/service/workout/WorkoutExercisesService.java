@@ -3,7 +3,7 @@ package com.ondrejkoula.service.workout;
 import com.ondrejkoula.domain.exercise.Exercise;
 import com.ondrejkoula.domain.exercise.ExerciseWithOrderInWorkout;
 import com.ondrejkoula.domain.workout.Workout;
-import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
 import com.ondrejkoula.domain.workout.WorkoutExerciseId;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.PositionOutOfRangeException;
@@ -50,7 +50,7 @@ public class WorkoutExercisesService {
 
         validatePositionIsInRange(position, getExercisesForWorkout(workoutId));
 
-        List<WorkoutExercise> allExercisesAfterPositionIncluding
+        List<ExerciseToWorkoutAssignment> allExercisesAfterPositionIncluding
                 = workoutExerciseRepository.getExercisesForWorkoutAfterPositionIncluding(workoutId, position);
 
         moveSubsequentExercisesPositionsOneUp(allExercisesAfterPositionIncluding);
@@ -60,13 +60,13 @@ public class WorkoutExercisesService {
     }
 
     private void assignNewExerciseToPositionInWorkout(Exercise exercise, Workout workout, Integer position) {
-        workoutExerciseRepository.save(WorkoutExercise.builder()
+        workoutExerciseRepository.save(ExerciseToWorkoutAssignment.builder()
                 .pk(WorkoutExerciseId.builder().exercise(exercise).workout(workout).build())
                 .position(position)
                 .build());
     }
 
-    private void moveSubsequentExercisesPositionsOneUp(List<WorkoutExercise> allExercisesAfterPositionIncluding) {
+    private void moveSubsequentExercisesPositionsOneUp(List<ExerciseToWorkoutAssignment> allExercisesAfterPositionIncluding) {
         allExercisesAfterPositionIncluding.forEach(following -> {
             following.setPosition(following.getPosition() + 1);
             workoutExerciseRepository.save(following);

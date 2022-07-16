@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 public abstract class CrudEndpoint<DE extends DomainEntity, DTO extends AbstractDTO,
-        S extends GenericService<DE>> extends CrdEndpoint<DE, DTO, S> {
+        S extends GenericService<DE>> extends CreateReadDeleteEndpoint<DE, DTO, S> {
 
     public CrudEndpoint(S service) {
         super(service);

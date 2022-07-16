@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class CrdEndpoint<DE extends DomainEntity, DTO extends AbstractDTO,
+public abstract class CreateReadDeleteEndpoint<DE extends DomainEntity, DTO extends AbstractDTO,
         S extends GenericService<DE>> extends AbstractEndpoint<DE, DTO> {
 
     protected final S service;
 
-    public CrdEndpoint(S service) {
+    public CreateReadDeleteEndpoint(S service) {
         this.service = service;
     }
     @GetMapping(value = "/{id}", produces = "application/json")

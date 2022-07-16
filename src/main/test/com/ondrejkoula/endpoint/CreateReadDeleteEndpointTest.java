@@ -19,7 +19,7 @@ import static java.util.Collections.singletonList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-class CrdEndpointTest {
+class CreateReadDeleteEndpointTest {
 
     @Mock
     ExerciseTypeService exerciseTypeService;

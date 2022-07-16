@@ -1,11 +1,11 @@
 package com.ondrejkoula.repository.workout;
 
 import com.ondrejkoula.PersistenceTest;
-import com.ondrejkoula.domain.exercise.SetsAndRepetitions;
+import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.domain.workout.Workout;
-import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
 import com.ondrejkoula.domain.workout.WorkoutExerciseId;
-import com.ondrejkoula.repository.exercise.SetsAndRepetitionsRepository;
+import com.ondrejkoula.repository.exercise.WeightsRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -19,7 +19,7 @@ public class WorkoutRepositoryTest extends PersistenceTest {
     WorkoutRepository workoutRepository;
 
     @Autowired
-    SetsAndRepetitionsRepository setsAndRepetitionsRepository;
+    WeightsRepository weightsRepository;
 
     @Autowired
     WorkoutExerciseRepository workoutExerciseRepository;
@@ -29,22 +29,22 @@ public class WorkoutRepositoryTest extends PersistenceTest {
         Workout workout = Workout.builder().id(1L).build();
         workoutRepository.save(workout);
 
-        SetsAndRepetitions setsAndRepetitions = SetsAndRepetitions.builder().id(2L).build();
-        setsAndRepetitionsRepository.save(setsAndRepetitions);
+        Weights weights = Weights.builder().id(2L).build();
+        weightsRepository.save(weights);
 
-        workoutExerciseRepository.save(WorkoutExercise.builder()
+        workoutExerciseRepository.save(ExerciseToWorkoutAssignment.builder()
                 .pk(WorkoutExerciseId.builder()
                         .workout(workout)
-                        .exercise(setsAndRepetitions)
+                        .exercise(weights)
                         .build())
                 .position(0)
                 .build());
 
-        List<WorkoutExercise> filtered = workoutExerciseRepository.getWorkoutsForExercise(setsAndRepetitions.getId());
+        List<ExerciseToWorkoutAssignment> filtered = workoutExerciseRepository.getWorkoutsForExercise(weights.getId());
 
         assertThat(filtered).hasSize(1).satisfies(list ->{
-            WorkoutExercise exercise = list.iterator().next();
-            assertThat(exercise.getPk().getExercise()).isEqualTo(setsAndRepetitions);
+            ExerciseToWorkoutAssignment exercise = list.iterator().next();
+            assertThat(exercise.getPk().getExercise()).isEqualTo(weights);
             assertThat(exercise.getPk().getWorkout()).isEqualTo(workout);
         });
     }

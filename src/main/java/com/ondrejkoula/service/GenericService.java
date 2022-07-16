@@ -5,7 +5,7 @@ import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.CascadeDependenciesException;
 import com.ondrejkoula.exception.DataNotFoundException;
-import com.ondrejkoula.service.merger.DataMerger;
+import com.ondrejkoula.service.merger.ColumnFieldDataMerger;
 import com.ondrejkoula.service.validation.DataValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -28,13 +28,13 @@ public abstract class GenericService<DE extends DomainEntity> {
 
     protected final JpaRepository<DE, Long> repository;
 
-    protected final DataMerger dataMerger;
+    protected final ColumnFieldDataMerger dataMerger;
 
     protected final DataValidator dataValidator;
 
     public GenericService(JpaRepository<DE, Long> repository) {
         this.repository = repository;
-        this.dataMerger = new DataMerger();
+        this.dataMerger = new ColumnFieldDataMerger();
         this.dataValidator = new DataValidator();
     }
 

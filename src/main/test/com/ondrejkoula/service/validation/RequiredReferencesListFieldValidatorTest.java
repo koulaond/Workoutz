@@ -2,7 +2,7 @@ package com.ondrejkoula.service.validation;
 
 import com.ondrejkoula.domain.exercise.circle.SuperCircle;
 import com.ondrejkoula.domain.workout.Workout;
-import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.ondrejkoula.exception.Errors.*;
-import static org.junit.jupiter.api.Assertions.*;
 
 class RequiredReferencesListFieldValidatorTest {
 
@@ -40,7 +39,7 @@ class RequiredReferencesListFieldValidatorTest {
     @Test
     void whenCollectionContainsNonDomainTypeAndTypeWithoutId_thenPutTwoErrorToMessages() {
         List<?> fieldValue = Arrays.asList(
-                new WorkoutExercise(),
+                new ExerciseToWorkoutAssignment(),
                 Workout.builder().build(),
                 SuperCircle.builder().id(1L).build()
 

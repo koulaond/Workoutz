@@ -2,7 +2,7 @@ package com.ondrejkoula.domain.exercise;
 
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.domain.workout.WorkoutExercise;
+import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
 import com.ondrejkoula.dto.exercise.ExerciseDTO;
 import com.ondrejkoula.service.validation.annotation.RequiredReferences;
 import lombok.Data;
@@ -19,7 +19,7 @@ public abstract class Exercise extends DomainEntity {
 
     @RequiredReferences
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "pk.exercise", cascade = CascadeType.ALL)
-    private List<WorkoutExercise> workoutExercises;
+    protected List<ExerciseToWorkoutAssignment> exerciseToWorkoutAssignments;
 
     public Exercise(Long id, String status, String note) {
         super(id, status, note);
