@@ -5,7 +5,7 @@ import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.PositionOutOfRangeException;
 import com.ondrejkoula.exception.ValidationException;
-import com.ondrejkoula.repository.CompositionChildRepository;
+import com.ondrejkoula.repository.jpa.CompositionChildRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 

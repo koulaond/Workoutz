@@ -4,7 +4,7 @@ import com.ondrejkoula.domain.Status;
 import com.ondrejkoula.domain.exercise.weights.SingleSet;
 import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.exception.InconsistentPositionsException;
-import com.ondrejkoula.repository.exercise.WeightsRepository;
+import com.ondrejkoula.repository.jpa.exercise.WeightsRepository;
 import com.ondrejkoula.service.GenericService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

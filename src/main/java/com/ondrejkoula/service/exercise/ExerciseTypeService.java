@@ -3,7 +3,7 @@ package com.ondrejkoula.service.exercise;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.domain.exercise.ExerciseType;
-import com.ondrejkoula.repository.exercise.ExerciseTypeRepository;
+import com.ondrejkoula.repository.jpa.exercise.ExerciseTypeRepository;
 import com.ondrejkoula.service.GenericService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;

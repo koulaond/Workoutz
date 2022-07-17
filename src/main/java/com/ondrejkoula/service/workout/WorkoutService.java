@@ -2,8 +2,8 @@ package com.ondrejkoula.service.workout;
 
 import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
-import com.ondrejkoula.repository.workout.WorkoutExerciseRepository;
-import com.ondrejkoula.repository.workout.WorkoutRepository;
+import com.ondrejkoula.repository.jpa.workout.WorkoutExerciseRepository;
+import com.ondrejkoula.repository.jpa.workout.WorkoutRepository;
 import com.ondrejkoula.service.GenericService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

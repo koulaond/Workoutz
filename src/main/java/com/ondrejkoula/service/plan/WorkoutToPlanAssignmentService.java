@@ -6,9 +6,9 @@ import com.ondrejkoula.domain.plan.WorkoutToPlanAssignmentId;
 import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.OutOfTimeWindowException;
-import com.ondrejkoula.repository.plan.PlanRepository;
-import com.ondrejkoula.repository.plan.WorkoutToPlanAssignmentRepository;
-import com.ondrejkoula.repository.workout.WorkoutRepository;
+import com.ondrejkoula.repository.jpa.plan.PlanRepository;
+import com.ondrejkoula.repository.jpa.plan.WorkoutToPlanAssignmentRepository;
+import com.ondrejkoula.repository.jpa.workout.WorkoutRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

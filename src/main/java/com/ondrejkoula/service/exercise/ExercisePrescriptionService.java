@@ -1,7 +1,7 @@
 package com.ondrejkoula.service.exercise;
 
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
-import com.ondrejkoula.repository.exercise.ExercisePrescriptionRepository;
+import com.ondrejkoula.repository.jpa.exercise.ExercisePrescriptionRepository;
 import com.ondrejkoula.service.GenericService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

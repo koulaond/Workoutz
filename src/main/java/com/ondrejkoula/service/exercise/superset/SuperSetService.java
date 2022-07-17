@@ -2,8 +2,8 @@ package com.ondrejkoula.service.exercise.superset;
 
 import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
-import com.ondrejkoula.repository.exercise.superset.SuperSetExerciseRepository;
-import com.ondrejkoula.repository.exercise.superset.SuperSetRepository;
+import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetExerciseRepository;
+import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetRepository;
 import com.ondrejkoula.service.CompositionService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;

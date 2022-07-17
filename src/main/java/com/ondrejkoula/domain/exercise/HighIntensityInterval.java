@@ -1,6 +1,7 @@
 package com.ondrejkoula.domain.exercise;
 
 import com.ondrejkoula.dto.exercise.HighIntensityIntervalDTO;
+import com.ondrejkoula.service.measurements.ResultValue;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.*;
@@ -21,6 +22,7 @@ public class HighIntensityInterval extends Exercise {
 
     // Intervals count
     @Required
+    @ResultValue(measurable = true, thresholdFieldName = "intervalsCountGoal")
     @Column(name = "intervals_count")
     private Integer intervalsCount;
 
