@@ -1,7 +1,7 @@
 package com.ondrejkoula.service.validation;
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.exception.Errors;
+import com.ondrejkoula.exception.validation.ValidationErrors;
 
 import java.util.Collection;
 import java.util.Iterator;
@@ -22,10 +22,10 @@ public class RequiredReferencesListFieldValidator implements FieldValidator {
     @Override
     public void validateFieldValue(Map<String, String> validationMessages) {
         if (isNull(fieldValue)) {
-            validationMessages.put(fieldName, Errors.VALIDATION_MISSING_REFERENCE);
+            validationMessages.put(fieldName, ValidationErrors.VALIDATION_MISSING_REFERENCE);
 
         } else if (!(fieldValue instanceof Collection<?>)) {
-            validationMessages.put(fieldName, Errors.VALIDATION_REFERENCES_IS_NOT_COLLECTION);
+            validationMessages.put(fieldName, ValidationErrors.VALIDATION_REFERENCES_IS_NOT_COLLECTION);
 
         } else {
             validateEachItemInCollection(validationMessages);
@@ -40,10 +40,10 @@ public class RequiredReferencesListFieldValidator implements FieldValidator {
         while (iterator.hasNext()) {
             Object next = iterator.next();
             if (!DomainEntity.class.isAssignableFrom(next.getClass())) {
-                validationMessages.put(fieldName + '[' + index + ']', Errors.VALIDATION_REFERENCE_IS_NOT_DOMAIN_TYPE);
+                validationMessages.put(fieldName + '[' + index + ']', ValidationErrors.VALIDATION_REFERENCE_IS_NOT_DOMAIN_TYPE);
 
             } else if (isNull(((DomainEntity) next).getId())) {
-                validationMessages.put(fieldName + '[' + index + ']', Errors.VALIDATION_REFERENCE_ID_IS_MISSING);
+                validationMessages.put(fieldName + '[' + index + ']', ValidationErrors.VALIDATION_REFERENCE_ID_IS_MISSING);
             }
             index++;
         }

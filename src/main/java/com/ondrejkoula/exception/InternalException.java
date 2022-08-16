@@ -13,12 +13,6 @@ public class InternalException extends RuntimeException {
 
     private final Map<String, String> messageArguments;
 
-    public InternalException(String message, Throwable cause) {
-        super(message, cause);
-        this.messageCode = UNKNOWN_HTTP_STATUS_CODE;
-        this.messageArguments = null;
-    }
-
     public InternalException(String message, String messageCode) {
         super(message);
         this.messageCode = messageCode;

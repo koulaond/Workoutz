@@ -5,12 +5,11 @@ import lombok.Getter;
 import java.util.Map;
 
 @Getter
-
 public class CascadeDependenciesException extends RuntimeException {
 
-    private Long parentEntityId;
+    private final Long parentEntityId;
 
-    private Map<String, Integer> typesAndOccurrences;
+    private final Map<String, Integer> typesAndOccurrences;
 
     public CascadeDependenciesException(Long parentEntityId, Map<String, Integer> typesAndOccurrences) {
         this.parentEntityId = parentEntityId;

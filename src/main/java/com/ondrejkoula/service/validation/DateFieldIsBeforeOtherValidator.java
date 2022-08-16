@@ -1,6 +1,6 @@
 package com.ondrejkoula.service.validation;
 
-import com.ondrejkoula.exception.Errors;
+import com.ondrejkoula.exception.validation.ValidationErrors;
 import com.ondrejkoula.service.validation.annotation.Before;
 import lombok.extern.slf4j.Slf4j;
 
@@ -52,11 +52,11 @@ public class DateFieldIsBeforeOtherValidator implements FieldValidator {
             return (LocalDateTime) fieldDefinition.get(fieldOwner);
 
         } catch(ClassCastException e){
-            validationMessages.put(fieldDefinition.getName(), Errors.VALIDATION_FIELD_NOT_DATE_TIME_TYPE);
+            validationMessages.put(fieldDefinition.getName(), ValidationErrors.VALIDATION_FIELD_NOT_DATE_TIME_TYPE);
             throw e;
         }
         catch (IllegalAccessException e) {
-            validationMessages.put(fieldDefinition.getName(), Errors.VALIDATION_FIELD_NOT_ACCESSIBLE);
+            validationMessages.put(fieldDefinition.getName(), ValidationErrors.VALIDATION_FIELD_NOT_ACCESSIBLE);
             throw e;
         }
     }
@@ -66,7 +66,7 @@ public class DateFieldIsBeforeOtherValidator implements FieldValidator {
             return fieldOwner.getClass().getDeclaredField(fieldName);
 
         } catch (NoSuchFieldException e) {
-            validationMessages.put(fieldName, Errors.VALIDATION_FIELD_NOT_DECLARED);
+            validationMessages.put(fieldName, ValidationErrors.VALIDATION_FIELD_NOT_DECLARED);
             throw e;
         }
     }
@@ -74,7 +74,7 @@ public class DateFieldIsBeforeOtherValidator implements FieldValidator {
     private void validateFieldIsBeforeOtherField(LocalDateTime fieldValue, LocalDateTime otherFieldValue,
                                                  int minimumHours, Map<String, String> validationMessages) {
         if (fieldValue.isAfter(otherFieldValue.minusHours(minimumHours))) {
-            validationMessages.put(field.getName(), Errors.VALIDATION_FIELD_IS_NOT_BEFORE);
+            validationMessages.put(field.getName(), ValidationErrors.VALIDATION_FIELD_IS_NOT_BEFORE);
         }
     }
 }

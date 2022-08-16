@@ -11,7 +11,6 @@ import com.ondrejkoula.dto.datachange.DataChangeOperation;
 import com.ondrejkoula.dto.datachange.composition.*;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.IncorrectParentException;
-import com.ondrejkoula.exception.ParentNotFoundException;
 import com.ondrejkoula.exception.UnsupportedCompositeChangeTypeException;
 import com.ondrejkoula.service.CompositionService;
 import com.ondrejkoula.service.GenericService;
@@ -51,7 +50,7 @@ public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends A
 
         } catch (DataNotFoundException e) {
             log.warn("Parent with ID {} not found.", parentId);
-            throw new ParentNotFoundException(e);
+            throw e;
         }
     }
 

@@ -3,8 +3,9 @@ package com.ondrejkoula.service;
 import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.exception.DataNotFoundException;
+import com.ondrejkoula.exception.InternalException;
+import com.ondrejkoula.exception.ParentNotFoundException;
 import com.ondrejkoula.exception.PositionOutOfRangeException;
-import com.ondrejkoula.exception.ValidationException;
 import com.ondrejkoula.repository.jpa.CompositionChildRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -37,11 +38,11 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
 
     public void assignNewChildToParent(Long parentId, CH newItem) {
         P parent = repository.findById(parentId)
-                .orElseThrow(() -> new ValidationException("Parent not found.", this.getClass().getSimpleName()));
+                .orElseThrow(() -> new ParentNotFoundException(parentId, this.getClass().getSimpleName()));
 
         if (isNull(newItem.getPosition())) {
             log.warn("Position not defined.");
-            throw new ValidationException("Position not defined.", this.getClass().getSimpleName());
+            throw new InternalException("Position not defined.", this.getClass().getSimpleName());
         }
 
         int countByParent = childRepository.countByParentId(parentId);

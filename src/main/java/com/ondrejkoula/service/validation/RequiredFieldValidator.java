@@ -1,10 +1,8 @@
 package com.ondrejkoula.service.validation;
 
-import com.ondrejkoula.exception.Errors;
-import org.apache.commons.lang3.StringUtils;
+import com.ondrejkoula.exception.validation.ValidationErrors;
 
 import java.util.Map;
-import java.util.Objects;
 
 import static java.util.Objects.isNull;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -23,7 +21,7 @@ public class RequiredFieldValidator implements FieldValidator {
     @Override
     public void validateFieldValue(Map<String, String> validationMessages) {
         if (isNull(fieldValue) || isBlank(fieldValue.toString())) {
-            validationMessages.put(fieldName, Errors.VALIDATION_MISSING_FIELD_CONTENT);
+            validationMessages.put(fieldName, ValidationErrors.VALIDATION_MISSING_FIELD_CONTENT);
         }
 
     }

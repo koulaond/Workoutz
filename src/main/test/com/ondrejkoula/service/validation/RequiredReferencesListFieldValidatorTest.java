@@ -11,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.ondrejkoula.exception.Errors.*;
+import static com.ondrejkoula.exception.validation.ValidationErrors.*;
 
 class RequiredReferencesListFieldValidatorTest {
 

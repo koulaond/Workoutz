@@ -4,7 +4,7 @@ import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
 import com.ondrejkoula.exception.PositionOutOfRangeException;
-import com.ondrejkoula.exception.ValidationException;
+import com.ondrejkoula.exception.validation.ValidationException;
 import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetRepository;
 import com.ondrejkoula.service.exercise.superset.SuperSetService;

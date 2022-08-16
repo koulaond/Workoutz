@@ -1,14 +1,12 @@
 package com.ondrejkoula.service.validation;
 
-import com.ondrejkoula.exception.Errors;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ondrejkoula.exception.Errors.VALIDATION_MISSING_FIELD_CONTENT;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.ondrejkoula.exception.validation.ValidationErrors.VALIDATION_MISSING_FIELD_CONTENT;
 
 class RequiredFieldValidatorTest {
 

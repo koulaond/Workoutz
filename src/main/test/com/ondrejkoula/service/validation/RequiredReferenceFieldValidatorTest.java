@@ -8,7 +8,7 @@ import org.junit.jupiter.api.Test;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.ondrejkoula.exception.Errors.*;
+import static com.ondrejkoula.exception.validation.ValidationErrors.*;
 
 class RequiredReferenceFieldValidatorTest {
 

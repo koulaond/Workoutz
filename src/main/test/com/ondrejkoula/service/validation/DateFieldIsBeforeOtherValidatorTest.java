@@ -1,7 +1,7 @@
 package com.ondrejkoula.service.validation;
 
 import com.ondrejkoula.domain.plan.Plan;
-import com.ondrejkoula.exception.Errors;
+import com.ondrejkoula.exception.validation.ValidationErrors;
 import com.ondrejkoula.service.validation.annotation.Before;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,7 +41,7 @@ class DateFieldIsBeforeOtherValidatorTest {
         validator.validateFieldValue(validationMessages);
 
         assertThat(validationMessages).hasSize(1).satisfies(map ->
-                assertThat(map.get("expectedPlanStart")).isEqualTo(Errors.VALIDATION_FIELD_IS_NOT_BEFORE));
+                assertThat(map.get("expectedPlanStart")).isEqualTo(ValidationErrors.VALIDATION_FIELD_IS_NOT_BEFORE));
     }
 
     @Test
@@ -55,7 +55,7 @@ class DateFieldIsBeforeOtherValidatorTest {
         validator.validateFieldValue(validationMessages);
 
         assertThat(validationMessages).hasSize(1).satisfies(map ->
-                assertThat(map.get("expectedPlanStart")).isEqualTo(Errors.VALIDATION_FIELD_IS_NOT_BEFORE));
+                assertThat(map.get("expectedPlanStart")).isEqualTo(ValidationErrors.VALIDATION_FIELD_IS_NOT_BEFORE));
     }
 
     @Test
@@ -71,7 +71,7 @@ class DateFieldIsBeforeOtherValidatorTest {
         validator.validateFieldValue(validationMessages);
 
         assertThat(validationMessages).hasSize(1).satisfies(map ->
-                assertThat(map.get("fieldIsNotDateTime")).isEqualTo(Errors.VALIDATION_FIELD_NOT_DATE_TIME_TYPE));
+                assertThat(map.get("fieldIsNotDateTime")).isEqualTo(ValidationErrors.VALIDATION_FIELD_NOT_DATE_TIME_TYPE));
     }
 
 
@@ -88,7 +88,7 @@ class DateFieldIsBeforeOtherValidatorTest {
         validator.validateFieldValue(validationMessages);
 
         assertThat(validationMessages).hasSize(1).satisfies(map ->
-                assertThat(map.get("expectedPlanEnd")).isEqualTo(Errors.VALIDATION_FIELD_NOT_DECLARED));
+                assertThat(map.get("expectedPlanEnd")).isEqualTo(ValidationErrors.VALIDATION_FIELD_NOT_DECLARED));
     }
 
     @Getter

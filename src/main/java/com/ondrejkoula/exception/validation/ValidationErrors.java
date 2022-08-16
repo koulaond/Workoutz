@@ -1,6 +1,6 @@
-package com.ondrejkoula.exception;
+package com.ondrejkoula.exception.validation;
 
-public final class Errors {
+public final class ValidationErrors {
 
     public static final String VALIDATION_FIELD_NOT_DECLARED = "VALIDATION_FIELD_NOT_DECLARED";
     public static final String VALIDATION_FIELD_NOT_DATE_TIME_TYPE = "VALIDATION_FIELD_NOT_DATE_TIME_TYPE";
@@ -14,7 +14,7 @@ public final class Errors {
     public static final String VALIDATION_FIELD_IS_NOT_BEFORE = "VALIDATION_FIELD_IS_NOT_BEFORE";
 
 
-    private Errors (){
+    private ValidationErrors(){
         throw new java.lang.UnsupportedOperationException("No constructor for " + Error.class.getName());
     }
 }
