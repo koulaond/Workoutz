@@ -8,11 +8,14 @@ import java.util.Map;
 public class CascadeDependenciesException extends RuntimeException {
 
     private final Long parentEntityId;
+    
+    private final String operation;
 
     private final Map<String, Integer> typesAndOccurrences;
 
-    public CascadeDependenciesException(Long parentEntityId, Map<String, Integer> typesAndOccurrences) {
+    public CascadeDependenciesException(Long parentEntityId, String operation, Map<String, Integer> typesAndOccurrences) {
         this.parentEntityId = parentEntityId;
+        this.operation = operation;
         this.typesAndOccurrences = typesAndOccurrences;
     }
 }

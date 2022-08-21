@@ -4,7 +4,7 @@ import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.datachange.DataChange;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataUpdateException;
-import com.ondrejkoula.exception.MissingDataForFieldException;
+import com.ondrejkoula.exception.MissingDataForFieldUpdateException;
 import com.ondrejkoula.exception.UnsupportedChangeTypeException;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
@@ -58,7 +58,7 @@ public class ColumnFieldDataMerger implements DataMerger {
                 Object newValue = changeForField.getValue();
 
                 if (newValue == null) {
-                    throw new MissingDataForFieldException(target.getId(), field.getName());
+                    throw new MissingDataForFieldUpdateException(target.getId(), field.getName());
                 }
 
                 if (!field.getType().equals(newValue.getClass())) {

@@ -5,13 +5,13 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MissingDataForFieldException extends RuntimeException{
+public class MissingDataForFieldUpdateException extends RuntimeException{
 
     private Long entityId;
 
     private String fieldName;
 
-    public MissingDataForFieldException(Long entityId, String fieldName) {
+    public MissingDataForFieldUpdateException(Long entityId, String fieldName) {
         this.entityId = entityId;
         this.fieldName = fieldName;
     }

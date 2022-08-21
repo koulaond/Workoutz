@@ -76,7 +76,7 @@ public abstract class GenericService<DE extends DomainEntity> {
             Map<String, Integer> occurrences = allDependencies.entrySet().stream()
                     .collect(toMap(Map.Entry::getKey, entry -> entry.getValue().size()));
 
-            throw new CascadeDependenciesException(id, occurrences);
+            throw new CascadeDependenciesException(id, "delete", occurrences);
         }
         repository.deleteById(id);
     }

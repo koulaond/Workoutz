@@ -3,6 +3,7 @@ package com.ondrejkoula.endpoint.errorhandler;
 import com.ondrejkoula.dto.error.ErrorDetailsDto;
 import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.ParentNotFoundException;
+import com.ondrejkoula.exception.converters.ExceptionToErrorDetailsConverter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -26,5 +27,9 @@ public class ApplicationExceptionHandler {
     public ResponseEntity<ErrorDetailsDto> badRequestHandler(Exception exception) {
         log.warn("Returning BAD_REQUEST status.", exception);
         return new ResponseEntity<>(convertToApiErrorDto(exception), HttpStatus.BAD_REQUEST);
+    }
+
+    private ErrorDetailsDto convertToApiErrorDto(Exception exception) {
+        return ExceptionToErrorDetailsConverter.convert(exception);
     }
 }

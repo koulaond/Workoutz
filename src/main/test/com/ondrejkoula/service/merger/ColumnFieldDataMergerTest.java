@@ -4,7 +4,7 @@ import com.ondrejkoula.domain.exercise.circle.SuperCircle;
 import com.ondrejkoula.dto.datachange.DataChange;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataUpdateException;
-import com.ondrejkoula.exception.MissingDataForFieldException;
+import com.ondrejkoula.exception.MissingDataForFieldUpdateException;
 import com.ondrejkoula.exception.UnsupportedChangeTypeException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -60,7 +60,7 @@ class ColumnFieldDataMergerTest {
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
-        org.junit.jupiter.api.Assertions.assertThrows(MissingDataForFieldException.class,
+        org.junit.jupiter.api.Assertions.assertThrows(MissingDataForFieldUpdateException.class,
                 () -> dataMerger.mergeSourceToTarget(dataChanges, target));
     }
 

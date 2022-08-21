@@ -1,17 +1,15 @@
 package com.ondrejkoula.dto.error;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 
-@Data
-public class ErrorDetailDto {
+@Getter
+public abstract class ErrorDetailDto {
 
-    private String errorMessage;
+    private final String errorMessage;
     
-    private String messageCode;
+    private final String messageCode;
     
-
-    @Builder
+  
     public ErrorDetailDto(String errorMessage, String messageCode) {
         this.errorMessage = errorMessage;
         this.messageCode = messageCode;
