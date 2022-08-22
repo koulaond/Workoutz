@@ -4,8 +4,10 @@ import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
 import com.ondrejkoula.dto.exercise.ExerciseTypeDTO;
 import com.ondrejkoula.integration.IntegrationTest;
 import org.junit.jupiter.api.Test;
-import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 
 public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
@@ -14,12 +16,12 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
     RestTemplate restTemplate = new RestTemplate();
 
     @Test
-    void testCreateAndDelete() {
+    void whenSomeDataIsMissingOnUpdate_thenReturnError() {
         ExercisePrescriptionDTO toCreate = ExercisePrescriptionDTO.builder()
                 .exerciseType(ExerciseTypeDTO.builder().category("testType").build())
                 .label("prescriptionLabel").build();
 
-        ResponseEntity<ExercisePrescriptionDTO> created = restTemplate.postForEntity(URL_PREFIX, toCreate, ExercisePrescriptionDTO.class);
-
+        assertThrows(HttpClientErrorException.class, () -> restTemplate.postForEntity(URL_PREFIX, toCreate, Object.class),
+                "{\"errorMessage\":\"Required data is missing on save.\",\"messageCode\":\"MISSING_DATA_ON_SAVE\",\"errorDetails\":{\"exerciseType\":\"VALIDATION_REFERENCE_ID_IS_MISSING\"}}");
     }
 }

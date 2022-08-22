@@ -2,18 +2,21 @@ package com.ondrejkoula.exception.converters;
 
 import com.ondrejkoula.dto.error.ErrorDetailDto;
 import com.ondrejkoula.dto.error.ErrorDetailDtoFactory;
-import com.ondrejkoula.dto.error.ErrorDetailsDto;
 import com.ondrejkoula.exception.*;
 import com.ondrejkoula.exception.validation.ValidationException;
 import org.springframework.core.convert.support.DefaultConversionService;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Function;
 
 public class ExceptionToErrorDetailsConverter {
 
     private static final DefaultConversionService CONVERSION_SERVICE = new DefaultConversionService();
 
-    static{
+    private static final Map<Class<Exception>, Function<Exception, ErrorDetailDto>> converters = new HashMap<>();
+
+    static {
         addConverter(Exception.class, ErrorDetailDtoFactory::fromGeneralError);
         addConverter(ValidationException.class, ErrorDetailDtoFactory::fromValidationError);
         addConverter(CascadeDependenciesException.class, ErrorDetailDtoFactory::fromCascadeDependenciesError);
@@ -28,12 +31,12 @@ public class ExceptionToErrorDetailsConverter {
         addConverter(UnsupportedChangeTypeException.class, ErrorDetailDtoFactory::fromUnsupportedChangeTypeError);
         addConverter(UnsupportedCompositeChangeTypeException.class, ErrorDetailDtoFactory::fromUnsupportedCompositeChangeTypeError);
     }
-    
+
     private static <T extends Exception, E extends ErrorDetailDto> void addConverter(Class<T> exceptionClazz, Function<T, E> exceptionConverter) {
         CONVERSION_SERVICE.addConverter(exceptionClazz, ErrorDetailDto.class, exceptionConverter::apply);
     }
 
-    public static ErrorDetailsDto convert(Exception ex) {
-        return CONVERSION_SERVICE.convert(ex, ErrorDetailsDto.class);
+    public static ErrorDetailDto convert(Exception ex) {
+        return CONVERSION_SERVICE.convert(ex, ErrorDetailDto.class);
     }
 }

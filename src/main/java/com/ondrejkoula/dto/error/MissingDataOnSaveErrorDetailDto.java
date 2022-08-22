@@ -8,11 +8,11 @@ import java.util.Map;
 @Getter
 public class MissingDataOnSaveErrorDetailDto extends ErrorDetailDto{
 
-    private final Map<String, String> errorMessages;
+    private final Map<String, String> errorDetails;
 
     @Builder
-    public MissingDataOnSaveErrorDetailDto(String errorMessage, String messageCode, Map<String, String> errorMessages) {
+    public MissingDataOnSaveErrorDetailDto(String errorMessage, String messageCode, Map<String, String> errorDetails) {
         super(errorMessage, messageCode);
-        this.errorMessages = errorMessages;
+        this.errorDetails = errorDetails;
     }
 }
