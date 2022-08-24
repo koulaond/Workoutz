@@ -7,6 +7,7 @@ import com.ondrejkoula.exception.validation.ValidationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -28,6 +29,18 @@ public class ApplicationExceptionHandler {
             MissingDataForFieldUpdateException.class, MissingDataOnSaveException.class, OutOfTimeWindowException.class, 
             PositionOutOfRangeException.class, UnsupportedChangeTypeException.class, UnsupportedCompositeChangeTypeException.class})
     public ResponseEntity<ErrorDetailDto> badRequestHandler(Exception exception) {
+        log.warn("Returning BAD_REQUEST status.", exception);
+        return new ResponseEntity<>(convertToApiErrorDto(exception), HttpStatus.BAD_REQUEST);
+    }
+
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    public ResponseEntity<ErrorDetailDto> dataIntegrityViolationErrorHandler(Exception exception) {
+        log.warn("Returning BAD_REQUEST status.", exception);
+        return new ResponseEntity<>(convertToApiErrorDto(exception), HttpStatus.BAD_REQUEST);
+    }
+    @ExceptionHandler({Exception.class})
+    public ResponseEntity<ErrorDetailDto> internalErrorHandler(Exception exception) {
         log.warn("Returning BAD_REQUEST status.", exception);
         return new ResponseEntity<>(convertToApiErrorDto(exception), HttpStatus.BAD_REQUEST);
     }

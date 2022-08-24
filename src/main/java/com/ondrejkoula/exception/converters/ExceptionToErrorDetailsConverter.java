@@ -5,6 +5,7 @@ import com.ondrejkoula.dto.error.ErrorDetailDtoFactory;
 import com.ondrejkoula.exception.*;
 import com.ondrejkoula.exception.validation.ValidationException;
 import org.springframework.core.convert.support.DefaultConversionService;
+import org.springframework.dao.DataIntegrityViolationException;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +19,7 @@ public class ExceptionToErrorDetailsConverter {
 
     static {
         addConverter(Exception.class, ErrorDetailDtoFactory::fromGeneralError);
+        addConverter(DataIntegrityViolationException.class, ErrorDetailDtoFactory::fromDataIntegrityViolationError);
         addConverter(ValidationException.class, ErrorDetailDtoFactory::fromValidationError);
         addConverter(CascadeDependenciesException.class, ErrorDetailDtoFactory::fromCascadeDependenciesError);
         addConverter(DataNotFoundException.class, ErrorDetailDtoFactory::fromDataNotFoundError);

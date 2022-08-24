@@ -5,10 +5,12 @@ import com.ondrejkoula.domain.exercise.ExerciseType;
 import com.ondrejkoula.dto.AbstractDTO;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class ExerciseTypeDTO extends AbstractDTO {
 

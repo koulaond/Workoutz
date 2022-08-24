@@ -3,11 +3,16 @@ package com.ondrejkoula.dto.error;
 import com.ondrejkoula.exception.*;
 import com.ondrejkoula.exception.converters.MessageCodes;
 import com.ondrejkoula.exception.validation.ValidationException;
+import org.springframework.dao.DataIntegrityViolationException;
 
 public class ErrorDetailDtoFactory {
     
     public static DefaultErrorDetailDto fromGeneralError(Exception ex) {
         return DefaultErrorDetailDto.builder().errorMessage(ex.getMessage()).messageCode(MessageCodes.GENERAL_ERROR).build();
+    }
+
+    public static DefaultErrorDetailDto fromDataIntegrityViolationError(DataIntegrityViolationException ex) {
+        return DefaultErrorDetailDto.builder().errorMessage("Unexpected data integrity internal error").messageCode(MessageCodes.GENERAL_ERROR).build();
     }
     
     public static ErrorDetailDto fromValidationError(ValidationException ex) {
