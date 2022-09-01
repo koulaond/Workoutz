@@ -3,9 +3,11 @@ package com.ondrejkoula.dto.exercise;
 import com.ondrejkoula.domain.exercise.Condition;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 
 @Data
+@NoArgsConstructor
 public class ConditionDTO extends ExerciseDTO {
 
     private ExercisePrescriptionDTO exercisePrescription;

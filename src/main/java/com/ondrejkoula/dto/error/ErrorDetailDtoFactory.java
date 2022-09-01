@@ -28,7 +28,7 @@ public class ErrorDetailDtoFactory {
                 .errorMessage("Unable to finish an operation die to existing dependencies.")
                 .parentEntityId(ex.getParentEntityId())
                 .messageCode(MessageCodes.CASCADE_DEPENDENCIES)
-                .dependenciesOccurrences(ex.getTypesAndOccurrences())
+                .dependencies(ex.getDependencies())
                 .build();
     }
 

@@ -3,6 +3,7 @@ package com.ondrejkoula.service.exercise;
 import com.ondrejkoula.domain.exercise.Condition;
 import com.ondrejkoula.repository.jpa.exercise.ConditionRepository;
 import com.ondrejkoula.service.GenericService;
+import com.ondrejkoula.service.dependencies.NoDependenciesCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -10,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class ConditionService extends GenericService<Condition> {
 
-    public ConditionService(ConditionRepository repository) {
-        super(repository);
+    public ConditionService(ConditionRepository repository, NoDependenciesCollector dependenciesCollector) {
+        super(repository, dependenciesCollector);
     }
 }

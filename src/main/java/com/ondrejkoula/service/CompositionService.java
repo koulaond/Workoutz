@@ -7,6 +7,7 @@ import com.ondrejkoula.exception.InternalException;
 import com.ondrejkoula.exception.ParentNotFoundException;
 import com.ondrejkoula.exception.PositionOutOfRangeException;
 import com.ondrejkoula.repository.jpa.CompositionChildRepository;
+import com.ondrejkoula.service.dependencies.NoDependenciesCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -24,8 +25,9 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
     protected final CompositionChildRepository<CH> childRepository;
 
     public CompositionService(CompositionChildRepository<CH> childRepository,
-                              JpaRepository<P, Long> parentRepository) {
-        super(parentRepository);
+                              JpaRepository<P, Long> parentRepository, 
+                              NoDependenciesCollector dependenciesCollector) {
+        super(parentRepository, dependenciesCollector);
         this.childRepository = childRepository;
     }
 

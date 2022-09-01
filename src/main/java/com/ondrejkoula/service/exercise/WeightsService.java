@@ -6,6 +6,7 @@ import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.exception.InconsistentPositionsException;
 import com.ondrejkoula.repository.jpa.exercise.WeightsRepository;
 import com.ondrejkoula.service.GenericService;
+import com.ondrejkoula.service.dependencies.NoDependenciesCollector;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -19,8 +20,8 @@ import static java.util.Comparator.comparing;
 public class WeightsService extends GenericService<Weights> {
 
     @Autowired
-    public WeightsService(WeightsRepository repository) {
-        super(repository);
+    public WeightsService(WeightsRepository repository, NoDependenciesCollector dependenciesCollector) {
+        super(repository, dependenciesCollector);
     }
 
     public Weights markAsReady(Long id) {

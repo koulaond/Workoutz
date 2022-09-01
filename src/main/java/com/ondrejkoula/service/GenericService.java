@@ -2,9 +2,11 @@ package com.ondrejkoula.service;
 
 
 import com.ondrejkoula.domain.DomainEntity;
+import com.ondrejkoula.dto.Dependencies;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.CascadeDependenciesException;
 import com.ondrejkoula.exception.DataNotFoundException;
+import com.ondrejkoula.service.dependencies.DependenciesCollector;
 import com.ondrejkoula.service.merger.ColumnFieldDataMerger;
 import com.ondrejkoula.service.validation.DataValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -13,15 +15,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 import static java.lang.String.format;
 import static java.util.Collections.singletonMap;
-import static java.util.stream.Collectors.toMap;
-import static org.apache.commons.collections4.MapUtils.isNotEmpty;
+import static org.apache.commons.collections4.CollectionUtils.isNotEmpty;
 
 @Slf4j
 public abstract class GenericService<DE extends DomainEntity> {
@@ -31,9 +30,12 @@ public abstract class GenericService<DE extends DomainEntity> {
     protected final ColumnFieldDataMerger dataMerger;
 
     protected final DataValidator dataValidator;
+    
+    private final DependenciesCollector dependenciesCollector;
 
-    public GenericService(JpaRepository<DE, Long> repository) {
+    public GenericService(JpaRepository<DE, Long> repository, DependenciesCollector dependenciesCollector) {
         this.repository = repository;
+        this.dependenciesCollector = dependenciesCollector;
         this.dataMerger = new ColumnFieldDataMerger();
         this.dataValidator = new DataValidator();
     }
@@ -70,25 +72,11 @@ public abstract class GenericService<DE extends DomainEntity> {
     }
 
     public void deleteById(Long id) {
-        Map<String, List<? extends DomainEntity>> allDependencies = findAllDependencies(id);
-
+        List<Dependencies> allDependencies = dependenciesCollector.collectDependencies(id);
         if (isNotEmpty(allDependencies)) {
-            Map<String, Integer> occurrences = allDependencies.entrySet().stream()
-                    .collect(toMap(Map.Entry::getKey, entry -> entry.getValue().size()));
-
-            throw new CascadeDependenciesException(id, "delete", occurrences);
+            throw new CascadeDependenciesException(id, "delete", allDependencies);
         }
         repository.deleteById(id);
-    }
-
-    public Map<String, List<? extends DomainEntity>> findAllDependencies(Long id) {
-        Map<String, List<? extends DomainEntity>> allDependencies = new HashMap<>();
-        doFindAllDependencies(id, allDependencies);
-        return allDependencies;
-    }
-
-    protected void doFindAllDependencies(Long id, Map<String, List<? extends DomainEntity>> allDependencies) {
-        // TODO implement dependencies collector pattern for each type and separate from this service
     }
 
 }
