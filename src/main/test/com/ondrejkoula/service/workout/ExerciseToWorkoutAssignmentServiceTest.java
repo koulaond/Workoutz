@@ -8,6 +8,7 @@ import com.ondrejkoula.repository.jpa.exercise.NonSpecificExerciseRepository;
 import com.ondrejkoula.repository.jpa.exercise.WeightsRepository;
 import com.ondrejkoula.repository.jpa.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.jpa.workout.WorkoutRepository;
+import com.ondrejkoula.service.dependencies.workout.WorkoutDependencyService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,10 +34,13 @@ class ExerciseToWorkoutAssignmentServiceTest extends PersistenceTest {
 
     @Autowired
     WeightsRepository weightsRepository;
+    
+    @Autowired
+    WorkoutDependencyService dependencyService;
 
     @BeforeEach
     void setup() {
-        workoutService = new WorkoutService(workoutRepository, workoutExerciseRepository);
+        workoutService = new WorkoutService(workoutRepository, workoutExerciseRepository, dependencyService);
         workoutExercisesService = new WorkoutExercisesService(exerciseRepository, workoutRepository, workoutExerciseRepository);
     }
 

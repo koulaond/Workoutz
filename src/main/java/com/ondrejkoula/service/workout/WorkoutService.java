@@ -1,11 +1,11 @@
 package com.ondrejkoula.service.workout;
 
-import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.domain.workout.ExerciseToWorkoutAssignment;
+import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.repository.jpa.workout.WorkoutExerciseRepository;
 import com.ondrejkoula.repository.jpa.workout.WorkoutRepository;
 import com.ondrejkoula.service.GenericService;
-import com.ondrejkoula.service.dependencies.NoDependenciesCollector;
+import com.ondrejkoula.service.dependencies.workout.WorkoutDependencyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,9 +22,9 @@ public class WorkoutService extends GenericService<Workout> {
     @Autowired
     public WorkoutService(WorkoutRepository repository,
                           WorkoutExerciseRepository workoutExerciseRepository, 
-                          NoDependenciesCollector dependenciesCollector) {
+                          WorkoutDependencyService dependencyService) {
         
-        super(repository, dependenciesCollector);
+        super(repository, dependencyService);
         this.workoutExerciseRepository = workoutExerciseRepository;
     }
 

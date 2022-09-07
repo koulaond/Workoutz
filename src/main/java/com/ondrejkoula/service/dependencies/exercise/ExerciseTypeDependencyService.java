@@ -3,7 +3,7 @@ package com.ondrejkoula.service.dependencies.exercise;
 import com.ondrejkoula.domain.EntityType;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.Dependencies;
-import com.ondrejkoula.service.dependencies.DependenciesCollector;
+import com.ondrejkoula.service.dependencies.DependencyService;
 import com.ondrejkoula.service.exercise.ExercisePrescriptionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -11,12 +11,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class ExerciseTypeDependenciesCollector extends DependenciesCollector {
+public class ExerciseTypeDependencyService extends DependencyService {
 
     private final ExercisePrescriptionService exercisePrescriptionService;
 
     @Autowired
-    ExerciseTypeDependenciesCollector(ExercisePrescriptionService exercisePrescriptionService) {
+    ExerciseTypeDependencyService(ExercisePrescriptionService exercisePrescriptionService) {
         this.exercisePrescriptionService = exercisePrescriptionService;
     }
 

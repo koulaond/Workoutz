@@ -5,7 +5,7 @@ import com.ondrejkoula.domain.exercise.circle.SuperCircleSetExercise;
 import com.ondrejkoula.repository.jpa.exercise.circle.SuperCircleSetExerciseRepository;
 import com.ondrejkoula.repository.jpa.exercise.circle.SuperCircleSetRepository;
 import com.ondrejkoula.service.CompositionService;
-import com.ondrejkoula.service.dependencies.NoDependenciesCollector;
+import com.ondrejkoula.service.dependencies.NoDependencyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +15,7 @@ public class SuperCircleSetService extends CompositionService<SuperCircleSetExer
 
     public SuperCircleSetService(SuperCircleSetExerciseRepository childRepository,
                                  SuperCircleSetRepository parentRepository, 
-                                 NoDependenciesCollector dependenciesCollector) {
+                                 NoDependencyService dependenciesCollector) {
         super(childRepository, parentRepository, dependenciesCollector);
     }
 }

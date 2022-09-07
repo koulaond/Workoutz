@@ -6,7 +6,7 @@ import com.ondrejkoula.dto.Dependencies;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.CascadeDependenciesException;
 import com.ondrejkoula.exception.DataNotFoundException;
-import com.ondrejkoula.service.dependencies.DependenciesCollector;
+import com.ondrejkoula.service.dependencies.DependencyService;
 import com.ondrejkoula.service.merger.ColumnFieldDataMerger;
 import com.ondrejkoula.service.validation.DataValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +31,11 @@ public abstract class GenericService<DE extends DomainEntity> {
 
     protected final DataValidator dataValidator;
     
-    private final DependenciesCollector dependenciesCollector;
+    private final DependencyService dependencyService;
 
-    public GenericService(JpaRepository<DE, Long> repository, DependenciesCollector dependenciesCollector) {
+    public GenericService(JpaRepository<DE, Long> repository, DependencyService dependencyService) {
         this.repository = repository;
-        this.dependenciesCollector = dependenciesCollector;
+        this.dependencyService = dependencyService;
         this.dataMerger = new ColumnFieldDataMerger();
         this.dataValidator = new DataValidator();
     }
@@ -72,7 +72,7 @@ public abstract class GenericService<DE extends DomainEntity> {
     }
 
     public void deleteById(Long id) {
-        List<Dependencies> allDependencies = dependenciesCollector.collectDependencies(id);
+        List<Dependencies> allDependencies = dependencyService.collectDependencies(id);
         if (isNotEmpty(allDependencies)) {
             throw new CascadeDependenciesException(id, "delete", allDependencies);
         }

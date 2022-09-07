@@ -3,7 +3,7 @@ package com.ondrejkoula.service.exercise;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.repository.jpa.exercise.ExercisePrescriptionRepository;
 import com.ondrejkoula.service.GenericService;
-import com.ondrejkoula.service.dependencies.NoDependenciesCollector;
+import com.ondrejkoula.service.dependencies.exercise.ExercisePrescriptionDependencyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,8 @@ public class ExercisePrescriptionService extends GenericService<ExercisePrescrip
     protected final ExercisePrescriptionRepository exercisePrescriptionRepository;
 
     @Autowired
-    public ExercisePrescriptionService(ExercisePrescriptionRepository repository, NoDependenciesCollector dependenciesCollector) {
-        super(repository, dependenciesCollector);
+    public ExercisePrescriptionService(ExercisePrescriptionRepository repository, ExercisePrescriptionDependencyService dependencyService) {
+        super(repository, dependencyService);
         this.exercisePrescriptionRepository = repository;
     }
 

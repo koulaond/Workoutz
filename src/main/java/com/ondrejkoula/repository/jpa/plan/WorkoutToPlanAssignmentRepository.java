@@ -13,5 +13,6 @@ public interface WorkoutToPlanAssignmentRepository extends JpaRepository<Workout
     @Query("select w from WorkoutToPlanAssignment w where w.pk.plan.id = :planId order by w.dateAndTimeScheduled")
     List<WorkoutToPlanAssignment> getWorkoutsAssignedToPlan(@Param("planId") Long planId);
 
-
+    @Query("select w from WorkoutToPlanAssignment w where w.pk.workout.id = :workoutId order by w.dateAndTimeScheduled")
+    List<WorkoutToPlanAssignment> getPlansContainingWorkout(@Param("workoutId") Long workoutId);
 }

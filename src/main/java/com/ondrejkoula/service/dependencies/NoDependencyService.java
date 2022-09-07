@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class NoDependenciesCollector extends DependenciesCollector{
+public class NoDependencyService extends DependencyService {
    
     @Override
     public void doCollect(Long parentEntityId, List<Dependencies> dependenciesList) {

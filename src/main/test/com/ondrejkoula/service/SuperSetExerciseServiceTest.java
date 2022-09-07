@@ -7,6 +7,7 @@ import com.ondrejkoula.exception.PositionOutOfRangeException;
 import com.ondrejkoula.exception.validation.ValidationException;
 import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetRepository;
+import com.ondrejkoula.service.dependencies.exercise.ExerciseDependencyService;
 import com.ondrejkoula.service.exercise.superset.SuperSetService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,12 +26,15 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
 
     @Autowired
     SuperSetRepository superSetRepository;
+    
+    @Autowired
+    ExerciseDependencyService exerciseDependencyService;
 
     SuperSetService service;
 
     @BeforeEach
     void setup() {
-        service = new SuperSetService(superSetExerciseRepository, superSetRepository);
+        service = new SuperSetService(superSetExerciseRepository, superSetRepository, exerciseDependencyService);
     }
 
     @Test
