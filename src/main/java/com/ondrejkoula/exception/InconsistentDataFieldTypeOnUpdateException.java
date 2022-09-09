@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class InconsistentDataUpdateException extends RuntimeException {
+public class InconsistentDataFieldTypeOnUpdateException extends RuntimeException {
 
     private Long entityId;
 
@@ -16,7 +16,7 @@ public class InconsistentDataUpdateException extends RuntimeException {
 
     private Object value;
 
-    public InconsistentDataUpdateException(Long entityId, String fieldName, Class<?> fieldType, Object value) {
+    public InconsistentDataFieldTypeOnUpdateException(Long entityId, String fieldName, Class<?> fieldType, Object value) {
         this.entityId = entityId;
         this.fieldName = fieldName;
         this.fieldType = fieldType;

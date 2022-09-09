@@ -23,7 +23,7 @@ public class ExceptionToErrorDetailsConverter {
         addConverter(ValidationException.class, ErrorDetailDtoFactory::fromValidationError);
         addConverter(CascadeDependenciesException.class, ErrorDetailDtoFactory::fromCascadeDependenciesError);
         addConverter(DataNotFoundException.class, ErrorDetailDtoFactory::fromDataNotFoundError);
-        addConverter(InconsistentDataUpdateException.class, ErrorDetailDtoFactory::fromInconsistentDataUpdateError);
+        addConverter(InconsistentDataFieldTypeOnUpdateException.class, ErrorDetailDtoFactory::fromInconsistentDataUpdateError);
         addConverter(InconsistentPositionsException.class, ErrorDetailDtoFactory::fromInconsistentPositionsError);
         addConverter(IncorrectParentException.class, ErrorDetailDtoFactory::fromIncorrectParentError);
         addConverter(MissingDataForFieldUpdateException.class, ErrorDetailDtoFactory::fromMissingDataForFieldUpdateError);

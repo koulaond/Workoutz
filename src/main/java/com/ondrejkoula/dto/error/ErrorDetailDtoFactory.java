@@ -39,7 +39,7 @@ public class ErrorDetailDtoFactory {
                 .build();
     }
 
-    public static ErrorDetailDto fromInconsistentDataUpdateError(InconsistentDataUpdateException ex) {
+    public static ErrorDetailDto fromInconsistentDataUpdateError(InconsistentDataFieldTypeOnUpdateException ex) {
         return InconsistentDataUpdateErrorDetailDto.builder()
                 .errorMessage("Cannot finish update doe to inconsistent data types received.")
                 .messageCode(MessageCodes.INCONSISTENT_DATA)

@@ -60,8 +60,7 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () -> restTemplate.postForEntity(URL_PREFIX, toCreate, Object.class));
         assertEquals("400 : \"{\"errorMessage\":\"Unexpected data integrity internal error\",\"messageCode\":\"GENERAL_ERROR\"}\"", exception.getMessage());
     }
-
-
+    
     @Test
     void delete_successfulCase() {
         ExerciseTypeDTO exerciseTypeDTO = ExerciseTypeDTO.builder().category("typeCategory").value("exerciseType").build();
@@ -110,4 +109,5 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
                 () -> restTemplate.delete(URL_PREFIX + "/" + createdExercisePrescription.getId(), createdExercisePrescription.getId()));
         assertEquals("400 : \"{\"errorMessage\":\"Unable to finish an operation due to existing dependencies.\",\"messageCode\":\"CASCADE_DEPENDENCIES\",\"parentEntityId\":2,\"operation\":null,\"dependencies\":[{\"type\":\"CONDITION\",\"ids\":[3]}]}\"", httpClientErrorException.getMessage());
     }
+    
 }

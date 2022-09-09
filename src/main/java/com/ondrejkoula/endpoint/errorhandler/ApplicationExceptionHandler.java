@@ -24,7 +24,7 @@ public class ApplicationExceptionHandler {
         return new ResponseEntity<>(convertToApiErrorDto(exception), HttpStatus.NOT_FOUND);
     }
 
-    @ExceptionHandler({ValidationException.class, CascadeDependenciesException.class, InconsistentDataUpdateException.class,
+    @ExceptionHandler({ValidationException.class, CascadeDependenciesException.class, InconsistentDataFieldTypeOnUpdateException.class,
             InconsistentPositionsException.class, IncorrectParentException.class, InternalException.class, 
             MissingDataForFieldUpdateException.class, MissingDataOnSaveException.class, OutOfTimeWindowException.class, 
             PositionOutOfRangeException.class, UnsupportedChangeTypeException.class, UnsupportedCompositeChangeTypeException.class})
