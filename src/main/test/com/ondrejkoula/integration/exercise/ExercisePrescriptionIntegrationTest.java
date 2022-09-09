@@ -26,7 +26,7 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
 
         ExerciseTypeDTO createdExerciseType = exerciseTypeResponse.getBody();
         Assertions.assertNotNull(createdExerciseType);
-        
+
         ExercisePrescriptionDTO toCreate = ExercisePrescriptionDTO.builder()
                 .exerciseType(ExerciseTypeDTO.builder().id(1L).category("testType").build())
                 .label("label")
@@ -36,10 +36,10 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
 
         ExercisePrescriptionDTO createdExercisePrescription = prescriptionResponse.getBody();
         Assertions.assertNotNull(createdExercisePrescription);
-        
-        Assertions.assertEquals(createdExercisePrescription.getExerciseType().getId(), createdExerciseType.getId());
+
+        assertEquals(createdExercisePrescription.getExerciseType().getId(), createdExerciseType.getId());
     }
-    
+
     @Test
     void create_whenLabelAndExerciseTypeReferenceIdIsMissing_thenReturnErrorMessage() {
         ExercisePrescriptionDTO toCreate = ExercisePrescriptionDTO.builder()
@@ -104,9 +104,10 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
         Assertions.assertNotNull(createdExercisePrescription);
 
         ConditionDTO condition = ConditionDTO.builder().exercisePrescription(createdExercisePrescription).timeSec(30).timeMin(30).build();
-        
         restTemplate.postForEntity("http://localhost:8080/api/v1/exercises/condition", condition, ConditionDTO.class);
-        
-        restTemplate.delete(URL_PREFIX + "/" + createdExercisePrescription.getId(), createdExercisePrescription.getId());
+
+        HttpClientErrorException httpClientErrorException = assertThrows(HttpClientErrorException.class,
+                () -> restTemplate.delete(URL_PREFIX + "/" + createdExercisePrescription.getId(), createdExercisePrescription.getId()));
+        assertEquals("400 : \"{\"errorMessage\":\"Unable to finish an operation due to existing dependencies.\",\"messageCode\":\"CASCADE_DEPENDENCIES\",\"parentEntityId\":2,\"operation\":null,\"dependencies\":[{\"type\":\"CONDITION\",\"ids\":[3]}]}\"", httpClientErrorException.getMessage());
     }
 }

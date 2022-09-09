@@ -25,7 +25,7 @@ public class ErrorDetailDtoFactory {
 
     public static ErrorDetailDto fromCascadeDependenciesError(CascadeDependenciesException ex) {
         return CascadeDependenciesErrorDetailDto.builder()
-                .errorMessage("Unable to finish an operation die to existing dependencies.")
+                .errorMessage("Unable to finish an operation due to existing dependencies.")
                 .parentEntityId(ex.getParentEntityId())
                 .messageCode(MessageCodes.CASCADE_DEPENDENCIES)
                 .dependencies(ex.getDependencies())

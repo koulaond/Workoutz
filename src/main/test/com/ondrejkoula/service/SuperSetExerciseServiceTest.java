@@ -3,8 +3,9 @@ package com.ondrejkoula.service;
 import com.ondrejkoula.PersistenceTest;
 import com.ondrejkoula.domain.exercise.superset.SuperSet;
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
+import com.ondrejkoula.exception.ParentNotFoundException;
+import com.ondrejkoula.exception.PositionNotDefinedOnChildAssignException;
 import com.ondrejkoula.exception.PositionOutOfRangeException;
-import com.ondrejkoula.exception.validation.ValidationException;
 import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetExerciseRepository;
 import com.ondrejkoula.repository.jpa.exercise.superset.SuperSetRepository;
 import com.ondrejkoula.service.dependencies.exercise.ExerciseDependencyService;
@@ -30,11 +31,11 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
     @Autowired
     ExerciseDependencyService exerciseDependencyService;
 
-    SuperSetService service;
+    SuperSetService superSetService;
 
     @BeforeEach
     void setup() {
-        service = new SuperSetService(superSetExerciseRepository, superSetRepository, exerciseDependencyService);
+        superSetService = new SuperSetService(superSetExerciseRepository, superSetRepository, exerciseDependencyService);
     }
 
     @Test
@@ -42,8 +43,8 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
         SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").position(0).build();
-        service.assignNewChildToParent(parentSet.getId(), newOne);
-        List<SuperSetExercise> allExercises = service.findChildrenByParent(parentSet.getId());
+        superSetService.assignNewChildToParent(parentSet.getId(), newOne);
+        List<SuperSetExercise> allExercises = superSetService.findChildrenByParent(parentSet.getId());
 
         assertThat(allExercises).hasSize(2)
                 .satisfies(exercises -> {
@@ -61,7 +62,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
     @Test
     void insertExerciseToSet_shouldFailDueParentNotFound() {
         SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").position(0).build();
-        assertThrows(ValidationException.class, () -> service.assignNewChildToParent(1L, newOne));
+        assertThrows(ParentNotFoundException.class, () -> superSetService.assignNewChildToParent(1L, newOne));
     }
 
     @Test
@@ -70,16 +71,25 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
         SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").build();
 
-        assertThrows(ValidationException.class, () -> service.assignNewChildToParent(1L, newOne));
+        assertThrows(PositionNotDefinedOnChildAssignException.class, () -> superSetService.assignNewChildToParent(parentSet.getId(), newOne));
     }
 
     @Test
     void insertExerciseToSet_shouldFailDueToPositionOutOfRange() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
-        SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").build();
+        SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").position(2).build();
 
-        assertThrows(ValidationException.class, () -> service.assignNewChildToParent(2L, newOne));
+        assertThrows(PositionOutOfRangeException.class, () -> superSetService.assignNewChildToParent(parentSet.getId(), newOne));
+    }
+
+    @Test
+    void insertExerciseToSet_shouldFailDueToPositionIsNegative() {
+        SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
+        superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
+        SuperSetExercise newOne = SuperSetExercise.builder().note("newOne").position(-1).build();
+
+        assertThrows(PositionOutOfRangeException.class, () -> superSetService.assignNewChildToParent(parentSet.getId(), newOne));
     }
 
     @Test
@@ -91,7 +101,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").parent(parentSet).position(2).build());
         SuperSetExercise formerlyFourth = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").parent(parentSet).position(3).build());
 
-        service.changeChildPosition(formerlyFourth.getId(), 0);
+        superSetService.changeChildPosition(formerlyFourth.getId(), 0);
 
         List<SuperSetExercise> allExercises = superSetExerciseRepository.findByParentIdOrderByPosition(parentSet.getId());
         Assertions.assertThat(allExercises).hasSize(4);
@@ -110,7 +120,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").parent(parentSet).position(2).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").parent(parentSet).position(3).build());
 
-        service.changeChildPosition(formerlyFirst.getId(), 3);
+        superSetService.changeChildPosition(formerlyFirst.getId(), 3);
 
         List<SuperSetExercise> allExercises = superSetExerciseRepository.findByParentIdOrderByPosition(parentSet.getId());
         Assertions.assertThat(allExercises).hasSize(4);
@@ -128,7 +138,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
         assertThrows(PositionOutOfRangeException.class,
-                () -> service.changeChildPosition(formerlyFirst.getId(), 3));
+                () -> superSetService.changeChildPosition(formerlyFirst.getId(), 3));
 
     }
 
@@ -140,7 +150,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         SuperSetExercise formerlyFirst = superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFirst").parent(parentSet).position(0).build());
 
         assertThrows(PositionOutOfRangeException.class,
-                () -> service.changeChildPosition(formerlyFirst.getId(), -1));
+                () -> superSetService.changeChildPosition(formerlyFirst.getId(), -1));
 
     }
 
@@ -154,7 +164,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyThird").parent(parentSet).position(2).build());
         superSetExerciseRepository.save(SuperSetExercise.builder().note("formerlyFourth").parent(parentSet).position(3).build());
 
-        service.removeExistingChildFromParent(formerlyFirst.getId());
+        superSetService.removeExistingChildFromParent(formerlyFirst.getId());
 
         List<SuperSetExercise> allExercises = superSetExerciseRepository.findByParentIdOrderByPosition(parentSet.getId());
 

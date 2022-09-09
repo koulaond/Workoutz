@@ -12,7 +12,6 @@ import com.ondrejkoula.dto.datachange.composition.CompositionChangeRaw;
 import com.ondrejkoula.dto.datachange.composition.CompositionChanges;
 import com.ondrejkoula.dto.exercise.superset.SuperSetDTO;
 import com.ondrejkoula.endpoint.exercise.superset.SuperSetEndpoint;
-import com.ondrejkoula.exception.DataNotFoundException;
 import com.ondrejkoula.exception.IncorrectParentException;
 import com.ondrejkoula.exception.ParentNotFoundException;
 import com.ondrejkoula.service.exercise.superset.SuperSetExerciseService;
@@ -76,7 +75,7 @@ class CompositionEndpointTest {
 
     @Test
     void whenParentDoesNotExist_thenParentNotFoundExceptionIsThrown() {
-        Mockito.doThrow(DataNotFoundException.class).when(superSetService).findById(10L);
+        Mockito.doThrow(ParentNotFoundException.class).when(superSetService).findById(10L);
 
         CompositionChanges changes = prepareChangesDtoForEndpoint();
         assertThrows(ParentNotFoundException.class, () -> superSetEndpoint.updateChildren(10L, changes));

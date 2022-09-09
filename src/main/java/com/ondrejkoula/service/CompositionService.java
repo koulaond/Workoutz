@@ -2,10 +2,7 @@ package com.ondrejkoula.service;
 
 import com.ondrejkoula.domain.CompositionChild;
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.exception.DataNotFoundException;
-import com.ondrejkoula.exception.InternalException;
-import com.ondrejkoula.exception.ParentNotFoundException;
-import com.ondrejkoula.exception.PositionOutOfRangeException;
+import com.ondrejkoula.exception.*;
 import com.ondrejkoula.repository.jpa.CompositionChildRepository;
 import com.ondrejkoula.service.dependencies.DependencyService;
 import lombok.extern.slf4j.Slf4j;
@@ -45,7 +42,7 @@ public abstract class CompositionService<CH extends CompositionChild<P>, P exten
 
         if (isNull(newItem.getPosition())) {
             log.warn("Position not defined.");
-            throw new InternalException("Position not defined.", this.getClass().getSimpleName());
+            throw new PositionNotDefinedOnChildAssignException("Position not defined.");
         }
 
         int countByParent = childRepository.countByParentId(parentId);
