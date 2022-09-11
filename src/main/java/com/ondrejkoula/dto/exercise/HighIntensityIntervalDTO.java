@@ -2,14 +2,12 @@ package com.ondrejkoula.dto.exercise;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.HighIntensityInterval;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class HighIntensityIntervalDTO extends ExerciseDTO {
 
