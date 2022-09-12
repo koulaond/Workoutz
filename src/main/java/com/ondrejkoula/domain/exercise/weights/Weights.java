@@ -6,6 +6,7 @@ import com.ondrejkoula.dto.exercise.weights.SingleSetDTO;
 import com.ondrejkoula.dto.exercise.weights.WeightsDTO;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredEmbedded;
+import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,7 @@ public class Weights extends Exercise {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "exercise_prescription_id")
+    @RequiredReference
     private ExercisePrescription exercisePrescription;
 
     @RequiredEmbedded

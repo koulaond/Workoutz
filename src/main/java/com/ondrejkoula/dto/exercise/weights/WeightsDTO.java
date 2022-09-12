@@ -5,10 +5,7 @@ import com.ondrejkoula.domain.exercise.weights.SingleSet;
 import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.dto.exercise.ExerciseDTO;
 import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 import org.apache.commons.collections4.CollectionUtils;
 
 import java.util.ArrayList;
@@ -18,6 +15,7 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class WeightsDTO extends ExerciseDTO {
 

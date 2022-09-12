@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Collections;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -66,9 +67,36 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () -> restTemplate.postForEntity(URL_PREFIX, toCreate, Object.class));
         assertEquals("400 : \"{\"errorMessage\":\"Unexpected data integrity internal error\",\"messageCode\":\"GENERAL_ERROR\"}\"", exception.getMessage());
     }
-
+    
     @Test
     void update_whenAllRequiredFieldsAreSet_thenUpdateExercisePrescription() {
+        ExerciseTypeDTO exerciseTypeDTO = ExerciseTypeDTO.builder().category("typeCategory").value("exerciseType").build();
+        ResponseEntity<ExerciseTypeDTO> exerciseTypeResponse = restTemplate.postForEntity("http://localhost:8080/api/v1/exercises/types", exerciseTypeDTO, ExerciseTypeDTO.class);
+
+        ExerciseTypeDTO createdExerciseType = exerciseTypeResponse.getBody();
+        Assertions.assertNotNull(createdExerciseType);
+
+        ExercisePrescriptionDTO toCreate = ExercisePrescriptionDTO.builder()
+                .exerciseType(createdExerciseType)
+                .label("label")
+                .build();
+
+        ResponseEntity<ExercisePrescriptionDTO> prescriptionResponse = restTemplate.postForEntity(URL_PREFIX, toCreate, ExercisePrescriptionDTO.class);
+
+        ExercisePrescriptionDTO createdExercisePrescription = prescriptionResponse.getBody();
+        Assertions.assertNotNull(createdExercisePrescription);
+
+        assertEquals(createdExercisePrescription.getExerciseType().getId(), createdExerciseType.getId());
+
+        DataChanges dataChanges = DataChanges.builder()
+                .changes(Collections.singletonMap("label", DataChange.builder().operation("update").value("updatedLabel").build()))
+                .build();
+
+       restTemplate.put(URL_PREFIX + "/" + createdExercisePrescription.getId(), dataChanges, DataChanges.class);
+    }
+
+    @Test
+    void update_whenAllRequiredValuesMissing_thenReturnErrorMessage() {
         ExerciseTypeDTO exerciseTypeDTO = ExerciseTypeDTO.builder().category("typeCategory").value("exerciseType").build();
         ResponseEntity<ExerciseTypeDTO> exerciseTypeResponse = restTemplate.postForEntity("http://localhost:8080/api/v1/exercises/types", exerciseTypeDTO, ExerciseTypeDTO.class);
 
