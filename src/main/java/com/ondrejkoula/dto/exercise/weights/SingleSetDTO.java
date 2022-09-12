@@ -3,13 +3,11 @@ package com.ondrejkoula.dto.exercise.weights;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.weights.SingleSet;
 import com.ondrejkoula.dto.ConvertibleFromDTOToDomain;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
+@NoArgsConstructor
 @EqualsAndHashCode
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class SingleSetDTO implements ConvertibleFromDTOToDomain {

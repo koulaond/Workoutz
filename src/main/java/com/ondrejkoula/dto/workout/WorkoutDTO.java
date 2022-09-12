@@ -4,13 +4,15 @@ import com.ondrejkoula.domain.workout.Workout;
 import com.ondrejkoula.dto.AbstractDTO;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class WorkoutDTO extends AbstractDTO {
 
-    private final String label;
+    private String label;
 
-    private final Integer expectedDurationInMins;
+    private Integer expectedDurationInMins;
 
     @Builder
     public WorkoutDTO(Long id, String status, String note, String label, Integer expectedDurationInMins) {
