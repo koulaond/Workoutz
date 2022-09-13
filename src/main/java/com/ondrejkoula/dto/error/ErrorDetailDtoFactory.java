@@ -115,9 +115,8 @@ public class ErrorDetailDtoFactory {
         return UnsupportedChangeTypeErrorDetailDto.builder()
                 .errorMessage("Unsupported data change operation type.")
                 .messageCode(MessageCodes.UNSUPPORTED_CHANGE_TYPE)
-                .operation(ex.getOperation())
-                .entityId(ex.getEntityId())
-                .fieldName(ex.getFieldName())
+                .operation(ex.getChangeType())
+          
                 .build();
     }
 

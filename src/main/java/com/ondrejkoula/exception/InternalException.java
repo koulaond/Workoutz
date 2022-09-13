@@ -24,5 +24,11 @@ public class InternalException extends RuntimeException {
         this.messageCode = messageCode;
         this.messageArguments = messageArguments;
     }
+    
+    public InternalException(String message, Throwable throwable) {
+        super(message, throwable);
+        this.messageCode = null;
+        this.messageArguments = null;
+    }
 
 }

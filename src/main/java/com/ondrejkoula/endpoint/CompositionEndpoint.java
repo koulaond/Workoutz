@@ -16,8 +16,8 @@ import com.ondrejkoula.service.CompositionService;
 import com.ondrejkoula.service.GenericService;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
@@ -31,7 +31,7 @@ public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends A
         this.childService = childService;
     }
 
-    @PatchMapping(value = "/{id}", produces = "application/json")
+    @PutMapping(value = "/update-children/{id}", produces = "application/json")
     public PDTO updateChildren(@PathVariable("id") Long parentId, @RequestBody CompositionChanges dataChanges) {
         verifyParentExists(parentId);
 

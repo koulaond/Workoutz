@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Collections.singletonList;
-import static java.util.Collections.singletonMap;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class WeightsIntegrationTest extends IntegrationTest {
@@ -27,7 +26,7 @@ public class WeightsIntegrationTest extends IntegrationTest {
     static final String URL_PREFIX = "http://localhost:8080/api/v1/exercises/weights";
 
     RestTemplate restTemplate = new RestTemplate();
-
+    
     @Test
     void create_whenAllRequiredFieldsAreSet_thenCreateWeights() {
         ExerciseTypeDTO createdExerciseType = createExerciseType();
@@ -51,21 +50,28 @@ public class WeightsIntegrationTest extends IntegrationTest {
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () -> restTemplate.postForEntity(URL_PREFIX, weightsToCreate, WeightsDTO.class));
         assertEquals("400 : \"{\"errorMessage\":\"Required data is missing on save.\",\"messageCode\":\"MISSING_DATA_ON_SAVE\",\"errorDetails\":{\"maxTimeMin\":\"MISSING_FIELD_CONTENT\",\"maxTimeSec\":\"MISSING_FIELD_CONTENT\",\"exercisePrescription\":\"MISSING_REFERENCE\"}}\"", exception.getMessage());
     }
-    
+
     @Test
     void update_whenAllRequiredFieldsAreSetOrUndeleted_thenUpdateWeights() {
         ExerciseTypeDTO createdExerciseType = createExerciseType();
         ExercisePrescriptionDTO createdExercisePrescription = createExercisePrescription(createdExerciseType);
+        ExercisePrescriptionDTO newExercisePrescription = createExercisePrescription(createdExerciseType);
 
         WeightsDTO weightsToCreate = WeightsDTO.builder().exercisePrescription(createdExercisePrescription).maxTimeMin(30).maxTimeSec(30).build();
 
         ResponseEntity<WeightsDTO> responseEntity = restTemplate.postForEntity(URL_PREFIX, weightsToCreate, WeightsDTO.class);
         WeightsDTO createdWeights = responseEntity.getBody();
-        
+
         assertNotNull(createdWeights);
-        
-        DataChanges dataChanges = DataChanges.builder().changes(singletonMap("maxTimeMin", DataChange.builder().operation("update").value(31).build())).build();
-        restTemplate.put(URL_PREFIX + "/" + createdWeights.getId(), dataChanges, DataChanges.class);
+
+        Map<String, DataChange> changesMap = Map.of(
+                "maxTimeMin", DataChange.builder().operation("update").value(31).build(),
+                "exercisePrescription", DataChange.builder().operation("update").value(newExercisePrescription.getId()).build()
+        );
+        DataChanges dataChanges = DataChanges.builder()
+                .changes(changesMap)
+                .build();
+        restTemplate.put(URL_PREFIX + "/" + createdWeights.getId(), dataChanges, WeightsDTO.class);
     }
 
     @Test
@@ -82,7 +88,7 @@ public class WeightsIntegrationTest extends IntegrationTest {
 
         DataChanges dataChanges = DataChanges.builder().changes(getChanges()).build();
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class, () -> restTemplate.put(URL_PREFIX + "/" + createdWeights.getId(), dataChanges, DataChanges.class));
-        assertEquals("400 : \"{\"errorMessage\":\"Required data is missing on save.\",\"messageCode\":\"MISSING_DATA_ON_SAVE\",\"errorDetails\":{\"maxTimeMin\":\"MISSING_FIELD_CONTENT\"}}\"", exception.getMessage());
+        assertEquals("400 : \"{\"errorMessage\":\"Required data is missing on save.\",\"messageCode\":\"MISSING_DATA_ON_SAVE\",\"errorDetails\":{\"maxTimeMin\":\"MISSING_FIELD_CONTENT\",\"exercisePrescription\":\"MISSING_REFERENCE\"}}\"", exception.getMessage());
     }
 
     @Test
@@ -120,7 +126,7 @@ public class WeightsIntegrationTest extends IntegrationTest {
 
         WorkoutDTO createdWorkout = workoutResponseEntity.getBody();
         assertNotNull(createdWorkout);
-        
+
         restTemplate.postForEntity("http://localhost:8080/api/v1/exercises/assign-to-workout", AssignExerciseToWorkoutDTO.builder()
                 .exerciseId(createdWeights.getId()).workoutId(createdWorkout.getId()).position(0).build(), List.class);
 

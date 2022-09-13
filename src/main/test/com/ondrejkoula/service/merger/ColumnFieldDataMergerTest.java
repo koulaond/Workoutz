@@ -1,6 +1,8 @@
 package com.ondrejkoula.service.merger;
 
+import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.domain.exercise.circle.SuperCircle;
+import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.dto.datachange.DataChange;
 import com.ondrejkoula.dto.datachange.DataChanges;
 import com.ondrejkoula.exception.InconsistentDataFieldTypeOnUpdateException;
@@ -11,6 +13,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class ColumnFieldDataMergerTest {
 
@@ -23,19 +27,12 @@ class ColumnFieldDataMergerTest {
 
         Map<String, DataChange> dataChangeMap = new HashMap<>();
 
-        dataChangeMap.put("status", DataChange.builder()
-                .operation("UPDATE").value("new").build());
-
-        dataChangeMap.put("prepareTime", DataChange.builder()
-                .operation("UPDATE").value(20).build());
-
+        dataChangeMap.put("status", DataChange.builder().operation("UPDATE").value("new").build());
+        dataChangeMap.put("prepareTime", DataChange.builder().operation("UPDATE").value(20).build());
         dataChangeMap.put("workTime", DataChange.builder().value(20).build()); // missing operation - should be update by default
-
-        dataChangeMap.put("restTime", DataChange.builder()
-                .operation("DELETE").build());
+        dataChangeMap.put("restTime", DataChange.builder().operation("DELETE").build());
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
-
         dataMerger.mergeSourceToTarget(dataChanges, target);
 
         Assertions.assertThat(target)
@@ -44,6 +41,96 @@ class ColumnFieldDataMergerTest {
                 .hasFieldOrPropertyWithValue("workTime", 20)
                 .hasFieldOrPropertyWithValue("restTime", null)
                 .hasFieldOrPropertyWithValue("setsCount", 10);
+    }
+
+    @Test
+    void shouldUpdateReference() {
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
+
+        ExercisePrescription exercisePrescription = ExercisePrescription.builder().id(1L).build();
+        Weights target = Weights.builder().status("old").maxTimeSec(10).maxTimeMin(20)
+                .exercisePrescription(exercisePrescription).build();
+
+        Map<String, DataChange> dataChangeMap = new HashMap<>();
+
+        dataChangeMap.put("status", DataChange.builder().operation("UPDATE").value("new").build());
+        dataChangeMap.put("maxTimeSec", DataChange.builder().operation("UPDATE").value(10).build());
+        dataChangeMap.put("maxTimeMin", DataChange.builder().value(20).build()); // missing operation - should be update by default
+        dataChangeMap.put("exercisePrescription", DataChange.builder().operation("update").value(2L).build());
+
+        DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
+        dataMerger.mergeSourceToTarget(dataChanges, target);
+
+        Assertions.assertThat(target)
+                .hasFieldOrPropertyWithValue("status", "new")
+                .hasFieldOrPropertyWithValue("maxTimeSec", 10)
+                .hasFieldOrPropertyWithValue("maxTimeMin", 20)
+                .hasFieldOrPropertyWithValue("exercisePrescription", exercisePrescription);
+    }
+
+    @Test
+    void shouldDeleteReference() {
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
+
+        ExercisePrescription exercisePrescription = ExercisePrescription.builder().id(1L).build();
+        Weights target = Weights.builder().status("old").maxTimeSec(10).maxTimeMin(20)
+                .exercisePrescription(exercisePrescription).build();
+
+        Map<String, DataChange> dataChangeMap = new HashMap<>();
+
+        dataChangeMap.put("status", DataChange.builder().operation("UPDATE").value("new").build());
+        dataChangeMap.put("maxTimeSec", DataChange.builder().operation("UPDATE").value(10).build());
+        dataChangeMap.put("maxTimeMin", DataChange.builder().value(20).build()); // missing operation - should be update by default
+        dataChangeMap.put("exercisePrescription", DataChange.builder().operation("delete").build());
+
+        DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
+        dataMerger.mergeSourceToTarget(dataChanges, target);
+
+        Assertions.assertThat(target)
+                .hasFieldOrPropertyWithValue("status", "new")
+                .hasFieldOrPropertyWithValue("maxTimeSec", 10)
+                .hasFieldOrPropertyWithValue("maxTimeMin", 20)
+                .hasFieldOrPropertyWithValue("exercisePrescription", null);
+    }
+
+    @Test
+    void whenReferenceIdIsNotLong_thenInconsistentDataFieldTypeOnUpdateExceptionIsThrown() {
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
+
+        ExercisePrescription exercisePrescription = ExercisePrescription.builder().id(1L).build();
+        Weights target = Weights.builder().status("old").maxTimeSec(10).maxTimeMin(20)
+                .exercisePrescription(exercisePrescription).build();
+
+        Map<String, DataChange> dataChangeMap = new HashMap<>();
+
+        dataChangeMap.put("status", DataChange.builder().operation("UPDATE").value("new").build());
+        dataChangeMap.put("maxTimeSec", DataChange.builder().operation("UPDATE").value(10).build());
+        dataChangeMap.put("maxTimeMin", DataChange.builder().value(20).build()); // missing operation - should be update by default
+        dataChangeMap.put("exercisePrescription", DataChange.builder().operation("update").value("someNonLongValue").build());
+
+        DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
+        assertThrows(InconsistentDataFieldTypeOnUpdateException.class, () -> dataMerger.mergeSourceToTarget(dataChanges, target));
+
+    }
+
+    @Test
+    void whenReferenceIdIsNotDefined_thenMissingDataForFieldUpdateExceptionIsThrown() {
+        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
+
+        ExercisePrescription exercisePrescription = ExercisePrescription.builder().id(1L).build();
+        Weights target = Weights.builder().status("old").maxTimeSec(10).maxTimeMin(20)
+                .exercisePrescription(exercisePrescription).build();
+
+        Map<String, DataChange> dataChangeMap = new HashMap<>();
+
+        dataChangeMap.put("status", DataChange.builder().operation("UPDATE").value("new").build());
+        dataChangeMap.put("maxTimeSec", DataChange.builder().operation("UPDATE").value(10).build());
+        dataChangeMap.put("maxTimeMin", DataChange.builder().value(20).build()); // missing operation - should be update by default
+        dataChangeMap.put("exercisePrescription", DataChange.builder().operation("update").value(null).build());
+
+        DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
+        assertThrows(MissingDataForFieldUpdateException.class, () -> dataMerger.mergeSourceToTarget(dataChanges, target));
+
     }
 
     @Test
@@ -60,7 +147,7 @@ class ColumnFieldDataMergerTest {
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
-        org.junit.jupiter.api.Assertions.assertThrows(MissingDataForFieldUpdateException.class,
+        assertThrows(MissingDataForFieldUpdateException.class,
                 () -> dataMerger.mergeSourceToTarget(dataChanges, target));
     }
 
@@ -78,7 +165,7 @@ class ColumnFieldDataMergerTest {
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
-        org.junit.jupiter.api.Assertions.assertThrows(InconsistentDataFieldTypeOnUpdateException.class,
+        assertThrows(InconsistentDataFieldTypeOnUpdateException.class,
                 () -> dataMerger.mergeSourceToTarget(dataChanges, target));
     }
 
@@ -96,7 +183,7 @@ class ColumnFieldDataMergerTest {
 
         DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
 
-        org.junit.jupiter.api.Assertions.assertThrows(UnsupportedChangeTypeException.class,
+        assertThrows(UnsupportedChangeTypeException.class,
                 () -> dataMerger.mergeSourceToTarget(dataChanges, target));
     }
 }

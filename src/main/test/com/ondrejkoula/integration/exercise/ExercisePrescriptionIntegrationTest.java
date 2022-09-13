@@ -121,7 +121,7 @@ public class ExercisePrescriptionIntegrationTest extends IntegrationTest {
 
         HttpClientErrorException exception = assertThrows(HttpClientErrorException.class,
                 () -> restTemplate.put(URL_PREFIX + "/" + createdExercisePrescription.getId(), dataChanges, DataChanges.class));
-        assertEquals("400 : \"{\"errorMessage\":\"Required data is missing on save.\",\"messageCode\":\"MISSING_DATA_ON_SAVE\",\"errorDetails\":{\"label\":\"MISSING_FIELD_CONTENT\"}}\"", exception.getMessage());
+        assertEquals("400 : \"{\"errorMessage\":\"Required data is missing on save.\",\"messageCode\":\"MISSING_DATA_ON_SAVE\",\"errorDetails\":{\"exerciseType\":\"MISSING_REFERENCE\",\"label\":\"MISSING_FIELD_CONTENT\"}}\"", exception.getMessage());
 
     }
 
