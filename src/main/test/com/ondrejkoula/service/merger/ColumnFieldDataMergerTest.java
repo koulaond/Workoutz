@@ -44,7 +44,7 @@ class ColumnFieldDataMergerTest {
     }
 
     @Test
-    void shouldUpdateReference() {
+    void shouldNotUpdateReference() {
         ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
 
         ExercisePrescription exercisePrescription = ExercisePrescription.builder().id(1L).build();
