@@ -1,11 +1,15 @@
 package com.ondrejkoula.domain.exercise.superset;
 
-import com.ondrejkoula.domain.CompositionChild;
+import com.ondrejkoula.domain.CompositionChildExercise;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
 import com.ondrejkoula.dto.exercise.superset.SuperSetExerciseDTO;
-import lombok.*;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 
 /**
@@ -15,12 +19,8 @@ import java.util.Objects;
 @NoArgsConstructor
 @Entity
 @Table(name = "super_set_exercises")
-public class SuperSetExercise extends CompositionChild<SuperSet> {
-
-    @ManyToOne
-    @JoinColumn(name = "exercise_prescription_id")
-    private ExercisePrescription exercisePrescription;
-
+public class SuperSetExercise extends CompositionChildExercise<SuperSet> {
+    
     // Repetitions values
     @Column(name = "repetitions_count")
     private Integer repetitionsCount;
@@ -43,12 +43,10 @@ public class SuperSetExercise extends CompositionChild<SuperSet> {
     private Integer maxTimeMin;
 
     @Builder
-    public SuperSetExercise(Long id, String status, String note, SuperSet parent, Integer position,
-                            ExercisePrescription exercisePrescription, Integer repetitionsCount, Integer repetitionsCountGoal,
-                            Integer weight, Integer weightGoal, Integer maxTimeSec, Integer maxTimeMin) {
-        super(id, status, note, parent, position);
-
-        this.exercisePrescription = exercisePrescription;
+    public SuperSetExercise(Long id, String status, String note, ExercisePrescription exercisePrescription, SuperSet parent,
+                            Integer position, Integer repetitionsCount, Integer repetitionsCountGoal, Integer weight,
+                            Integer weightGoal, Integer maxTimeSec, Integer maxTimeMin) {
+        super(id, status, note, exercisePrescription, parent, position);
         this.repetitionsCount = repetitionsCount;
         this.repetitionsCountGoal = repetitionsCountGoal;
         this.weight = weight;
@@ -59,7 +57,6 @@ public class SuperSetExercise extends CompositionChild<SuperSet> {
 
     @Override
     public String loggableString() {
-
         String exPrescLoggableString = "null";
         if (!Objects.isNull(exercisePrescription)) {
             exPrescLoggableString = exercisePrescription.loggableString();
@@ -67,7 +64,7 @@ public class SuperSetExercise extends CompositionChild<SuperSet> {
 
         return "Super set exercise item: [position: " + position + "prescription details: " + exPrescLoggableString + "]";
     }
-
+    
     @Override
     public SuperSetExerciseDTO toDTO() {
        return SuperSetExerciseDTO.builder()

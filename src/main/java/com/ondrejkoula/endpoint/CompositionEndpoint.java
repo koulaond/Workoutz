@@ -4,7 +4,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ondrejkoula.domain.CompositionChild;
+import com.ondrejkoula.domain.CompositionChildExercise;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.dto.AbstractDTO;
 import com.ondrejkoula.dto.datachange.DataChangeOperation;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Slf4j
-public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends AbstractDTO, CH extends CompositionChild<P>, CDTO extends AbstractDTO>
+public abstract class CompositionEndpoint<P extends DomainEntity, PDTO extends AbstractDTO, CH extends CompositionChildExercise<P>, CDTO extends AbstractDTO>
         extends CrudEndpoint<P, PDTO, CompositionService<CH, P>> {
 
     private final GenericService<CH> childService;

@@ -1,7 +1,7 @@
 package com.ondrejkoula.dto.exercise.superset;
 
 import com.ondrejkoula.domain.exercise.superset.SuperSetExercise;
-import com.ondrejkoula.dto.AbstractDTO;
+import com.ondrejkoula.dto.exercise.ExerciseDTO;
 import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
 import lombok.Builder;
 import lombok.Data;
@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class SuperSetExerciseDTO extends AbstractDTO {
+public class SuperSetExerciseDTO extends ExerciseDTO {
 
     private ExercisePrescriptionDTO exercisePrescription;
 

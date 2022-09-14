@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface Composite<DE extends DomainEntity> {
 
-     List<? extends CompositionChild<DE>> getChildren();
+     List<? extends CompositionChildExercise<DE>> getChildren();
 }

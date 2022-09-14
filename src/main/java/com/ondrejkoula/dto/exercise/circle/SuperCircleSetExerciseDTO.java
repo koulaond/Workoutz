@@ -2,7 +2,7 @@ package com.ondrejkoula.dto.exercise.circle;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.ondrejkoula.domain.exercise.circle.SuperCircleSetExercise;
-import com.ondrejkoula.dto.AbstractDTO;
+import com.ondrejkoula.dto.exercise.ExerciseDTO;
 import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import lombok.Setter;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class SuperCircleSetExerciseDTO extends AbstractDTO {
+public class SuperCircleSetExerciseDTO extends ExerciseDTO {
 
     private ExercisePrescriptionDTO exercisePrescription;
 

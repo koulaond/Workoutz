@@ -130,7 +130,6 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
         Assertions.assertThat(allExercises.get(2).getNote()).isEqualTo("formerlyFourth");
     }
 
-
     @Test
     void changeExercisePosition_positionIsOutOfRange() {
         SuperSet parentSet = superSetRepository.save(SuperSet.builder().id(42L).build());
@@ -139,9 +138,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
 
         assertThrows(PositionOutOfRangeException.class,
                 () -> superSetService.changeChildPosition(formerlyFirst.getId(), 3));
-
     }
-
 
     @Test
     void changeExercisePosition_positionIsNegative() {
@@ -151,9 +148,7 @@ class SuperSetExerciseServiceTest extends PersistenceTest {
 
         assertThrows(PositionOutOfRangeException.class,
                 () -> superSetService.changeChildPosition(formerlyFirst.getId(), -1));
-
     }
-
 
     @Test
     void removeExerciseFromSet() {

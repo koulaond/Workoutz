@@ -1,6 +1,6 @@
 package com.ondrejkoula.service;
 
-import com.ondrejkoula.domain.CompositionChild;
+import com.ondrejkoula.domain.CompositionChildExercise;
 import com.ondrejkoula.domain.DomainEntity;
 import com.ondrejkoula.exception.*;
 import com.ondrejkoula.repository.jpa.CompositionChildRepository;
@@ -16,7 +16,7 @@ import static java.util.Collections.singletonMap;
 import static java.util.Objects.isNull;
 
 @Slf4j
-public abstract class CompositionService<CH extends CompositionChild<P>, P extends DomainEntity>
+public abstract class CompositionService<CH extends CompositionChildExercise<P>, P extends DomainEntity>
         extends GenericService<P> {
 
     protected final CompositionChildRepository<CH> childRepository;

@@ -43,6 +43,6 @@ public class SuperCircleSetAndExercisesRepositoryTest extends PersistenceTest {
         assertThat(superCircleRepository.findAll()).hasSize(0);
         assertThat(setRepository.findAll()).hasSize(0);
         assertThat(exerciseRepository.findAll()).hasSize(0);
-
     }
+    
 }

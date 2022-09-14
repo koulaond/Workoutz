@@ -1,14 +1,14 @@
 package com.ondrejkoula.repository.jpa;
 
 import com.ondrejkoula.domain.DomainEntity;
-import com.ondrejkoula.domain.CompositionChild;
+import com.ondrejkoula.domain.CompositionChildExercise;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.NoRepositoryBean;
 
 import java.util.List;
 
 @NoRepositoryBean
-public interface CompositionChildRepository<T extends CompositionChild<? extends DomainEntity>> extends JpaRepository<T, Long> {
+public interface CompositionChildRepository<T extends CompositionChildExercise<? extends DomainEntity>> extends JpaRepository<T, Long> {
 
     List<T> findByParentIdOrderByPosition(Long parentId);
 
