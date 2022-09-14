@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 @Table(name = "weights")
 public class Weights extends Exercise {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "exercise_prescription_id")
     @RequiredReference
     private ExercisePrescription exercisePrescription;

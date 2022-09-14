@@ -92,47 +92,7 @@ class ColumnFieldDataMergerTest {
                 .hasFieldOrPropertyWithValue("maxTimeMin", 20)
                 .hasFieldOrPropertyWithValue("exercisePrescription", null);
     }
-
-    @Test
-    void whenReferenceIdIsNotLong_thenInconsistentDataFieldTypeOnUpdateExceptionIsThrown() {
-        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
-
-        ExercisePrescription exercisePrescription = ExercisePrescription.builder().id(1L).build();
-        Weights target = Weights.builder().status("old").maxTimeSec(10).maxTimeMin(20)
-                .exercisePrescription(exercisePrescription).build();
-
-        Map<String, DataChange> dataChangeMap = new HashMap<>();
-
-        dataChangeMap.put("status", DataChange.builder().operation("UPDATE").value("new").build());
-        dataChangeMap.put("maxTimeSec", DataChange.builder().operation("UPDATE").value(10).build());
-        dataChangeMap.put("maxTimeMin", DataChange.builder().value(20).build()); // missing operation - should be update by default
-        dataChangeMap.put("exercisePrescription", DataChange.builder().operation("update").value("someNonLongValue").build());
-
-        DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
-        assertThrows(InconsistentDataFieldTypeOnUpdateException.class, () -> dataMerger.mergeSourceToTarget(dataChanges, target));
-
-    }
-
-    @Test
-    void whenReferenceIdIsNotDefined_thenMissingDataForFieldUpdateExceptionIsThrown() {
-        ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
-
-        ExercisePrescription exercisePrescription = ExercisePrescription.builder().id(1L).build();
-        Weights target = Weights.builder().status("old").maxTimeSec(10).maxTimeMin(20)
-                .exercisePrescription(exercisePrescription).build();
-
-        Map<String, DataChange> dataChangeMap = new HashMap<>();
-
-        dataChangeMap.put("status", DataChange.builder().operation("UPDATE").value("new").build());
-        dataChangeMap.put("maxTimeSec", DataChange.builder().operation("UPDATE").value(10).build());
-        dataChangeMap.put("maxTimeMin", DataChange.builder().value(20).build()); // missing operation - should be update by default
-        dataChangeMap.put("exercisePrescription", DataChange.builder().operation("update").value(null).build());
-
-        DataChanges dataChanges = DataChanges.builder().changes(dataChangeMap).build();
-        assertThrows(MissingDataForFieldUpdateException.class, () -> dataMerger.mergeSourceToTarget(dataChanges, target));
-
-    }
-
+    
     @Test
     void whenMissingValueForFieldUpdate_thenMissingDataExceptionIsThrown() {
         ColumnFieldDataMerger dataMerger = new ColumnFieldDataMerger();
