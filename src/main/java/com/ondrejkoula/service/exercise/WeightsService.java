@@ -1,11 +1,11 @@
 package com.ondrejkoula.service.exercise;
 
 import com.ondrejkoula.domain.Status;
-import com.ondrejkoula.domain.exercise.weights.SingleSet;
+import com.ondrejkoula.domain.exercise.weights.WeightSingleSet;
 import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.exception.InconsistentPositionsException;
+import com.ondrejkoula.repository.jpa.exercise.ExercisePrescriptionRepository;
 import com.ondrejkoula.repository.jpa.exercise.WeightsRepository;
-import com.ondrejkoula.service.GenericService;
 import com.ondrejkoula.service.dependencies.exercise.ExerciseDependencyService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +17,13 @@ import static java.util.Comparator.comparing;
 
 @Slf4j
 @Component
-public class WeightsService extends GenericService<Weights> {
+public class WeightsService extends ExercisePrescriptionOwnerService<Weights> {
 
     @Autowired
-    public WeightsService(WeightsRepository repository, ExerciseDependencyService dependencyService) {
-        super(repository, dependencyService);
+    public WeightsService(WeightsRepository repository, 
+                          ExercisePrescriptionRepository exercisePrescriptionRepository, 
+                          ExerciseDependencyService dependencyService) {
+        super(repository, dependencyService, exercisePrescriptionRepository);
     }
 
     public Weights markAsReady(Long id) {
@@ -37,7 +39,7 @@ public class WeightsService extends GenericService<Weights> {
         return create(weights);
     }
 
-    public Weights updateSetsInWeightsExercise(Long weightsId, List<SingleSet> sets) {
+    public Weights updateSetsInWeightsExercise(Long weightsId, List<WeightSingleSet> sets) {
         sortSetsByPosition(sets);
         validateSetsListConsistency(sets);
 
@@ -49,11 +51,11 @@ public class WeightsService extends GenericService<Weights> {
         return repository.save(found);
     }
 
-    private void sortSetsByPosition(List<SingleSet> sets) {
-        sets.sort(comparing(SingleSet::getPosition));
+    private void sortSetsByPosition(List<WeightSingleSet> sets) {
+        sets.sort(comparing(WeightSingleSet::getPosition));
     }
 
-    private void validateSetsListConsistency(List<SingleSet> sets) {
+    private void validateSetsListConsistency(List<WeightSingleSet> sets) {
         if (sets.get(0).getPosition() != 1) {
             throw new InconsistentPositionsException("Sets do not start with position 1.");
         }

@@ -1,7 +1,7 @@
 package com.ondrejkoula.dto.exercise.weights;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ondrejkoula.domain.exercise.weights.SingleSet;
+import com.ondrejkoula.domain.exercise.weights.WeightSingleSet;
 import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.dto.exercise.ExerciseDTO;
 import com.ondrejkoula.dto.exercise.ExercisePrescriptionDTO;
@@ -39,7 +39,7 @@ public class WeightsDTO extends ExerciseDTO {
 
     @Override
     public Weights toDomain() {
-        List<SingleSet> sets = CollectionUtils.isNotEmpty(getSets())
+        List<WeightSingleSet> sets = CollectionUtils.isNotEmpty(getSets())
                 ? getSets().stream().map(SingleSetDTO::toDomain).collect(Collectors.toList())
                 : new ArrayList<>();
 

@@ -1,7 +1,7 @@
 package com.ondrejkoula.dto.exercise.weights;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.ondrejkoula.domain.exercise.weights.SingleSet;
+import com.ondrejkoula.domain.exercise.weights.WeightSingleSet;
 import com.ondrejkoula.dto.ConvertibleFromDTOToDomain;
 import lombok.*;
 
@@ -32,8 +32,8 @@ public class SingleSetDTO implements ConvertibleFromDTOToDomain {
 
 
     @Override
-    public SingleSet toDomain() {
-        return SingleSet.builder()
+    public WeightSingleSet toDomain() {
+        return WeightSingleSet.builder()
                 .position(getPosition())
                 .repetitions(getRepetitions())
                 .repetitionsGoal(getRepetitionsGoal())

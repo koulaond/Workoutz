@@ -1,6 +1,6 @@
 package com.ondrejkoula.endpoint.exercise;
 
-import com.ondrejkoula.domain.exercise.weights.SingleSet;
+import com.ondrejkoula.domain.exercise.weights.WeightSingleSet;
 import com.ondrejkoula.domain.exercise.weights.Weights;
 import com.ondrejkoula.dto.exercise.weights.SingleSetDTO;
 import com.ondrejkoula.dto.exercise.weights.WeightsDTO;
@@ -24,7 +24,7 @@ public class WeightsEndpoint extends CrudEndpoint<Weights, WeightsDTO, WeightsSe
     @PutMapping(value = "/{id}/update-sets", produces = "application/json")
     public WeightsDTO updateSetsInWeightsExercise(@PathVariable Long id, @RequestBody List<SingleSetDTO> setDtos) {
 
-        List<SingleSet> sets = setDtos.stream().map(SingleSetDTO::toDomain).collect(Collectors.toList());
+        List<WeightSingleSet> sets = setDtos.stream().map(SingleSetDTO::toDomain).collect(Collectors.toList());
 
         Weights updated = service.updateSetsInWeightsExercise(id, sets);
         return updated.toDTO();

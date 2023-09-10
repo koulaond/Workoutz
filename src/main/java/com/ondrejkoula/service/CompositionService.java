@@ -31,7 +31,7 @@ public abstract class CompositionService<CH extends CompositionChildExercise<P>,
 
     public List<CH> findChildrenByParent(Long parentId) {
         repository.findById(parentId)
-                .orElseThrow(() -> new DataNotFoundException("Parent found", "dataNotFound", singletonMap("parentId", parentId.toString())));
+                .orElseThrow(() -> new DataNotFoundException("Parent not found", "dataNotFound", singletonMap("parentId", parentId.toString())));
 
         return childRepository.findByParentIdOrderByPosition(parentId);
     }

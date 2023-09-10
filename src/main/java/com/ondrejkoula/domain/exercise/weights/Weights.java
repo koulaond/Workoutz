@@ -1,12 +1,11 @@
 package com.ondrejkoula.domain.exercise.weights;
 
-import com.ondrejkoula.domain.exercise.Exercise;
 import com.ondrejkoula.domain.exercise.ExercisePrescription;
+import com.ondrejkoula.domain.exercise.ExercisePrescriptionOwner;
 import com.ondrejkoula.dto.exercise.weights.SingleSetDTO;
 import com.ondrejkoula.dto.exercise.weights.WeightsDTO;
 import com.ondrejkoula.service.validation.annotation.Required;
 import com.ondrejkoula.service.validation.annotation.RequiredEmbedded;
-import com.ondrejkoula.service.validation.annotation.RequiredReference;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,17 +21,12 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @Entity
 @Table(name = "weights")
-public class Weights extends Exercise {
-
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "exercise_prescription_id")
-    @RequiredReference
-    private ExercisePrescription exercisePrescription;
-
+public class Weights extends ExercisePrescriptionOwner {
+    
     @RequiredEmbedded
     @ElementCollection(fetch = FetchType.LAZY)
     @CollectionTable(name = "weights_sets", joinColumns = @JoinColumn(name = "weights_id"))
-    private List<SingleSet> sets;
+    private List<WeightSingleSet> sets;
 
     // Time values
     @Required
@@ -45,8 +39,8 @@ public class Weights extends Exercise {
 
     @Builder
     public Weights(Long id, String status, String note, ExercisePrescription exercisePrescription,
-                   List<SingleSet> sets, Integer maxTimeSec, Integer maxTimeMin) {
-        super(id, status, note);
+                   List<WeightSingleSet> sets, Integer maxTimeSec, Integer maxTimeMin) {
+        super(id, status, note, exercisePrescription);
         this.exercisePrescription = exercisePrescription;
         this.sets = sets;
         this.maxTimeSec = maxTimeSec;
@@ -68,7 +62,7 @@ public class Weights extends Exercise {
     @Override
     public WeightsDTO toDTO() {
         List<SingleSetDTO> sets = CollectionUtils.isNotEmpty(getSets())
-                ? getSets().stream().map(SingleSet::toDTO).collect(Collectors.toList())
+                ? getSets().stream().map(WeightSingleSet::toDTO).collect(Collectors.toList())
                 : new ArrayList<>();
 
         return WeightsDTO.builder()

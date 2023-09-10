@@ -12,7 +12,7 @@ import javax.persistence.Embeddable;
 @Data
 @NoArgsConstructor
 @Embeddable
-public class SingleSet implements ConvertibleFromDomainToDTO {
+public class WeightSingleSet implements ConvertibleFromDomainToDTO {
 
     @Required
     private Integer position;
@@ -28,7 +28,7 @@ public class SingleSet implements ConvertibleFromDomainToDTO {
     private Integer weightGoal;
 
     @Builder
-    public SingleSet(Integer position, Integer repetitions, Integer repetitionsGoal, Integer weight, Integer weightGoal) {
+    public WeightSingleSet(Integer position, Integer repetitions, Integer repetitionsGoal, Integer weight, Integer weightGoal) {
         this.position = position;
         this.repetitions = repetitions;
         this.repetitionsGoal = repetitionsGoal;

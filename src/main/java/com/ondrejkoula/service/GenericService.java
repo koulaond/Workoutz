@@ -42,7 +42,7 @@ public abstract class GenericService<DE extends DomainEntity> {
 
     public DE findById(Long id) {
         Optional<DE> found = repository.findById(id);
-        return found.orElseThrow(() -> new DataNotFoundException("Data not found", "notFound", singletonMap("id", id.toString())));
+        return found.orElseThrow(() -> new DataNotFoundException("Data not found", "dataNotFound", singletonMap("id", id.toString())));
     }
 
     public List<DE> findAll() {
